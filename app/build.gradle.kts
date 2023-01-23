@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
 
+    implementation(project(":core"))
     implementation(project(":core-ui"))
     implementation(project(":onboarding:onboarding-presentation"))
 }

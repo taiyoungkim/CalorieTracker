@@ -3,9 +3,12 @@ package com.tydev.calorietracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.tydev.calorietracker.navigation.navigate
 import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
+import com.tydev.core.navigation.Route
 import com.tydev.onboarding.presentation.welcome.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -13,17 +16,42 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CalorieTrackerTheme {
-                // A surface container using the 'background' color from the theme
-                WelcomeScreen()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = Route.WELCOME
+                ) {
+                    composable(Route.WELCOME) {
+                        WelcomeScreen(onNavigate = navController::navigate)
+                    }
+                    composable(Route.AGE) {
+                    }
+
+                    composable(Route.GENDER) {
+                    }
+
+                    composable(Route.HEIGHT) {
+                    }
+
+                    composable(Route.WEIGHT) {
+                    }
+
+                    composable(Route.NUTRIENT_GOAL) {
+                    }
+
+                    composable(Route.ACTIVITY) {
+                    }
+
+                    composable(Route.GOAL) {
+                    }
+
+                    composable(Route.TRACKER_OVERVIEW) {
+                    }
+
+                    composable(Route.SEARCH) {
+                    }
+                }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CalorieTrackerTheme {
-        WelcomeScreen()
     }
 }
