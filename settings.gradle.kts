@@ -1,10 +1,12 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,12 +15,12 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CalorieTracker"
-include ':app'
-include ':core'
-include ':onboarding'
-include ':onboarding:onboarding-domain'
-include ':onboarding:onboarding-presentation'
-include ':tracker'
-include ':tracker:tracker-domain'
-include ':tracker:tracker-data'
-include ':tracker:tracker-presentation'
+include(":app")
+include(":core")
+include(":onboarding")
+include(":onboarding:onboarding-domain")
+include(":onboarding:onboarding-presentation")
+include(":tracker")
+include(":tracker:tracker-domain")
+include(":tracker:tracker-data")
+include(":tracker:tracker-presentation")

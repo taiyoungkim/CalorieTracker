@@ -1,4 +1,3 @@
 package com.tydev.core
 
-class MyClass {
-}
+class MyClass
