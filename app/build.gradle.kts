@@ -79,6 +79,9 @@ dependencies {
 
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
+
+    implementation(project(":core-ui"))
+    implementation(project(":onboarding:onboarding-presentation"))
 }
 
 // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13
