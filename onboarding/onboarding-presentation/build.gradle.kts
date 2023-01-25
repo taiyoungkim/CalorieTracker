@@ -1,6 +1,7 @@
 plugins {
     id("tydev.android.library")
     id("tydev.android.library.compose")
+    id("tydev.android.hilt")
 }
 
 dependencies {
@@ -10,4 +11,5 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

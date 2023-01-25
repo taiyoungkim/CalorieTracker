@@ -41,7 +41,7 @@ fun WelcomeScreen(
             text = stringResource(id = R.string.next),
             // 보통 presentation 로직을 viewModel 을 통해 구현해야하지만
             // 해당 기능만 존재하는 화면이므로 뷰모델 없이 구현(오버엔지니어링이라 생각)
-            onClick = { onNavigate(UiEvent.Navigate(Route.AGE)) },
+            onClick = { onNavigate(UiEvent.Navigate(Route.GENDER)) },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
