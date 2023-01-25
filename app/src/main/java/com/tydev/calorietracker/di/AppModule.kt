@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.tydev.core.domain.data.UserPreferencesImpl
 import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,11 @@ class AppModule {
         sharedPreferences: SharedPreferences
     ): UserPreferences {
         return UserPreferencesImpl(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilterOutDigitsUseCase(): FilterOutDigitsUseCase {
+        return FilterOutDigitsUseCase()
     }
 }
