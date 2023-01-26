@@ -1,4 +1,4 @@
-package com.tydev.onboarding.presentation.age
+package com.tydev.onboarding.presentation.weight
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,38 +17,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AgeViewModel @Inject constructor(
+class WeightViewModel @Inject constructor(
     private val preferences: UserPreferences,
     private val filterOutDigitsUseCase: FilterOutDigitsUseCase
 ) : ViewModel() {
 
-    var age by mutableStateOf(DEFAULT_AGE)
+    var weight by mutableStateOf(DEFAULT_WEIGHT)
         private set
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun onAgeEnter(age: String) {
-        if (age.length <= VALIDATE_AGE_LENGTH) {
-            this.age = filterOutDigitsUseCase(age)
+    fun onWeightEnter(weight: String) {
+        if (weight.length <= VALIDATE_WEIGHT_LENGTH) {
+            this.weight = filterOutDigitsUseCase(weight)
         }
     }
 
     fun onNextClick() = viewModelScope.launch {
-        val ageNumber = age.toIntOrNull() ?: run {
+        val weightNumber = weight.toFloatOrNull() ?: run {
             _uiEvent.send(
-                // viewModel 에 context 를 참조해야하는 문제
-                // -> helper class 를 통해 해결
                 UiEvent.ShowSnackbar(
-                    UiText.StringResource(com.tydev.core.R.string.error_age_cant_be_empty)
+                    UiText.StringResource(com.tydev.core.R.string.error_weight_cant_be_empty)
                 )
             )
             return@launch
         }
-        preferences.saveAge(ageNumber)
-        _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+        preferences.saveWeight(weightNumber)
+        _uiEvent.send(UiEvent.Navigate(Route.ACTIVITY))
     }
 }
 
-const val DEFAULT_AGE = "20"
-const val VALIDATE_AGE_LENGTH = 3
+const val DEFAULT_WEIGHT = "80.0"
+const val VALIDATE_WEIGHT_LENGTH = 5

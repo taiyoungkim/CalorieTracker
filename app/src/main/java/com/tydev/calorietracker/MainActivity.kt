@@ -19,6 +19,8 @@ import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
 import com.tydev.core.navigation.Route
 import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
+import com.tydev.onboarding.presentation.height.HeightScreen
+import com.tydev.onboarding.presentation.weight.WeightScreen
 import com.tydev.onboarding.presentation.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,9 +57,17 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(Route.HEIGHT) {
+                                HeightScreen(
+                                    snackbarHostState = snackbarHostState,
+                                    onNavigate = navController::navigate
+                                )
                             }
 
                             composable(Route.WEIGHT) {
+                                WeightScreen(
+                                    snackbarHostState = snackbarHostState,
+                                    onNavigate = navController::navigate
+                                )
                             }
 
                             composable(Route.NUTRIENT_GOAL) {
