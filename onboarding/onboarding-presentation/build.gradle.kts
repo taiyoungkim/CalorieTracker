@@ -7,6 +7,7 @@ plugins {
 dependencies {
     implementation(project(":core"))
     implementation(project(":core-ui"))
+    implementation(project(":onboarding:onboarding-domain"))
 
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.material3)

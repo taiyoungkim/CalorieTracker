@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tydev.core.R
 import com.tydev.core.domain.preferences.UserPreferences
-import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import com.tydev.core.navigation.Route
 import com.tydev.core.util.UiEvent
 import com.tydev.core.util.UiText
@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeightViewModel @Inject constructor(
-    private val preferences: UserPreferences,
-    private val filterOutDigitsUseCase: FilterOutDigitsUseCase
+    private val preferences: UserPreferences
 ) : ViewModel() {
 
     var weight by mutableStateOf(DEFAULT_WEIGHT)
@@ -30,7 +29,7 @@ class WeightViewModel @Inject constructor(
 
     fun onWeightEnter(weight: String) {
         if (weight.length <= VALIDATE_WEIGHT_LENGTH) {
-            this.weight = filterOutDigitsUseCase(weight)
+            this.weight = weight
         }
     }
 
@@ -38,7 +37,7 @@ class WeightViewModel @Inject constructor(
         val weightNumber = weight.toFloatOrNull() ?: run {
             _uiEvent.send(
                 UiEvent.ShowSnackbar(
-                    UiText.StringResource(com.tydev.core.R.string.error_weight_cant_be_empty)
+                    UiText.StringResource(R.string.error_weight_cant_be_empty)
                 )
             )
             return@launch

@@ -22,6 +22,7 @@ import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
 import com.tydev.onboarding.presentation.goal.GoalScreen
 import com.tydev.onboarding.presentation.height.HeightScreen
+import com.tydev.onboarding.presentation.nutrientGoal.NutrientScreen
 import com.tydev.onboarding.presentation.weight.WeightScreen
 import com.tydev.onboarding.presentation.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +74,10 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(Route.NUTRIENT_GOAL) {
+                                NutrientScreen(
+                                    snackbarHostState = snackbarHostState,
+                                    onNavigate = navController::navigate
+                                )
                             }
 
                             composable(Route.ACTIVITY) {
