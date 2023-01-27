@@ -11,6 +11,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.compose)
+
     implementation(project(":core"))
     implementation(project(":core-ui"))
     implementation(project(":tracker::tracker-domain"))
