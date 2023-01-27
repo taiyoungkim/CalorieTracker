@@ -83,6 +83,10 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":core-ui"))
     implementation(project(":onboarding:onboarding-presentation"))
+    implementation(project(":onboarding:onboarding-domain"))
+    implementation(project(":tracker:tracker-presentation"))
+    implementation(project(":tracker:tracker-data"))
+    implementation(project(":tracker:tracker-domain"))
 }
 
 // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13

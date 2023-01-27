@@ -25,6 +25,7 @@ import com.tydev.onboarding.presentation.height.HeightScreen
 import com.tydev.onboarding.presentation.nutrientGoal.NutrientScreen
 import com.tydev.onboarding.presentation.weight.WeightScreen
 import com.tydev.onboarding.presentation.welcome.WelcomeScreen
+import com.tydev.tracker.presentation.overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,6 +94,9 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(Route.TRACKER_OVERVIEW) {
+                                TrackerOverviewScreen(
+                                    onNavigate = navController::navigate
+                                )
                             }
 
                             composable(Route.SEARCH) {
