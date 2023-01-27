@@ -52,7 +52,7 @@ fun GenderScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.whats_your_gender),
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 

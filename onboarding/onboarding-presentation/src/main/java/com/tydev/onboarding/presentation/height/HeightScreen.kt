@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +56,8 @@ fun HeightScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = stringResource(id = R.string.whats_your_height)
+                text = stringResource(id = R.string.whats_your_height),
+                style = MaterialTheme.typography.headlineSmall
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))

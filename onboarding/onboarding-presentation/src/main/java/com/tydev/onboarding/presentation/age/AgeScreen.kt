@@ -56,7 +56,7 @@ fun AgeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.whats_your_gender),
+                text = stringResource(id = R.string.whats_your_age),
                 style = MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
