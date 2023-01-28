@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -25,14 +26,22 @@ import com.tydev.tracker.presentation.overview.components.TrackedFoodItem
 
 @ExperimentalCoilApi
 @Composable
-fun TrackerOverviewScreen(
+fun TrackerOverViewScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
-    viewModel: TrackerOverviewVIewModel = hiltViewModel()
+    viewModel: TrackerOverViewViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
 
+    LaunchedEffect(key1 = context) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.Navigate -> onNavigate(event)
+                else -> Unit
+            }
+        }
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -44,10 +53,10 @@ fun TrackerOverviewScreen(
             DaySelector(
                 date = state.date,
                 onPreviousDayClick = {
-                    viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClick)
+                    viewModel.onEvent(TrackerOverViewEvent.OnPreviousDayClick)
                 },
                 onNextDayClick = {
-                    viewModel.onEvent(TrackerOverviewEvent.OnNextDayClick)
+                    viewModel.onEvent(TrackerOverViewEvent.OnNextDayClick)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,7 +68,7 @@ fun TrackerOverviewScreen(
             ExpandableMeal(
                 meal = meal,
                 onToggleClick = {
-                    viewModel.onEvent(TrackerOverviewEvent.OnToggleMealClick(meal))
+                    viewModel.onEvent(TrackerOverViewEvent.OnToggleMealClick(meal))
                 },
                 content = {
                     Column(
@@ -72,7 +81,7 @@ fun TrackerOverviewScreen(
                                 trackedFood = food,
                                 onDeleteClick = {
                                     viewModel.onEvent(
-                                        TrackerOverviewEvent
+                                        TrackerOverViewEvent
                                             .OnDeleteTrackedFoodClick(food)
                                     )
                                 }
@@ -86,7 +95,7 @@ fun TrackerOverviewScreen(
                             ),
                             onClick = {
                                 viewModel.onEvent(
-                                    TrackerOverviewEvent.OnAddFoodClick(meal)
+                                    TrackerOverViewEvent.OnAddFoodClick(meal)
                                 )
                             },
                             modifier = Modifier.fillMaxWidth()

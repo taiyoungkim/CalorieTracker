@@ -1,6 +1,7 @@
 plugins {
     id("tydev.android.library")
     id("tydev.android.hilt")
+    id("kotlinx-serialization")
     alias(libs.plugins.ksp)
 }
 

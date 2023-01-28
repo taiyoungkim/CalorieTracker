@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Product(
     @SerialName("image_front_thumb_url")
-    val imageFrontThumbUrl: String?,
+    val imageFrontThumbUrl: String? = null,
     val nutriments: Nutriments,
     @SerialName("product_name")
-    val productName: String?
+    val productName: String? = null
 )

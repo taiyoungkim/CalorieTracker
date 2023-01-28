@@ -86,7 +86,7 @@ fun NutrientsHeader(
             protein = state.totalProtein,
             fat = state.totalFat,
             calories = state.totalCalories,
-            calorieGoal =state.caloriesGoal,
+            calorieGoal = state.caloriesGoal,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(30.dp)

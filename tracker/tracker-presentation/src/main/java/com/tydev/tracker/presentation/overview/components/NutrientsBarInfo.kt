@@ -83,7 +83,7 @@ fun NutrientsBarInfo(
             )
             Text(
                 text = name,
-                color = if(value <= goal) {
+                color = if (value <= goal) {
                     MaterialTheme.colorScheme.onPrimary
                 } else goalExceededColor,
                 style = MaterialTheme.typography.bodyLarge,

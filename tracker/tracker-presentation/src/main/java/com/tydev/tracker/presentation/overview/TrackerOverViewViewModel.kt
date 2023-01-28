@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TrackerOverviewVIewModel @Inject constructor(
+class TrackerOverViewViewModel @Inject constructor(
     preferences: UserPreferences,
     private val trackerUseCases: TrackerUseCases,
 ) : ViewModel() {
@@ -36,40 +36,40 @@ class TrackerOverviewVIewModel @Inject constructor(
         preferences.saveShouldShowOnboarding(false)
     }
 
-    fun onEvent(event: TrackerOverviewEvent) {
+    fun onEvent(event: TrackerOverViewEvent) {
         when (event) {
-            is TrackerOverviewEvent.OnAddFoodClick -> {
+            is TrackerOverViewEvent.OnAddFoodClick -> {
                 viewModelScope.launch {
                     _uiEvent.send(
                         UiEvent.Navigate(
-                            route = Route.SEARCH
-                                    + "/${event.meal.mealType.name}"
-                                    + "/${state.date.dayOfMonth}"
-                                    + "/${state.date.monthValue}"
-                                    + "/${state.date.year}"
+                            route = Route.SEARCH +
+                                "/${event.meal.mealType.name}" +
+                                "/${state.date.dayOfMonth}" +
+                                "/${state.date.monthValue}" +
+                                "/${state.date.year}"
                         )
                     )
                 }
             }
-            is TrackerOverviewEvent.OnDeleteTrackedFoodClick -> {
+            is TrackerOverViewEvent.OnDeleteTrackedFoodClick -> {
                 viewModelScope.launch {
                     trackerUseCases.deleteTrackedFoodUseCase(event.trackedFood)
                     refreshFoods()
                 }
             }
-            is TrackerOverviewEvent.OnNextDayClick -> {
+            is TrackerOverViewEvent.OnNextDayClick -> {
                 state = state.copy(
                     date = state.date.plusDays(1)
                 )
                 refreshFoods()
             }
-            is TrackerOverviewEvent.OnPreviousDayClick -> {
+            is TrackerOverViewEvent.OnPreviousDayClick -> {
                 state = state.copy(
                     date = state.date.minusDays(1)
                 )
                 refreshFoods()
             }
-            is TrackerOverviewEvent.OnToggleMealClick -> {
+            is TrackerOverViewEvent.OnToggleMealClick -> {
                 state = state.copy(
                     meals = state.meals.map {
                         if (it.name == event.meal.name) {

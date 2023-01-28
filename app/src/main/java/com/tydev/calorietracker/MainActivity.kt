@@ -10,10 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.tydev.calorietracker.navigation.navigate
 import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
 import com.tydev.core.navigation.Route
@@ -25,9 +29,12 @@ import com.tydev.onboarding.presentation.height.HeightScreen
 import com.tydev.onboarding.presentation.nutrientGoal.NutrientScreen
 import com.tydev.onboarding.presentation.weight.WeightScreen
 import com.tydev.onboarding.presentation.welcome.WelcomeScreen
-import com.tydev.tracker.presentation.overview.TrackerOverviewScreen
+import com.tydev.tracker.presentation.overview.TrackerOverViewScreen
+import com.tydev.tracker.presentation.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalComposeUiApi
+@ExperimentalCoilApi
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -94,12 +101,42 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(Route.TRACKER_OVERVIEW) {
-                                TrackerOverviewScreen(
+                                TrackerOverViewScreen(
                                     onNavigate = navController::navigate
                                 )
                             }
 
-                            composable(Route.SEARCH) {
+                            composable(
+                                route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",
+                                arguments = listOf(
+                                    navArgument("mealName") {
+                                        type = NavType.StringType
+                                    },
+                                    navArgument("dayOfMonth") {
+                                        type = NavType.IntType
+                                    },
+                                    navArgument("month") {
+                                        type = NavType.IntType
+                                    },
+                                    navArgument("year") {
+                                        type = NavType.IntType
+                                    },
+                                )
+                            ) {
+                                val mealName = it.arguments?.getString("mealName")!!
+                                val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
+                                val month = it.arguments?.getInt("month")!!
+                                val year = it.arguments?.getInt("year")!!
+                                SearchScreen(
+                                    snackbarHostState = snackbarHostState,
+                                    mealName = mealName,
+                                    dayOfMonth = dayOfMonth,
+                                    month = month,
+                                    year = year,
+                                    onNavigateUp = {
+                                        navController.navigateUp()
+                                    }
+                                )
                             }
                         }
                     }
