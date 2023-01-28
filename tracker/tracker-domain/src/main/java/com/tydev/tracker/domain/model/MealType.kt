@@ -4,7 +4,7 @@ sealed class MealType(val name: String) {
     object Breakfast : MealType("Breakfast")
     object Lunch : MealType("Lunch")
     object Dinner : MealType("Dinner")
-    object Snack : MealType("Snack")
+    object Snack : MealType("Snacks")
 
     companion object {
         fun fromString(name: String): MealType {
@@ -12,7 +12,7 @@ sealed class MealType(val name: String) {
                 "Breakfast" -> Breakfast
                 "Lunch" -> Lunch
                 "Dinner" -> Dinner
-                "Snack" -> Snack
+                "Snacks" -> Snack
                 else -> Breakfast
             }
         }
