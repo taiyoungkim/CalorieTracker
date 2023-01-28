@@ -20,6 +20,7 @@ import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.calorietracker.navigation.navigate
 import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
+import com.tydev.core.domain.preferences.UserPreferences
 import com.tydev.core.navigation.Route
 import com.tydev.onboarding.presentation.activity.ActivityScreen
 import com.tydev.onboarding.presentation.age.AgeScreen
@@ -32,14 +33,20 @@ import com.tydev.onboarding.presentation.welcome.WelcomeScreen
 import com.tydev.tracker.presentation.overview.TrackerOverViewScreen
 import com.tydev.tracker.presentation.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 @ExperimentalCoilApi
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferences: UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val shouldShowOnboarding = preferences.loadShouldShowOnboarding()
         setContent {
             CalorieTrackerTheme {
                 val navController = rememberNavController()
@@ -50,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     content = { padding ->
                         NavHost(
                             navController = navController,
-                            startDestination = Route.WELCOME,
+                            startDestination = if (shouldShowOnboarding) Route.WELCOME else Route.TRACKER_OVERVIEW,
                             modifier = Modifier.padding(padding)
                         ) {
                             composable(Route.WELCOME) {
