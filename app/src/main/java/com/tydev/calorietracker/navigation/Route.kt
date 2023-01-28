@@ -1,4 +1,4 @@
-package com.tydev.core.navigation
+package com.tydev.calorietracker.navigation
 
 object Route {
     const val WELCOME = "welcome"

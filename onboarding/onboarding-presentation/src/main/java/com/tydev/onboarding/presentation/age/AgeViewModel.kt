@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.preferences.UserPreferences
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
-import com.tydev.core.navigation.Route
 import com.tydev.core.util.UiEvent
 import com.tydev.core.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +45,7 @@ class AgeViewModel @Inject constructor(
             return@launch
         }
         preferences.saveAge(ageNumber)
-        _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+        _uiEvent.send(UiEvent.Success)
     }
 }
 
