@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "com/tydev/apps/calorietracker/data/gender.proto";
+import "com/tydev/apps/calorietracker/data/activity_level.proto";
+import "com/tydev/apps/calorietracker/data/goal_type.proto";
+
+option java_package = "com.tydev.core.data";
+option java_multiple_files = true;
+
+message UserPreferences {
+  GenderProto gender = 1;
+  int32 age = 2;
+  float weight = 3;
+  int32 height = 4;
+  ActivityLevelProto activityLevel = 5;
+  GoalTypeProto goalType = 6;
+  float carbRatio = 7;
+  float proteinRatio = 8;
+  float fatRatio = 9;
+  bool shouldShowOnboarding = 10;
+}

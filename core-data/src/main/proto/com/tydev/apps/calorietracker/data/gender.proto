@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.tydev.core.data";
+option java_multiple_files = true;
+
+enum GenderProto {
+  MALE = 0;
+  FEMALE = 1;
+}
