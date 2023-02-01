@@ -1,11 +1,11 @@
-package com.tydev.core.data.di
+package com.tydev.core.datastore.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import com.tydev.core.data.UserPreferences
-import com.tydev.core.data.UserPreferencesSerializer
+import com.tydev.core.datastore.UserPreferences
+import com.tydev.core.datastore.UserPreferencesSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

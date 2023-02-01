@@ -1,4 +1,4 @@
-package com.tydev.core.data
+package com.tydev.core.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
