@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import com.tydev.core.util.UiEvent
 import com.tydev.onboarding.domain.usecase.ValidateNutrientsUseCase
@@ -17,9 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NutrientViewModel @Inject constructor(
-    private val preferences: UserPreferences,
     private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
-    private val validateNutrientsUseCase: ValidateNutrientsUseCase
+    private val validateNutrientsUseCase: ValidateNutrientsUseCase,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(NutrientGoalState())
@@ -53,10 +53,10 @@ class NutrientViewModel @Inject constructor(
                 )
                 when (result) {
                     is ValidateNutrientsUseCase.Result.Success -> {
-                        preferences.saveCarbRatio(result.carbsRatio)
-                        preferences.saveProteinRatio(result.proteinRatio)
-                        preferences.saveFatRatio(result.fatRatio)
                         viewModelScope.launch {
+                            userDataRepository.setCarbRatio(result.carbsRatio)
+                            userDataRepository.setProteinRatio(result.proteinRatio)
+                            userDataRepository.setFatRatio(result.fatRatio)
                             _uiEvent.send(UiEvent.Success)
                         }
                     }

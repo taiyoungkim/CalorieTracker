@@ -61,11 +61,11 @@ fun ActivityScreen(
             Row {
                 SelectableButton(
                     text = stringResource(id = R.string.low),
-                    isSelected = viewModel.selectedActivityLevel is ActivityLevel.Low,
+                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.LOW,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.Low)
+                        viewModel.onActivityLevelSelect(ActivityLevel.LOW)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -76,11 +76,11 @@ fun ActivityScreen(
 
                 SelectableButton(
                     text = stringResource(id = R.string.medium),
-                    isSelected = viewModel.selectedActivityLevel is ActivityLevel.Medium,
+                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.MEDIUM,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.Medium)
+                        viewModel.onActivityLevelSelect(ActivityLevel.MEDIUM)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -91,11 +91,11 @@ fun ActivityScreen(
 
                 SelectableButton(
                     text = stringResource(id = R.string.high),
-                    isSelected = viewModel.selectedActivityLevel is ActivityLevel.High,
+                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.HIGH,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.High)
+                        viewModel.onActivityLevelSelect(ActivityLevel.HIGH)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal

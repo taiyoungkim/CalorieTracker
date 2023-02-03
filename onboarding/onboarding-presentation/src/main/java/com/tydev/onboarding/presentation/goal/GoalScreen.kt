@@ -61,11 +61,11 @@ fun GoalScreen(
             Row {
                 SelectableButton(
                     text = stringResource(id = R.string.lose),
-                    isSelected = viewModel.selectedGoal is GoalType.LoseWeight,
+                    isSelected = viewModel.selectedGoal == GoalType.LOSE_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGoalTypeSelect(GoalType.LoseWeight)
+                        viewModel.onGoalTypeSelect(GoalType.LOSE_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -76,11 +76,11 @@ fun GoalScreen(
 
                 SelectableButton(
                     text = stringResource(id = R.string.keep),
-                    isSelected = viewModel.selectedGoal is GoalType.KeepWeight,
+                    isSelected = viewModel.selectedGoal == GoalType.KEEP_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGoalTypeSelect(GoalType.KeepWeight)
+                        viewModel.onGoalTypeSelect(GoalType.KEEP_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -91,11 +91,11 @@ fun GoalScreen(
 
                 SelectableButton(
                     text = stringResource(id = R.string.gain),
-                    isSelected = viewModel.selectedGoal is GoalType.GainWeight,
+                    isSelected = viewModel.selectedGoal == GoalType.GAIN_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGoalTypeSelect(GoalType.GainWeight)
+                        viewModel.onGoalTypeSelect(GoalType.GAIN_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal

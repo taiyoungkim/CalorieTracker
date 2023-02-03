@@ -3,24 +3,33 @@ package com.tydev.calorietracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.tydev.calorietracker.MainActivityUiState.Loading
+import com.tydev.calorietracker.MainActivityUiState.Success
 import com.tydev.calorietracker.navigation.Route
 import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
-import com.tydev.core.domain.preferences.UserPreferences
 import com.tydev.onboarding.presentation.activity.ActivityScreen
 import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
@@ -32,6 +41,9 @@ import com.tydev.onboarding.presentation.welcome.WelcomeScreen
 import com.tydev.tracker.presentation.overview.TrackerOverViewScreen
 import com.tydev.tracker.presentation.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalComposeUiApi
@@ -40,12 +52,23 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var preferences: UserPreferences
+    val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val shouldShowOnboarding = preferences.loadShouldShowOnboarding()
+
+        var uiState: MainActivityUiState by mutableStateOf(Loading)
+
+        // Update the uiState
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState
+                    .onEach {
+                        uiState = it
+                    }
+                    .collect()
+            }
+        }
         setContent {
             CalorieTrackerTheme {
                 val navController = rememberNavController()
@@ -56,7 +79,7 @@ class MainActivity : ComponentActivity() {
                     content = { padding ->
                         NavHost(
                             navController = navController,
-                            startDestination = if (shouldShowOnboarding) Route.WELCOME else Route.TRACKER_OVERVIEW,
+                            startDestination = if (shouldShowOnboarding(uiState)) Route.WELCOME else Route.TRACKER_OVERVIEW,
                             modifier = Modifier.padding(padding)
                         ) {
                             composable(Route.WELCOME) {
@@ -177,4 +200,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+
+@Composable
+fun shouldShowOnboarding(
+    uiState: MainActivityUiState,
+): Boolean = when (uiState) {
+    Loading -> true
+    is Success -> uiState.userData.shouldShowOnboarding
 }

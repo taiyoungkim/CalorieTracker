@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.util.UiEvent
 import com.tydev.tracker.domain.usecase.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrackerOverViewViewModel @Inject constructor(
-    preferences: UserPreferences,
     private val trackerUseCases: TrackerUseCases,
+    userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(TrackerOverViewState())
@@ -33,7 +33,9 @@ class TrackerOverViewViewModel @Inject constructor(
 
     init {
         refreshFoods()
-        preferences.saveShouldShowOnboarding(false)
+        viewModelScope.launch {
+            userDataRepository.setShouldShowOnboarding(false)
+        }
     }
 
     fun onEvent(event: TrackerOverViewEvent) {
@@ -74,34 +76,35 @@ class TrackerOverViewViewModel @Inject constructor(
         getFoodsForDateJob = trackerUseCases
             .getFoodsForDateUseCase(state.date)
             .onEach { foods ->
-                val nutrientsResult = trackerUseCases.calculateMealNutrientsUseCase(foods)
-                state = state.copy(
-                    totalCarbs = nutrientsResult.totalCarbs,
-                    totalProtein = nutrientsResult.totalProtein,
-                    totalFat = nutrientsResult.totalFat,
-                    totalCalories = nutrientsResult.totalCalories,
-                    carbsGoal = nutrientsResult.carbsGoal,
-                    proteinGoal = nutrientsResult.proteinGoal,
-                    fatGoal = nutrientsResult.fatGoal,
-                    caloriesGoal = nutrientsResult.caloriesGoal,
-                    trackedFoods = foods,
-                    meals = state.meals.map {
-                        val nutrientsForMeal =
-                            nutrientsResult.mealNutrients[it.mealType]
-                                ?: return@map it.copy(
-                                    carbs = 0,
-                                    protein = 0,
-                                    fat = 0,
-                                    calories = 0
-                                )
-                        it.copy(
-                            carbs = nutrientsForMeal.carbs,
-                            protein = nutrientsForMeal.protein,
-                            fat = nutrientsForMeal.fat,
-                            calories = nutrientsForMeal.calories
-                        )
-                    }
-                )
+                trackerUseCases.calculateMealNutrientsUseCase(foods).onEach { nutrientsResult ->
+                    state = state.copy(
+                        totalCarbs = nutrientsResult.totalCarbs,
+                        totalProtein = nutrientsResult.totalProtein,
+                        totalFat = nutrientsResult.totalFat,
+                        totalCalories = nutrientsResult.totalCalories,
+                        carbsGoal = nutrientsResult.carbsGoal,
+                        proteinGoal = nutrientsResult.proteinGoal,
+                        fatGoal = nutrientsResult.fatGoal,
+                        caloriesGoal = nutrientsResult.caloriesGoal,
+                        trackedFoods = foods,
+                        meals = state.meals.map {
+                            val nutrientsForMeal =
+                                nutrientsResult.mealNutrients[it.mealType]
+                                    ?: return@map it.copy(
+                                        carbs = 0,
+                                        protein = 0,
+                                        fat = 0,
+                                        calories = 0
+                                    )
+                            it.copy(
+                                carbs = nutrientsForMeal.carbs,
+                                protein = nutrientsForMeal.protein,
+                                fat = nutrientsForMeal.fat,
+                                calories = nutrientsForMeal.calories
+                            )
+                        }
+                    )
+                }
             }.launchIn(viewModelScope)
     }
 }

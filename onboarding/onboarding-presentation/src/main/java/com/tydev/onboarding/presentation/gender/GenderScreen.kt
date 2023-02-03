@@ -59,11 +59,11 @@ fun GenderScreen(
             Row {
                 SelectableButton(
                     text = stringResource(id = R.string.male),
-                    isSelected = viewModel.selectedGender is Gender.Male,
+                    isSelected = viewModel.selectedGender == Gender.MALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGenderClick(Gender.Male)
+                        viewModel.onGenderClick(Gender.MALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -73,11 +73,11 @@ fun GenderScreen(
 
                 SelectableButton(
                     text = stringResource(id = R.string.female),
-                    isSelected = viewModel.selectedGender is Gender.Female,
+                    isSelected = viewModel.selectedGender == Gender.FEMALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGenderClick(Gender.Female)
+                        viewModel.onGenderClick(Gender.FEMALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal

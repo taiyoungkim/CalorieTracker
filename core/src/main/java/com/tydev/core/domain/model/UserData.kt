@@ -1,12 +1,12 @@
-package com.tydev.core.datastore
+package com.tydev.core.domain.model
 
 data class UserData(
-    val genderEnum: GenderEnum,
+    val gender: Gender,
     val age: Int,
     val weight: Float,
     val height: Int,
-    val activityLevelEnum: ActivityLevelEnum,
-    val goalTypeEnum: GoalTypeEnum,
+    val activityLevel: ActivityLevel,
+    val goalType: GoalType,
     val carbRatio: Float,
     val proteinRatio: Float,
     val fatRatio: Float,

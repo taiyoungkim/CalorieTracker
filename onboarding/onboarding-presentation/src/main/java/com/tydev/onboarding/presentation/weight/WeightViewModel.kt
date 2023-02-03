@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.R
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.util.UiEvent
 import com.tydev.core.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeightViewModel @Inject constructor(
-    private val preferences: UserPreferences
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     var weight by mutableStateOf(DEFAULT_WEIGHT)
@@ -41,7 +41,7 @@ class WeightViewModel @Inject constructor(
             )
             return@launch
         }
-        preferences.saveWeight(weightNumber)
+        userDataRepository.setWeight(weightNumber)
         _uiEvent.send(UiEvent.Success)
     }
 }

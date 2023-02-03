@@ -82,6 +82,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":core-ui"))
+    implementation(project(":core-data"))
     implementation(project(":onboarding:onboarding-presentation"))
     implementation(project(":onboarding:onboarding-domain"))
     implementation(project(":tracker:tracker-presentation"))

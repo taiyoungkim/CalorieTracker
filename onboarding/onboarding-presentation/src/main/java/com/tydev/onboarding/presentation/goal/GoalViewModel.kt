@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.model.GoalType
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalViewModel @Inject constructor(
-    private val preferences: UserPreferences,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    var selectedGoal by mutableStateOf<GoalType>(GoalType.KeepWeight)
+    var selectedGoal by mutableStateOf(GoalType.KEEP_WEIGHT)
         private set
 
     private val _uiEvent = Channel<UiEvent>()
@@ -30,7 +30,7 @@ class GoalViewModel @Inject constructor(
     }
 
     fun onNextClick() = viewModelScope.launch {
-        preferences.saveGoalType(selectedGoal)
+        userDataRepository.setGoalType(selectedGoal)
         _uiEvent.send(UiEvent.Success)
     }
 }

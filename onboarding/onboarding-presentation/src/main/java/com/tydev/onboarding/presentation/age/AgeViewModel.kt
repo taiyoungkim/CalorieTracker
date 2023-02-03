@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import com.tydev.core.util.UiEvent
 import com.tydev.core.util.UiText
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AgeViewModel @Inject constructor(
-    private val preferences: UserPreferences,
-    private val filterOutDigitsUseCase: FilterOutDigitsUseCase
+    private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     var age by mutableStateOf(DEFAULT_AGE)
@@ -44,7 +44,7 @@ class AgeViewModel @Inject constructor(
             )
             return@launch
         }
-        preferences.saveAge(ageNumber)
+        userDataRepository.setAge(ageNumber)
         _uiEvent.send(UiEvent.Success)
     }
 }

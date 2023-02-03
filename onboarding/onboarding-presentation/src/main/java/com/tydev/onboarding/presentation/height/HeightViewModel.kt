@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import com.tydev.core.util.UiEvent
 import com.tydev.core.util.UiText
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeightViewModel @Inject constructor(
-    private val preferences: UserPreferences,
-    private val filterOutDigitsUseCase: FilterOutDigitsUseCase
+    private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     var height by mutableStateOf(DEFAULT_HEIGHT)
@@ -42,7 +42,7 @@ class HeightViewModel @Inject constructor(
             )
             return@launch
         }
-        preferences.saveHeight(heightNumber)
+        userDataRepository.setHeight(heightNumber)
         _uiEvent.send(UiEvent.Success)
     }
 }

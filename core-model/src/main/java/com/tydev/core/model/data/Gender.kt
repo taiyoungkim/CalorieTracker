@@ -1,4 +1,4 @@
-package com.tydev.core.domain.model
+package com.tydev.core.model.data
 
 enum class Gender {
     MALE, FEMALE

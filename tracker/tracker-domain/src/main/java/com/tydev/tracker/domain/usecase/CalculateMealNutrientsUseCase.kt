@@ -1,85 +1,88 @@
 package com.tydev.tracker.domain.usecase
 
+import android.util.Log
 import com.tydev.core.domain.model.ActivityLevel
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.domain.model.GoalType
-import com.tydev.core.domain.model.UserInfo
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.model.UserData
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.domain.model.TrackedFood
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlin.math.roundToInt
 
 class CalculateMealNutrientsUseCase(
-    private val preferences: UserPreferences
+    private val userDataRepository: UserDataRepository
 ) {
 
-    operator fun invoke(trackedFoods: List<TrackedFood>): Result {
-        val allNutrients = trackedFoods
-            .groupBy { it.mealType }
-            .mapValues { entry ->
-                val type = entry.key
-                val foods = entry.value
-                MealNutrients(
-                    carbs = foods.sumOf { it.carbs },
-                    protein = foods.sumOf { it.protein },
-                    fat = foods.sumOf { it.fat },
-                    calories = foods.sumOf { it.calories },
-                    mealType = type
-                )
-            }
-        val totalCarbs = allNutrients.values.sumOf { it.carbs }
-        val totalProtein = allNutrients.values.sumOf { it.protein }
-        val totalFat = allNutrients.values.sumOf { it.fat }
-        val totalCalories = allNutrients.values.sumOf { it.calories }
+    operator fun invoke(trackedFoods: List<TrackedFood>): Flow<Result> =
+        userDataRepository.userData.map { userData ->
+            val allNutrients = trackedFoods
+                .groupBy { it.mealType }
+                .mapValues { entry ->
+                    val type = entry.key
+                    val foods = entry.value
+                    MealNutrients(
+                        carbs = foods.sumOf { it.carbs },
+                        protein = foods.sumOf { it.protein },
+                        fat = foods.sumOf { it.fat },
+                        calories = foods.sumOf { it.calories },
+                        mealType = type
+                    )
+                }
+            val totalCarbs = allNutrients.values.sumOf { it.carbs }
+            val totalProtein = allNutrients.values.sumOf { it.protein }
+            val totalFat = allNutrients.values.sumOf { it.fat }
+            val totalCalories = allNutrients.values.sumOf { it.calories }
 
-        val userInfo = preferences.loadUserInfo()
-        val caloryGoal = dailyCaloryRequirement(userInfo)
-        val carbsGoal = (caloryGoal * userInfo.carbRatio / CARBSGOAL_RATIO).roundToInt()
-        val proteinGoal = (caloryGoal * userInfo.proteinRatio / PROTEINGOAL_RATIO).roundToInt()
-        val fatGoal = (caloryGoal * userInfo.fatRatio / FATGOAL_RATIO).roundToInt()
+            val calorieGoal = dailyCaloryRequirement(userData)
+            val carbsGoal = (calorieGoal * userData.carbRatio / CARBSGOAL_RATIO).roundToInt()
+            val proteinGoal = (calorieGoal * userData.proteinRatio / PROTEINGOAL_RATIO).roundToInt()
+            val fatGoal = (calorieGoal * userData.fatRatio / FATGOAL_RATIO).roundToInt()
 
-        return Result(
-            carbsGoal = carbsGoal,
-            proteinGoal = proteinGoal,
-            fatGoal = fatGoal,
-            caloriesGoal = caloryGoal,
-            totalCarbs = totalCarbs,
-            totalProtein = totalProtein,
-            totalFat = totalFat,
-            totalCalories = totalCalories,
-            mealNutrients = allNutrients
-        )
-    }
+            Result(
+                carbsGoal = carbsGoal,
+                proteinGoal = proteinGoal,
+                fatGoal = fatGoal,
+                caloriesGoal = calorieGoal,
+                totalCarbs = totalCarbs,
+                totalProtein = totalProtein,
+                totalFat = totalFat,
+                totalCalories = totalCalories,
+                mealNutrients = allNutrients
+            )
+        }
 
-    private fun bmr(userInfo: UserInfo): Int {
-        return when (userInfo.gender) {
-            is Gender.Male -> {
+    private fun bmr(userData: UserData): Int {
+        return when (userData.gender) {
+            Gender.MALE -> {
                 (
-                    BMR_MALE_DEFAULT + BMR_MALE_WEIGHT * userInfo.weight +
-                        BMR_MALE_HEIGHT * userInfo.height - BMR_MALE_AGE * userInfo.age
+                    BMR_MALE_DEFAULT + BMR_MALE_WEIGHT * userData.weight +
+                        BMR_MALE_HEIGHT * userData.height - BMR_MALE_AGE * userData.age
                     ).roundToInt()
             }
-            is Gender.Female -> {
+            Gender.FEMALE -> {
                 (
-                    BMR_FEMALE_DEFAULT + BMR_FEMALE_WEIGHT * userInfo.weight +
-                        BMR_FEMALE_HEIGHT * userInfo.height - BMR_FEMALE_AGE * userInfo.age
+                    BMR_FEMALE_DEFAULT + BMR_FEMALE_WEIGHT * userData.weight +
+                        BMR_FEMALE_HEIGHT * userData.height - BMR_FEMALE_AGE * userData.age
                     ).roundToInt()
             }
         }
     }
 
-    private fun dailyCaloryRequirement(userInfo: UserInfo): Int {
-        val activityFactor = when (userInfo.activityLevel) {
-            is ActivityLevel.Low -> ACTIVITYLEVEL_LOW
-            is ActivityLevel.Medium -> ACTIVITYLEVEL_MEDIUM
-            is ActivityLevel.High -> ACTIVITYLEVEL_HIGH
+    private fun dailyCaloryRequirement(userData: UserData): Int {
+        val activityFactor = when (userData.activityLevel) {
+            ActivityLevel.LOW -> ACTIVITYLEVEL_LOW
+            ActivityLevel.MEDIUM -> ACTIVITYLEVEL_MEDIUM
+            ActivityLevel.HIGH -> ACTIVITYLEVEL_HIGH
         }
-        val caloryExtra = when (userInfo.goalType) {
-            is GoalType.LoseWeight -> LOSEWEIGHT_CALORY
-            is GoalType.KeepWeight -> KEEPWEIGHT_CALORY
-            is GoalType.GainWeight -> GAINWEIGHT_CALORY
+        val caloryExtra = when (userData.goalType) {
+            GoalType.LOSE_WEIGHT -> LOSEWEIGHT_CALORY
+            GoalType.KEEP_WEIGHT -> KEEPWEIGHT_CALORY
+            GoalType.GAIN_WEIGHT -> GAINWEIGHT_CALORY
         }
-        return (bmr(userInfo) * activityFactor + caloryExtra).roundToInt()
+        return (bmr(userData) * activityFactor + caloryExtra).roundToInt()
     }
 
     data class MealNutrients(

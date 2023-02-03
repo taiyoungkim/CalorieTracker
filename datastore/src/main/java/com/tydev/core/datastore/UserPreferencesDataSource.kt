@@ -1,6 +1,10 @@
 package com.tydev.core.datastore
 
 import androidx.datastore.core.DataStore
+import com.tydev.core.domain.model.ActivityLevel
+import com.tydev.core.domain.model.Gender
+import com.tydev.core.domain.model.GoalType
+import com.tydev.core.domain.model.UserData
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -11,25 +15,25 @@ class UserPreferencesDataSource @Inject constructor(
     val userData = userPreferences.data
         .map {
             UserData(
-                genderEnum = when (it.gender) {
-                    GenderProto.MALE -> GenderEnum.MALE
-                    GenderProto.FEMALE -> GenderEnum.FEMALE
-                    else -> GenderEnum.FEMALE
+                gender = when (it.gender) {
+                    GenderProto.MALE -> Gender.MALE
+                    GenderProto.FEMALE -> Gender.FEMALE
+                    else -> Gender.FEMALE
                 },
                 age = it.age,
                 weight = it.weight,
                 height = it.height,
-                activityLevelEnum = when (it.activityLevel) {
-                    ActivityLevelProto.LOW -> ActivityLevelEnum.LOW
-                    ActivityLevelProto.MEDIUM -> ActivityLevelEnum.MEDIUM
-                    ActivityLevelProto.HIGH -> ActivityLevelEnum.HIGH
-                    else -> ActivityLevelEnum.MEDIUM
+                activityLevel = when (it.activityLevel) {
+                    ActivityLevelProto.LOW -> ActivityLevel.LOW
+                    ActivityLevelProto.MEDIUM -> ActivityLevel.MEDIUM
+                    ActivityLevelProto.HIGH -> ActivityLevel.HIGH
+                    else -> ActivityLevel.MEDIUM
                 },
-                goalTypeEnum = when (it.goalType) {
-                    GoalTypeProto.GAIN_WEIGHT -> GoalTypeEnum.GAIN_WEIGHT
-                    GoalTypeProto.KEEP_WEIGHT -> GoalTypeEnum.KEEP_WEIGHT
-                    GoalTypeProto.LOSE_WEIGHT -> GoalTypeEnum.LOSE_WEIGHT
-                    else -> GoalTypeEnum.KEEP_WEIGHT
+                goalType = when (it.goalType) {
+                    GoalTypeProto.GAIN_WEIGHT -> GoalType.GAIN_WEIGHT
+                    GoalTypeProto.KEEP_WEIGHT -> GoalType.KEEP_WEIGHT
+                    GoalTypeProto.LOSE_WEIGHT -> GoalType.LOSE_WEIGHT
+                    else -> GoalType.KEEP_WEIGHT
                 },
                 carbRatio = it.carbRatio,
                 proteinRatio = it.proteinRatio,
@@ -38,12 +42,12 @@ class UserPreferencesDataSource @Inject constructor(
             )
         }
 
-    suspend fun setGender(genderEnum: GenderEnum) {
+    suspend fun setGender(gender: Gender) {
         userPreferences.updateData {
             it.copy {
-                this.gender = when (genderEnum) {
-                    GenderEnum.MALE -> GenderProto.MALE
-                    GenderEnum.FEMALE -> GenderProto.FEMALE
+                this.gender = when (gender) {
+                    Gender.MALE -> GenderProto.MALE
+                    Gender.FEMALE -> GenderProto.FEMALE
                 }
             }
         }
@@ -73,25 +77,25 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
-    suspend fun setActivityLevel(activityLevelEnum: ActivityLevelEnum) {
+    suspend fun setActivityLevel(activityLevel: ActivityLevel) {
         userPreferences.updateData {
             it.copy {
-                this.activityLevel = when (activityLevelEnum) {
-                    ActivityLevelEnum.LOW -> ActivityLevelProto.LOW
-                    ActivityLevelEnum.MEDIUM -> ActivityLevelProto.MEDIUM
-                    ActivityLevelEnum.HIGH -> ActivityLevelProto.HIGH
+                this.activityLevel = when (activityLevel) {
+                    ActivityLevel.LOW -> ActivityLevelProto.LOW
+                    ActivityLevel.MEDIUM -> ActivityLevelProto.MEDIUM
+                    ActivityLevel.HIGH -> ActivityLevelProto.HIGH
                 }
             }
         }
     }
 
-    suspend fun setGoalType(goalTypeEnum: GoalTypeEnum) {
+    suspend fun setGoalType(goalType: GoalType) {
         userPreferences.updateData {
             it.copy {
-                this.goalType = when (goalTypeEnum) {
-                    GoalTypeEnum.GAIN_WEIGHT -> GoalTypeProto.GAIN_WEIGHT
-                    GoalTypeEnum.KEEP_WEIGHT -> GoalTypeProto.KEEP_WEIGHT
-                    GoalTypeEnum.LOSE_WEIGHT -> GoalTypeProto.LOSE_WEIGHT
+                this.goalType = when (goalType) {
+                    GoalType.GAIN_WEIGHT -> GoalTypeProto.GAIN_WEIGHT
+                    GoalType.KEEP_WEIGHT -> GoalTypeProto.KEEP_WEIGHT
+                    GoalType.LOSE_WEIGHT -> GoalTypeProto.LOSE_WEIGHT
                 }
             }
         }

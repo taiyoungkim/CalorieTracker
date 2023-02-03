@@ -1,6 +1,6 @@
 package com.tydev.tracker.domain.di
 
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.tracker.domain.repository.TrackerRepository
 import com.tydev.tracker.domain.usecase.CalculateMealNutrientsUseCase
 import com.tydev.tracker.domain.usecase.DeleteTrackedFoodUseCase
@@ -21,15 +21,15 @@ object TrackerDomainModule {
     @ViewModelScoped
     @Provides
     fun provideTrackerUseCases(
-        repository: TrackerRepository,
-        preferences: UserPreferences
+        trackerRepository: TrackerRepository,
+        userDataRepository: UserDataRepository
     ): TrackerUseCases {
         return TrackerUseCases(
-            trackFoodUseCase = TrackFoodUseCase(repository),
-            searchFoodUseCase = SearchFoodUseCase(repository),
-            getFoodsForDateUseCase = GetFoodsForDateUseCase(repository),
-            deleteTrackedFoodUseCase = DeleteTrackedFoodUseCase(repository),
-            calculateMealNutrientsUseCase = CalculateMealNutrientsUseCase(preferences)
+            trackFoodUseCase = TrackFoodUseCase(trackerRepository),
+            searchFoodUseCase = SearchFoodUseCase(trackerRepository),
+            getFoodsForDateUseCase = GetFoodsForDateUseCase(trackerRepository),
+            deleteTrackedFoodUseCase = DeleteTrackedFoodUseCase(trackerRepository),
+            calculateMealNutrientsUseCase = CalculateMealNutrientsUseCase(userDataRepository)
         )
     }
 }

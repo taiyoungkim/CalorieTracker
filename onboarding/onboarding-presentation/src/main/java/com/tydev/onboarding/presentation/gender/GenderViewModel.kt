@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.model.Gender
-import com.tydev.core.domain.preferences.UserPreferences
+import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GenderViewModel @Inject constructor(
-    private val preferences: UserPreferences
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    var selectedGender by mutableStateOf<Gender>(Gender.Male)
+    var selectedGender by mutableStateOf(Gender.MALE)
         private set
 
     // TODO: SharedFlow Migration
@@ -31,7 +31,7 @@ class GenderViewModel @Inject constructor(
     }
 
     fun onNextClick() = viewModelScope.launch {
-        preferences.saveGender(selectedGender)
+        userDataRepository.setGender(selectedGender)
         _uiEvent.send(UiEvent.Success)
     }
 }

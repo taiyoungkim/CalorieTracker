@@ -1,6 +1,6 @@
-package com.tydev.core.domain.model
+package com.tydev.core.model.data
 
-data class UserInfo(
+data class UserData(
     val gender: Gender,
     val age: Int,
     val weight: Float,
@@ -9,5 +9,6 @@ data class UserInfo(
     val goalType: GoalType,
     val carbRatio: Float,
     val proteinRatio: Float,
-    val fatRatio: Float
+    val fatRatio: Float,
+    val shouldShowOnboarding: Boolean,
 )
