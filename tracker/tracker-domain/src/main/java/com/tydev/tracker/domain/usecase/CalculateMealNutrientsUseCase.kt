@@ -1,6 +1,5 @@
 package com.tydev.tracker.domain.usecase
 
-import android.util.Log
 import com.tydev.core.domain.model.ActivityLevel
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.domain.model.GoalType

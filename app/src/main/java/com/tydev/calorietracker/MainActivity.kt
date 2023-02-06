@@ -42,9 +42,8 @@ import com.tydev.tracker.presentation.overview.TrackerOverViewScreen
 import com.tydev.tracker.presentation.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 @ExperimentalCoilApi
@@ -63,7 +62,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState
-                    .onEach {
+                    .map {
                         uiState = it
                     }
                     .collect()
@@ -201,7 +200,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun shouldShowOnboarding(

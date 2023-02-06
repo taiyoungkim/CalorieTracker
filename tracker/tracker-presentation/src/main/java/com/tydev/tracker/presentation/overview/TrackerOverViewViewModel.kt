@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -104,7 +105,7 @@ class TrackerOverViewViewModel @Inject constructor(
                             )
                         }
                     )
-                }
+                }.launchIn(viewModelScope)
             }.launchIn(viewModelScope)
     }
 }

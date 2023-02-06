@@ -54,5 +54,4 @@ class UserDataRepositoryImpl @Inject constructor(
     override suspend fun setShouldShowOnboarding(shouldShowOnboarding: Boolean) {
         userPreferencesDataSource.setShouldShowOnboarding(shouldShowOnboarding)
     }
-
 }
