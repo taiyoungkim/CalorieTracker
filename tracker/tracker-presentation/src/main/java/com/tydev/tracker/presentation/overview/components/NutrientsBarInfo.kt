@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,7 +40,6 @@ fun NutrientsBarInfo(
     val angelRatio = remember {
         Animatable(0f)
     }
-
     LaunchedEffect(key1 = value) {
         angelRatio.animateTo(
             targetValue = if (goal > 0) {
@@ -56,11 +56,11 @@ fun NutrientsBarInfo(
     ) {
         Canvas(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .aspectRatio(1f)
         ) {
             drawArc(
-                color = if (value <= goal) background else goalExceededColor,
+                color = if(value <= goal) background else goalExceededColor,
                 startAngle = 0f,
                 sweepAngle = 360f,
                 useCenter = false,
@@ -70,21 +70,37 @@ fun NutrientsBarInfo(
                     cap = StrokeCap.Round
                 )
             )
+            if(value <= goal) {
+                drawArc(
+                    color = color,
+                    startAngle = 90f,
+                    sweepAngle = 360 * angelRatio.value,
+                    useCenter = false,
+                    size = size,
+                    style = Stroke(
+                        width = strokeWidth.toPx(),
+                        cap = StrokeCap.Round
+                    )
+                )
+            }
         }
         Column(
-            modifier = Modifier.fillMaxSize().padding(top = 10.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             UnitDisplay(
                 amount = value,
                 unit = stringResource(id = R.string.grams),
-                amountColor = if (value <= goal) {
+                amountColor = if(value <= goal) {
+                    MaterialTheme.colorScheme.onPrimary
+                } else goalExceededColor,
+                unitColor = if(value <= goal) {
                     MaterialTheme.colorScheme.onPrimary
                 } else goalExceededColor,
             )
             Text(
                 text = name,
-                color = if (value <= goal) {
+                color = if(value <= goal) {
                     MaterialTheme.colorScheme.onPrimary
                 } else goalExceededColor,
                 style = MaterialTheme.typography.bodyLarge,
