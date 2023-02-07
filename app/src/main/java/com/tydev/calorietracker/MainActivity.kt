@@ -58,7 +58,6 @@ class MainActivity : ComponentActivity() {
 
         var uiState: MainActivityUiState by mutableStateOf(Loading)
 
-        // Update the uiState
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState
@@ -76,122 +75,129 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                     content = { padding ->
-                        NavHost(
-                            navController = navController,
-                            startDestination = if (shouldShowOnboarding(uiState)) Route.WELCOME else Route.TRACKER_OVERVIEW,
-                            modifier = Modifier.padding(padding)
-                        ) {
-                            composable(Route.WELCOME) {
-                                WelcomeScreen(
-                                    onNextClick = {
-                                        navController.navigate(Route.GENDER)
-                                    }
-                                )
-                            }
-                            composable(Route.AGE) {
-                                AgeScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNextClick = {
-                                        navController.navigate(Route.HEIGHT)
-                                    }
-                                )
-                            }
+                        when (uiState) {
+                            is Loading -> {
 
-                            composable(Route.GENDER) {
-                                GenderScreen(
-                                    onNextClick = {
-                                        navController.navigate(Route.AGE)
-                                    }
-                                )
                             }
-
-                            composable(Route.HEIGHT) {
-                                HeightScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNextClick = {
-                                        navController.navigate(Route.WEIGHT)
-                                    }
-                                )
-                            }
-
-                            composable(Route.WEIGHT) {
-                                WeightScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNextClick = {
-                                        navController.navigate(Route.ACTIVITY)
-                                    }
-                                )
-                            }
-
-                            composable(Route.NUTRIENT_GOAL) {
-                                NutrientScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNextClick = {
-                                        navController.navigate(Route.TRACKER_OVERVIEW)
-                                    }
-                                )
-                            }
-
-                            composable(Route.ACTIVITY) {
-                                ActivityScreen(
-                                    onNextClick = {
-                                        navController.navigate(Route.GOAL)
-                                    }
-                                )
-                            }
-
-                            composable(Route.GOAL) {
-                                GoalScreen(
-                                    onNextClick = {
-                                        navController.navigate(Route.NUTRIENT_GOAL)
-                                    }
-                                )
-                            }
-
-                            composable(Route.TRACKER_OVERVIEW) {
-                                TrackerOverViewScreen(
-                                    onNavigateToSearch = { mealName, day, month, year ->
-                                        navController.navigate(
-                                            Route.SEARCH + "/$mealName" +
-                                                "/$day" +
-                                                "/$month" +
-                                                "/$year"
+                            is Success -> {
+                                NavHost(
+                                    navController = navController,
+                                    startDestination = if (shouldShowOnboarding(uiState)) Route.WELCOME else Route.TRACKER_OVERVIEW,
+                                    modifier = Modifier.padding(padding)
+                                ) {
+                                    composable(Route.WELCOME) {
+                                        WelcomeScreen(
+                                            onNextClick = {
+                                                navController.navigate(Route.GENDER)
+                                            }
                                         )
                                     }
-                                )
-                            }
-
-                            composable(
-                                route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",
-                                arguments = listOf(
-                                    navArgument("mealName") {
-                                        type = NavType.StringType
-                                    },
-                                    navArgument("dayOfMonth") {
-                                        type = NavType.IntType
-                                    },
-                                    navArgument("month") {
-                                        type = NavType.IntType
-                                    },
-                                    navArgument("year") {
-                                        type = NavType.IntType
-                                    },
-                                )
-                            ) {
-                                val mealName = it.arguments?.getString("mealName")!!
-                                val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
-                                val month = it.arguments?.getInt("month")!!
-                                val year = it.arguments?.getInt("year")!!
-                                SearchScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    mealName = mealName,
-                                    dayOfMonth = dayOfMonth,
-                                    month = month,
-                                    year = year,
-                                    onNavigateUp = {
-                                        navController.navigateUp()
+                                    composable(Route.AGE) {
+                                        AgeScreen(
+                                            snackbarHostState = snackbarHostState,
+                                            onNextClick = {
+                                                navController.navigate(Route.HEIGHT)
+                                            }
+                                        )
                                     }
-                                )
+
+                                    composable(Route.GENDER) {
+                                        GenderScreen(
+                                            onNextClick = {
+                                                navController.navigate(Route.AGE)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.HEIGHT) {
+                                        HeightScreen(
+                                            snackbarHostState = snackbarHostState,
+                                            onNextClick = {
+                                                navController.navigate(Route.WEIGHT)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.WEIGHT) {
+                                        WeightScreen(
+                                            snackbarHostState = snackbarHostState,
+                                            onNextClick = {
+                                                navController.navigate(Route.ACTIVITY)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.NUTRIENT_GOAL) {
+                                        NutrientScreen(
+                                            snackbarHostState = snackbarHostState,
+                                            onNextClick = {
+                                                navController.navigate(Route.TRACKER_OVERVIEW)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.ACTIVITY) {
+                                        ActivityScreen(
+                                            onNextClick = {
+                                                navController.navigate(Route.GOAL)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.GOAL) {
+                                        GoalScreen(
+                                            onNextClick = {
+                                                navController.navigate(Route.NUTRIENT_GOAL)
+                                            }
+                                        )
+                                    }
+
+                                    composable(Route.TRACKER_OVERVIEW) {
+                                        TrackerOverViewScreen(
+                                            onNavigateToSearch = { mealName, day, month, year ->
+                                                navController.navigate(
+                                                    Route.SEARCH + "/$mealName" +
+                                                            "/$day" +
+                                                            "/$month" +
+                                                            "/$year"
+                                                )
+                                            }
+                                        )
+                                    }
+
+                                    composable(
+                                        route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",
+                                        arguments = listOf(
+                                            navArgument("mealName") {
+                                                type = NavType.StringType
+                                            },
+                                            navArgument("dayOfMonth") {
+                                                type = NavType.IntType
+                                            },
+                                            navArgument("month") {
+                                                type = NavType.IntType
+                                            },
+                                            navArgument("year") {
+                                                type = NavType.IntType
+                                            },
+                                        )
+                                    ) {
+                                        val mealName = it.arguments?.getString("mealName")!!
+                                        val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
+                                        val month = it.arguments?.getInt("month")!!
+                                        val year = it.arguments?.getInt("year")!!
+                                        SearchScreen(
+                                            snackbarHostState = snackbarHostState,
+                                            mealName = mealName,
+                                            dayOfMonth = dayOfMonth,
+                                            month = month,
+                                            year = year,
+                                            onNavigateUp = {
+                                                navController.navigateUp()
+                                            }
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
