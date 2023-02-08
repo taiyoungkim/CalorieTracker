@@ -9,8 +9,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +39,7 @@ import com.tydev.tracker.presentation.search.components.SearchTextField
 import com.tydev.tracker.presentation.search.components.TrackableFoodItem
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
@@ -63,77 +71,93 @@ fun SearchScreen(
             }
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(spacing.spaceMedium)
-    ) {
-        Text(
-            text = stringResource(id = R.string.add_meal, mealName),
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Spacer(modifier = Modifier.height(spacing.spaceMedium))
-
-        SearchTextField(
-            text = state.query,
-            onValueChange = {
-                viewModel.onEvent(SearchEvent.OnQueryChange(it))
-            },
-            shouldShowHint = state.isHintVisible,
-            onSearch = {
-                keyboardController?.hide()
-                viewModel.onEvent(SearchEvent.OnSearch)
-            },
-            onFocusChanged = {
-                viewModel.onEvent(SearchEvent.OnSearchFocusChange(it.isFocused))
-            }
-        )
-
-        Spacer(modifier = Modifier.height(spacing.spaceMedium))
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(state.trackableFood) { food ->
-                TrackableFoodItem(
-                    trackableFoodUiState = food,
-                    onClick = {
-                        viewModel.onEvent(SearchEvent.OnToggleTrackableFood(food.food))
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                 title = {
+                     Text(
+                         text = stringResource(id = R.string.add_meal, mealName),
+                         style = MaterialTheme.typography.headlineMedium
+                     )
+                 },
+                 navigationIcon = {
+                     IconButton(onClick = { onNavigateUp() }) {
+                         Icon(
+                             imageVector = Icons.Filled.ArrowBack,
+                             contentDescription = "Back"
+                         )
+                     }
+                 }
+            )
+        },
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(spacing.spaceMedium)
+            ) {
+                Spacer(modifier = Modifier.padding(padding))
+                SearchTextField(
+                    text = state.query,
+                    onValueChange = {
+                        viewModel.onEvent(SearchEvent.OnQueryChange(it))
                     },
-                    onAmountChange = {
-                        viewModel.onEvent(
-                            SearchEvent.OnAmountForFoodChange(
-                                food.food, it
-                            )
-                        )
-                    },
-                    onTrack = {
+                    shouldShowHint = state.isHintVisible,
+                    onSearch = {
                         keyboardController?.hide()
-                        viewModel.onEvent(
-                            SearchEvent.OnTrackFoodClick(
-                                food = food.food,
-                                mealType = MealType.fromString(mealName),
-                                date = LocalDate.of(year, month, dayOfMonth)
-                            )
-                        )
+                        viewModel.onEvent(SearchEvent.OnSearch)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    onFocusChanged = {
+                        viewModel.onEvent(SearchEvent.OnSearchFocusChange(it.isFocused))
+                    }
                 )
+
+                Spacer(modifier = Modifier.height(spacing.spaceMedium))
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.trackableFood) { food ->
+                        TrackableFoodItem(
+                            trackableFoodUiState = food,
+                            onClick = {
+                                viewModel.onEvent(SearchEvent.OnToggleTrackableFood(food.food))
+                            },
+                            onAmountChange = {
+                                viewModel.onEvent(
+                                    SearchEvent.OnAmountForFoodChange(
+                                        food.food, it
+                                    )
+                                )
+                            },
+                            onTrack = {
+                                keyboardController?.hide()
+                                viewModel.onEvent(
+                                    SearchEvent.OnTrackFoodClick(
+                                        food = food.food,
+                                        mealType = MealType.fromString(mealName),
+                                        date = LocalDate.of(year, month, dayOfMonth)
+                                    )
+                                )
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                when {
+                    state.isSearching -> CircularProgressIndicator()
+                    state.trackableFood.isEmpty() -> {
+                        Text(
+                            text = stringResource(id = R.string.no_results),
+                            style = MaterialTheme.typography.bodyLarge,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
         }
-    }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        when {
-            state.isSearching -> CircularProgressIndicator()
-            state.trackableFood.isEmpty() -> {
-                Text(
-                    text = stringResource(id = R.string.no_results),
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
+    )
 }
