@@ -23,6 +23,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,7 @@ fun SearchTextField(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search,
             ),
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             modifier = Modifier
                 .clip(RoundedCornerShape(5.dp))
                 .padding(2.dp)
