@@ -74,20 +74,20 @@ fun SearchScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                 title = {
-                     Text(
-                         text = stringResource(id = R.string.add_meal, mealName),
-                         style = MaterialTheme.typography.headlineMedium
-                     )
-                 },
-                 navigationIcon = {
-                     IconButton(onClick = { onNavigateUp() }) {
-                         Icon(
-                             imageVector = Icons.Filled.ArrowBack,
-                             contentDescription = "Back"
-                         )
-                     }
-                 }
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.add_meal, mealName),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { onNavigateUp() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
             )
         },
         content = { padding ->

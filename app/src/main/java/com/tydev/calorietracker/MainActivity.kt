@@ -77,7 +77,6 @@ class MainActivity : ComponentActivity() {
                     content = { padding ->
                         when (uiState) {
                             is Loading -> {
-
                             }
                             is Success -> {
                                 NavHost(
@@ -157,9 +156,9 @@ class MainActivity : ComponentActivity() {
                                             onNavigateToSearch = { mealName, day, month, year ->
                                                 navController.navigate(
                                                     Route.SEARCH + "/$mealName" +
-                                                            "/$day" +
-                                                            "/$month" +
-                                                            "/$year"
+                                                        "/$day" +
+                                                        "/$month" +
+                                                        "/$year"
                                                 )
                                             }
                                         )
