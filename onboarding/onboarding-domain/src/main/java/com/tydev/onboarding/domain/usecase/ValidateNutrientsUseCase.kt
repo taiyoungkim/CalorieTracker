@@ -1,8 +1,5 @@
 package com.tydev.onboarding.domain.usecase
 
-import com.tydev.core.R
-import com.tydev.core.util.UiText
-
 class ValidateNutrientsUseCase {
 
     operator fun invoke(
@@ -16,12 +13,12 @@ class ValidateNutrientsUseCase {
 
         if (carbsRatio == null || proteinRatio == null || fatRatio == null) {
             return Result.Error(
-                message = UiText.StringResource(R.string.error_invalid_values)
+                message = "These are not valid values"
             )
         }
         if (carbsRatio + proteinRatio + fatRatio != RATIO_SUM) {
             return Result.Error(
-                message = UiText.StringResource(R.string.error_not_100_percent)
+                message = "The values must add up to 100%"
             )
         }
         return Result.Success(
@@ -39,7 +36,7 @@ class ValidateNutrientsUseCase {
         ) : Result()
 
         // without having context
-        data class Error(val message: UiText) : Result()
+        data class Error(val message: String) : Result()
     }
 }
 

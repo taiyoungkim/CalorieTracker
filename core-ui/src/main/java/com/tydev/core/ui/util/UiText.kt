@@ -1,4 +1,4 @@
-package com.tydev.core.util
+package com.tydev.core.ui.util
 
 import android.content.Context
 

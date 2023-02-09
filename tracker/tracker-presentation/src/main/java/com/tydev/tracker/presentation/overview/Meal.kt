@@ -2,7 +2,7 @@ package com.tydev.tracker.presentation.overview
 
 import androidx.annotation.DrawableRes
 import com.tydev.core.R
-import com.tydev.core.util.UiText
+import com.tydev.core.ui.util.UiText
 import com.tydev.tracker.domain.model.MealType
 
 // presentation model

@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
-import com.tydev.core.util.UiEvent
+import com.tydev.core.ui.util.UiEvent
+import com.tydev.core.ui.util.UiText
 import com.tydev.onboarding.domain.usecase.ValidateNutrientsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -62,7 +63,7 @@ class NutrientViewModel @Inject constructor(
                     }
                     is ValidateNutrientsUseCase.Result.Error -> {
                         viewModelScope.launch {
-                            _uiEvent.send(UiEvent.ShowSnackbar(result.message))
+                            _uiEvent.send(UiEvent.ShowSnackbar(UiText.DynamicString(result.message)))
                         }
                     }
                 }

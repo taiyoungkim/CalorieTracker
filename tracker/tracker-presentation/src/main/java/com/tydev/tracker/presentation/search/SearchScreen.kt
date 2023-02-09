@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
-import com.tydev.core.util.UiEvent
+import com.tydev.core.ui.util.UiEvent
 import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.presentation.search.components.SearchTextField
 import com.tydev.tracker.presentation.search.components.TrackableFoodItem

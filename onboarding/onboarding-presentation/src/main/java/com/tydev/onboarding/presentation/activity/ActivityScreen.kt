@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.domain.model.ActivityLevel
 import com.tydev.core.ui.LocalSpacing
-import com.tydev.core.util.UiEvent
+import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.SelectableButton
 

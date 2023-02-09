@@ -1,4 +1,4 @@
-package com.tydev.core.util
+package com.tydev.core.ui.util
 
 sealed class UiEvent {
     object Success : UiEvent()
