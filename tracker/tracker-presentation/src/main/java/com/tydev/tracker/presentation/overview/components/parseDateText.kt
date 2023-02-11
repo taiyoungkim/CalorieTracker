@@ -13,6 +13,6 @@ fun parseDateText(date: LocalDate): String {
         today -> stringResource(id = R.string.today)
         today.minusDays(1) -> stringResource(id = R.string.yesterday)
         today.plusDays(1) -> stringResource(id = R.string.tomorrow)
-        else -> DateTimeFormatter.ofPattern("dd LLLL").format(date)
+        else -> DateTimeFormatter.ofPattern("dd / LLLL").format(date)
     }
 }

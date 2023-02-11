@@ -17,8 +17,6 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     userDataRepository: UserDataRepository
 ) : ViewModel() {
-//    private val shouldShowOnboarding: Flow<Boolean> =
-//        userDataRepository.userData.map { !it.shouldShowOnboarding }
 
     val uiState: StateFlow<MainActivityUiState> = userDataRepository.userData.map {
         Success(it)

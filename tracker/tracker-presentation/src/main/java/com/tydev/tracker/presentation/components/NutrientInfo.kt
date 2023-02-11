@@ -18,11 +18,11 @@ fun NutrientInfo(
     amount: Int,
     unit: String,
     modifier: Modifier = Modifier,
-    amountTextSize: TextUnit = 20.sp,
+    amountTextSize: TextUnit = 15.sp,
     amountColor: Color = MaterialTheme.colorScheme.onBackground,
-    unitTextSize: TextUnit = 14.sp,
+    unitTextSize: TextUnit = 10.sp,
     unitColor: Color = MaterialTheme.colorScheme.onBackground,
-    nameTextStyle: TextStyle = MaterialTheme.typography.bodyLarge
+    nameTextStyle: TextStyle = MaterialTheme.typography.labelSmall
 ) {
     Column(
         modifier = modifier,
