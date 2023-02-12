@@ -14,22 +14,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tydev.core.R
-import com.tydev.tracker.presentation.components.UnitDisplay
+import com.tydev.core.ui.DarkGreen
+import kotlin.math.absoluteValue
 
 @Composable
 fun NutrientsBarInfo(
     value: Int,
     goal: Int,
     name: String,
-    color: Color,
     modifier: Modifier = Modifier,
     strokeWidth: Dp = 8.dp
 ) {
@@ -38,6 +37,12 @@ fun NutrientsBarInfo(
     val angelRatio = remember {
         Animatable(0f)
     }
+
+    val data = if (value <= goal)
+        stringResource(id = R.string.left)
+    else
+        stringResource(id = R.string.over)
+
     LaunchedEffect(key1 = value) {
         angelRatio.animateTo(
             targetValue = if (goal > 0) {
@@ -70,8 +75,8 @@ fun NutrientsBarInfo(
             )
             if (value <= goal) {
                 drawArc(
-                    color = color,
-                    startAngle = 90f,
+                    color = DarkGreen,
+                    startAngle = 270f,
                     sweepAngle = 360 * angelRatio.value,
                     useCenter = false,
                     size = size,
@@ -86,23 +91,21 @@ fun NutrientsBarInfo(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            UnitDisplay(
-                amount = value,
-                unit = stringResource(id = R.string.grams),
-                amountColor = if (value <= goal) {
+            Text(
+                text = (goal - value).absoluteValue.toString(),
+                color = if (value <= goal) {
                     MaterialTheme.colorScheme.onPrimary
                 } else goalExceededColor,
-                unitColor = if (value <= goal) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else goalExceededColor,
+                style = MaterialTheme.typography.headlineLarge,
+                fontSize = 40.sp,
+                modifier = Modifier
             )
             Text(
-                text = name,
+                text = "$name $data",
                 color = if (value <= goal) {
                     MaterialTheme.colorScheme.onPrimary
                 } else goalExceededColor,
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Light
             )
         }
     }

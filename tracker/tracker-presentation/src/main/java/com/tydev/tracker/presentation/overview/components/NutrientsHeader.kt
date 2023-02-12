@@ -6,26 +6,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tydev.core.R
 import com.tydev.core.ui.CarbColor
 import com.tydev.core.ui.FatColor
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.ProteinColor
-import com.tydev.tracker.presentation.components.UnitDisplay
 import com.tydev.tracker.presentation.overview.TrackerOverViewState
 
 @Composable
@@ -53,71 +51,50 @@ fun NutrientsHeader(
             )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.padding(spacing.spaceSmall)
         ) {
-            UnitDisplay(
-                amount = animatedCalorieCount.value,
-                unit = stringResource(id = R.string.kcal),
-                amountColor = MaterialTheme.colorScheme.onPrimary,
-                amountTextSize = 40.sp,
-                unitColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.align(Alignment.Bottom)
+            NutrientsBarInfo(
+                value = state.totalCalories,
+                goal = state.caloriesGoal,
+                name = stringResource(id = R.string.kcal),
+                modifier = Modifier.fillMaxWidth(0.5f)
             )
-            Column {
-                Text(
-                    text = stringResource(id = R.string.your_goal),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimary
+            Spacer(modifier = Modifier.width(spacing.spaceExtraLarge))
+            Column(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                NutrientsBar(
+                    value = state.totalCarbs,
+                    goal = state.carbsGoal,
+                    color = CarbColor,
+                    name = "CARB",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
                 )
-                UnitDisplay(
-                    amount = state.caloriesGoal,
-                    unit = stringResource(id = R.string.kcal),
-                    amountColor = MaterialTheme.colorScheme.onPrimary,
-                    amountTextSize = 40.sp,
-                    unitColor = MaterialTheme.colorScheme.onPrimary,
+                Spacer(modifier = Modifier.height(spacing.spaceSmall))
+                NutrientsBar(
+                    value = state.totalProtein,
+                    goal = state.proteinGoal,
+                    color = ProteinColor,
+                    name = "PROTEIN",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
+                )
+                Spacer(modifier = Modifier.height(spacing.spaceSmall))
+                NutrientsBar(
+                    value = state.totalFat,
+                    goal = state.fatGoal,
+                    color = FatColor,
+                    name = "FAT",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
                 )
             }
-        }
-        Spacer(modifier = Modifier.height(spacing.spaceSmall))
-
-        NutrientsBar(
-            carbs = state.totalCarbs,
-            protein = state.totalProtein,
-            fat = state.totalFat,
-            calories = state.totalCalories,
-            calorieGoal = state.caloriesGoal,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(30.dp)
-        )
-        Spacer(modifier = Modifier.height(spacing.spaceLarge))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            NutrientsBarInfo(
-                value = state.totalCarbs,
-                goal = state.carbsGoal,
-                name = stringResource(id = R.string.carbs),
-                color = CarbColor,
-                modifier = Modifier.size(90.dp)
-            )
-            NutrientsBarInfo(
-                value = state.totalProtein,
-                goal = state.proteinGoal,
-                name = stringResource(id = R.string.protein),
-                color = ProteinColor,
-                modifier = Modifier.size(90.dp)
-            )
-            NutrientsBarInfo(
-                value = state.totalFat,
-                goal = state.fatGoal,
-                name = stringResource(id = R.string.fat),
-                color = FatColor,
-                modifier = Modifier.size(90.dp)
-            )
         }
     }
 }

@@ -2,93 +2,87 @@ package com.tydev.tracker.presentation.overview.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
-import com.tydev.core.ui.CarbColor
-import com.tydev.core.ui.FatColor
-import com.tydev.core.ui.ProteinColor
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.tydev.core.R
+import kotlin.math.absoluteValue
 
 @Composable
 fun NutrientsBar(
-    carbs: Int,
-    protein: Int,
-    fat: Int,
-    calories: Int,
-    calorieGoal: Int,
+    value: Int,
+    goal: Int,
+    color: Color,
+    name: String,
     modifier: Modifier = Modifier
 ) {
     val background = MaterialTheme.colorScheme.background
-    val caloriesExceedColor = MaterialTheme.colorScheme.error
+    val goalExceededColor = MaterialTheme.colorScheme.error
+    val widthRatio = remember {
+        Animatable(0f)
+    }
 
-    val carbWidthRatio = remember {
-        Animatable(0f)
-    }
-    val proteinWidthRatio = remember {
-        Animatable(0f)
-    }
-    val fatWidthRatio = remember {
-        Animatable(0f)
-    }
-    LaunchedEffect(key1 = carbs) {
-        carbWidthRatio.animateTo(
-            targetValue = ((carbs * 4f) / calorieGoal)
+    val data = if (value <= goal)
+        stringResource(id = R.string.left)
+    else
+        stringResource(id = R.string.over)
+
+    LaunchedEffect(key1 = value) {
+        widthRatio.animateTo(
+            targetValue = if (goal > 0) {
+                value / goal.toFloat()
+            } else 0f,
         )
     }
-    LaunchedEffect(key1 = protein) {
-        proteinWidthRatio.animateTo(
-            targetValue = ((protein * 4f) / calorieGoal)
+    Column {
+        Text(
+            text = name,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.bodyLarge,
         )
-    }
-    LaunchedEffect(key1 = fat) {
-        fatWidthRatio.animateTo(
-            targetValue = ((fat * 9f) / calorieGoal)
-        )
-    }
-    Canvas(modifier = modifier) {
-        if (calories <= calorieGoal) {
-            val carbsWidth = carbWidthRatio.value * size.width
-            val proteinWidth = proteinWidthRatio.value * size.width
-            val fatWith = fatWidthRatio.value * size.width
-            drawRoundRect(
-                color = background,
-                size = size,
-                cornerRadius = CornerRadius(100f)
-            )
-            drawRoundRect(
-                color = FatColor,
-                size = Size(
-                    width = carbsWidth + proteinWidth + fatWith,
-                    height = size.height
-                ),
-                cornerRadius = CornerRadius(100f)
-            )
-            drawRoundRect(
-                color = ProteinColor,
-                size = Size(
-                    width = carbsWidth + proteinWidth,
-                    height = size.height
-                ),
-                cornerRadius = CornerRadius(100f)
-            )
-            drawRoundRect(
-                color = CarbColor,
-                size = Size(
-                    width = carbsWidth,
-                    height = size.height
-                ),
-                cornerRadius = CornerRadius(100f)
-            )
-        } else {
-            drawRoundRect(
-                color = caloriesExceedColor,
-                size = size,
-                cornerRadius = CornerRadius(100f)
-            )
+        Spacer(modifier = Modifier.height(2.dp))
+        Canvas(modifier = modifier) {
+            if (value <= goal) {
+                val valueWidth = widthRatio.value * size.width
+                drawRoundRect(
+                    color = background,
+                    size = size,
+                    cornerRadius = CornerRadius(100f)
+                )
+                drawRoundRect(
+                    color = color,
+                    size = Size(
+                        width = valueWidth,
+                        height = size.height
+                    ),
+                    cornerRadius = CornerRadius(100f)
+                )
+            } else {
+                drawRoundRect(
+                    color = goalExceededColor,
+                    size = size,
+                    cornerRadius = CornerRadius(100f)
+                )
+            }
         }
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(
+            text = "${(goal - value).absoluteValue}${stringResource(id = R.string.grams)} $data",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimary,
+        )
     }
 }
