@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
@@ -21,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tydev.core.R
-import com.tydev.core.ui.DarkGreen
 import kotlin.math.absoluteValue
 
 @Composable
@@ -32,7 +32,8 @@ fun NutrientsBarInfo(
     modifier: Modifier = Modifier,
     strokeWidth: Dp = 8.dp
 ) {
-    val background = MaterialTheme.colorScheme.background
+    val background = Color.LightGray
+    val primaryColor = MaterialTheme.colorScheme.primary
     val goalExceededColor = MaterialTheme.colorScheme.error
     val angelRatio = remember {
         Animatable(0f)
@@ -75,9 +76,9 @@ fun NutrientsBarInfo(
             )
             if (value <= goal) {
                 drawArc(
-                    color = DarkGreen,
+                    color = primaryColor,
                     startAngle = 270f,
-                    sweepAngle = 360 * angelRatio.value,
+                    sweepAngle = 360f * angelRatio.value,
                     useCenter = false,
                     size = size,
                     style = Stroke(
@@ -94,7 +95,7 @@ fun NutrientsBarInfo(
             Text(
                 text = (goal - value).absoluteValue.toString(),
                 color = if (value <= goal) {
-                    MaterialTheme.colorScheme.onPrimary
+                    primaryColor
                 } else goalExceededColor,
                 style = MaterialTheme.typography.headlineLarge,
                 fontSize = 40.sp,
@@ -103,7 +104,7 @@ fun NutrientsBarInfo(
             Text(
                 text = "$name $data",
                 color = if (value <= goal) {
-                    MaterialTheme.colorScheme.onPrimary
+                    background
                 } else goalExceededColor,
                 style = MaterialTheme.typography.bodyLarge,
             )

@@ -2,7 +2,7 @@ package com.tydev.calorietracker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val BrightGreen = Color(0xFF00C713)
+val BrightGreen = Color(0xFF2BC985)
 val DarkGreen = Color(0xFF00790C)
 val Orange = Color(0xFFFFAA00)
 val CarbColor = Color(0xFFEEFF00)

@@ -28,7 +28,7 @@ fun NutrientsBar(
     name: String,
     modifier: Modifier = Modifier
 ) {
-    val background = MaterialTheme.colorScheme.background
+    val background = Color.LightGray
     val goalExceededColor = MaterialTheme.colorScheme.error
     val widthRatio = remember {
         Animatable(0f)
@@ -50,7 +50,7 @@ fun NutrientsBar(
         Text(
             text = name,
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
         )
         Spacer(modifier = Modifier.height(2.dp))
@@ -82,7 +82,7 @@ fun NutrientsBar(
         Text(
             text = "${(goal - value).absoluteValue}${stringResource(id = R.string.grams)} $data",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }

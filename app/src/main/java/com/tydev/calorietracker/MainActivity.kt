@@ -30,6 +30,7 @@ import com.tydev.calorietracker.MainActivityUiState.Loading
 import com.tydev.calorietracker.MainActivityUiState.Success
 import com.tydev.calorietracker.navigation.Route
 import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
+import com.tydev.core.domain.model.UserData
 import com.tydev.onboarding.presentation.activity.ActivityScreen
 import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
@@ -81,7 +82,7 @@ class MainActivity : ComponentActivity() {
                             is Success -> {
                                 NavHost(
                                     navController = navController,
-                                    startDestination = if (shouldShowOnboarding(uiState)) Route.WELCOME else Route.TRACKER_OVERVIEW,
+                                    startDestination = if (getUserData(uiState)?.shouldShowOnboarding == true) Route.WELCOME else Route.TRACKER_OVERVIEW,
                                     modifier = Modifier.padding(padding)
                                 ) {
                                     composable(Route.WELCOME) {
@@ -152,16 +153,19 @@ class MainActivity : ComponentActivity() {
                                     }
 
                                     composable(Route.TRACKER_OVERVIEW) {
-                                        TrackerOverViewScreen(
-                                            onNavigateToSearch = { mealName, day, month, year ->
-                                                navController.navigate(
-                                                    Route.SEARCH + "/$mealName" +
-                                                        "/$day" +
-                                                        "/$month" +
-                                                        "/$year"
-                                                )
-                                            }
-                                        )
+                                        getUserData(uiState)?.let { userData ->
+                                            TrackerOverViewScreen(
+                                                userData = userData,
+                                                onNavigateToSearch = { mealName, day, month, year ->
+                                                    navController.navigate(
+                                                        Route.SEARCH + "/$mealName" +
+                                                            "/$day" +
+                                                            "/$month" +
+                                                            "/$year"
+                                                    )
+                                                }
+                                            )
+                                        }
                                     }
 
                                     composable(
@@ -207,9 +211,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun shouldShowOnboarding(
+fun getUserData(
     uiState: MainActivityUiState,
-): Boolean = when (uiState) {
-    Loading -> true
-    is Success -> uiState.userData.shouldShowOnboarding
+): UserData? = when (uiState) {
+    Loading -> null
+    is Success -> uiState.userData
 }

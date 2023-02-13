@@ -15,17 +15,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.R
+import com.tydev.core.domain.model.UserData
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.tracker.presentation.overview.components.AddButton
 import com.tydev.tracker.presentation.overview.components.DaySelector
 import com.tydev.tracker.presentation.overview.components.ExpandableMeal
 import com.tydev.tracker.presentation.overview.components.NutrientsHeader
+import com.tydev.tracker.presentation.overview.components.TopHeader
 import com.tydev.tracker.presentation.overview.components.TrackedFoodItem
 
 @ExperimentalCoilApi
 @Composable
 fun TrackerOverViewScreen(
     onNavigateToSearch: (String, Int, Int, Int) -> Unit,
+    userData: UserData,
     viewModel: TrackerOverViewViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
@@ -38,8 +41,11 @@ fun TrackerOverViewScreen(
             .padding(bottom = spacing.spaceMedium)
     ) {
         item {
-            NutrientsHeader(state = state)
-            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+            TopHeader(
+                goalType = userData.goalType,
+                activityLevel = userData.activityLevel
+            )
+            Spacer(modifier = Modifier.height(spacing.spaceSmall))
             DaySelector(
                 date = state.date,
                 onPreviousDayClick = {
@@ -52,7 +58,7 @@ fun TrackerOverViewScreen(
                     .fillMaxWidth()
                     .padding(horizontal = spacing.spaceMedium)
             )
-            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+            NutrientsHeader(state = state)
         }
         items(state.meals) { meal ->
             ExpandableMeal(
