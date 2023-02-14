@@ -5,5 +5,6 @@ data class TrackerUseCases(
     val searchFoodUseCase: SearchFoodUseCase,
     val getFoodsForDateUseCase: GetFoodsForDateUseCase,
     val deleteTrackedFoodUseCase: DeleteTrackedFoodUseCase,
-    val calculateMealNutrientsUseCase: CalculateMealNutrientsUseCase
+    val calculateMealNutrientsUseCase: CalculateMealNutrientsUseCase,
+    val updateTrackedFoodUseCase: UpdateTrackedFoodUseCase
 )

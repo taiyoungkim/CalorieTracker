@@ -31,12 +31,12 @@ class TrackerRepositoryImpl(
             Result.success(
                 searchDto.products
                     .filter {
-                        val calculatedClories =
+                        val calculatedCalories =
                             it.nutriments.carbohydrates100g * 4f +
                                 it.nutriments.proteins100g * 4f +
                                 it.nutriments.fat100g * 9f
-                        val lowerBound = calculatedClories * 0.99f
-                        val upperBound = calculatedClories * 1.01f
+                        val lowerBound = calculatedCalories * 0.99f
+                        val upperBound = calculatedCalories * 1.01f
                         it.nutriments.energyKcal100g in (lowerBound..upperBound)
                     }
                     .mapNotNull { it.toTrackableFood() }
@@ -62,5 +62,9 @@ class TrackerRepositoryImpl(
         ).map { entities ->
             entities.map { it.toTrackedFood() }
         }
+    }
+
+    override suspend fun updateTrackedFood(food: TrackedFood) {
+        dao.updateTrackedFood(food.toTrackedFoodEntity())
     }
 }

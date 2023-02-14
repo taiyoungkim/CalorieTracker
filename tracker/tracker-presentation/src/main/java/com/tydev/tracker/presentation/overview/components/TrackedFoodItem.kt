@@ -88,7 +88,7 @@ fun TrackedFoodItem(
         ) {
             Text(
                 text = trackedFood.name,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2
             )
@@ -99,7 +99,7 @@ fun TrackedFoodItem(
                     trackedFood.amount,
                     trackedFood.calories
                 ),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodySmall
             )
         }
         Spacer(modifier = Modifier.width(spacing.spaceMedium))
@@ -122,27 +122,18 @@ fun TrackedFoodItem(
                     name = stringResource(id = R.string.carbs),
                     amount = trackedFood.carbs,
                     unit = stringResource(id = R.string.grams),
-                    amountTextSize = 16.sp,
-                    unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
                 NutrientInfo(
                     name = stringResource(id = R.string.protein),
                     amount = trackedFood.protein,
                     unit = stringResource(id = R.string.grams),
-                    amountTextSize = 16.sp,
-                    unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
                 NutrientInfo(
                     name = stringResource(id = R.string.fat),
                     amount = trackedFood.fat,
                     unit = stringResource(id = R.string.grams),
-                    amountTextSize = 16.sp,
-                    unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
                 )
             }
         }

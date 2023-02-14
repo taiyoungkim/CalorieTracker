@@ -8,6 +8,7 @@ import com.tydev.tracker.domain.usecase.GetFoodsForDateUseCase
 import com.tydev.tracker.domain.usecase.SearchFoodUseCase
 import com.tydev.tracker.domain.usecase.TrackFoodUseCase
 import com.tydev.tracker.domain.usecase.TrackerUseCases
+import com.tydev.tracker.domain.usecase.UpdateTrackedFoodUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,8 @@ object TrackerDomainModule {
             searchFoodUseCase = SearchFoodUseCase(trackerRepository),
             getFoodsForDateUseCase = GetFoodsForDateUseCase(trackerRepository),
             deleteTrackedFoodUseCase = DeleteTrackedFoodUseCase(trackerRepository),
-            calculateMealNutrientsUseCase = CalculateMealNutrientsUseCase(userDataRepository)
+            calculateMealNutrientsUseCase = CalculateMealNutrientsUseCase(userDataRepository),
+            updateTrackedFoodUseCase = UpdateTrackedFoodUseCase(trackerRepository)
         )
     }
 }

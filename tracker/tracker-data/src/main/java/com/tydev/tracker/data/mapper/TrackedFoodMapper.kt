@@ -16,7 +16,11 @@ fun TrackedFoodEntity.toTrackedFood(): TrackedFood {
         amount = amount,
         date = LocalDate.of(year, month, dayOfMonth),
         calories = calories,
-        id = id
+        carbsPerGram = carbsPerGram,
+        proteinPerGram = proteinPerGram,
+        fatPerGram = fatPerGram,
+        caloriePerGram = caloriePerGram,
+        id = id,
     )
 }
 
@@ -33,6 +37,10 @@ fun TrackedFood.toTrackedFoodEntity(): TrackedFoodEntity {
         month = date.monthValue,
         year = date.year,
         calories = calories,
+        carbsPerGram = carbsPerGram,
+        proteinPerGram = proteinPerGram,
+        fatPerGram = fatPerGram,
+        caloriePerGram = caloriePerGram,
         id = id
     )
 }

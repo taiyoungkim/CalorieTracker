@@ -16,5 +16,9 @@ data class TrackedFoodEntity(
     val month: Int,
     val year: Int,
     val calories: Int,
+    val carbsPerGram: Float,
+    val proteinPerGram: Float,
+    val fatPerGram: Float,
+    val caloriePerGram: Float,
     @PrimaryKey val id: Int? = null
 )

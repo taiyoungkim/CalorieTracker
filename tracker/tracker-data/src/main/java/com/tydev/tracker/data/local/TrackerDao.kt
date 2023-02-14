@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.tydev.tracker.data.entity.TrackedFoodEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -25,4 +26,7 @@ interface TrackerDao {
         """
     )
     fun getFoodsForDate(day: Int, month: Int, year: Int): Flow<List<TrackedFoodEntity>>
+
+    @Update
+    suspend fun updateTrackedFood(trackedFoodEntity: TrackedFoodEntity)
 }
