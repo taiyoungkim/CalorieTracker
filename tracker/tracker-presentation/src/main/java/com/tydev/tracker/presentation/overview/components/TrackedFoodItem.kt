@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,7 +56,7 @@ fun TrackedFoodItem(
             )
             .background(MaterialTheme.colorScheme.surface)
             .padding(end = spacing.spaceMedium)
-            .height(100.dp),
+            .height(70.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -79,6 +80,7 @@ fun TrackedFoodItem(
                         bottomStart = 5.dp
                     )
                 )
+                .padding(spacing.spaceSmall)
         )
         Spacer(modifier = Modifier.width(spacing.spaceMedium))
         Column(

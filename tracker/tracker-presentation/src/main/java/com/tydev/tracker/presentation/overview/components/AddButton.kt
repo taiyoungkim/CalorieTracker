@@ -33,12 +33,12 @@ fun AddButton(
     val spacing = LocalSpacing.current
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(100f))
+            .clip(RoundedCornerShape(20f))
             .clickable { onClick() }
             .border(
                 width = 1.dp,
                 color = color,
-                shape = RoundedCornerShape(100f)
+                shape = RoundedCornerShape(20f)
             )
             .padding(spacing.spaceMedium),
         horizontalArrangement = Arrangement.Center,

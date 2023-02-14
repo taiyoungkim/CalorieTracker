@@ -91,7 +91,7 @@ fun TrackableFoodItem(
                     contentDescription = food.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(70.dp)
                         .clip(RoundedCornerShape(topStart = 5.dp))
                 )
 
