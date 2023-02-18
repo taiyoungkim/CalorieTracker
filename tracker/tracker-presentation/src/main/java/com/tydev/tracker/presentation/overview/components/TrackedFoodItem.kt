@@ -43,6 +43,7 @@ import com.tydev.tracker.presentation.components.NutrientInfo
 fun TrackedFoodItem(
     trackedFood: TrackedFood,
     onDeleteClick: () -> Unit,
+    onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -107,13 +108,23 @@ fun TrackedFoodItem(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = stringResource(id = R.string.delete),
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable { onDeleteClick() }
-            )
+            Row(
+                modifier = Modifier.align(Alignment.End)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(id = R.string.delete),
+                    modifier = Modifier
+                        .clickable { onDeleteClick() }
+                )
+                Spacer(modifier = Modifier.width(spacing.spaceSmall))
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(id = R.string.edit),
+                    modifier = Modifier
+                        .clickable { onEditClick() }
+                )
+            }
             Spacer(modifier = Modifier.height(spacing.spaceExtraSmall))
             Row(
                 verticalAlignment = Alignment.CenterVertically

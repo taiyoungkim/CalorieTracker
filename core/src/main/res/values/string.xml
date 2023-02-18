@@ -62,4 +62,5 @@
     <string name="edit">Edit</string>
     <string name="left">left</string>
     <string name="over">over</string>
+    <string name="setGram">Set gram</string>
 </resources>

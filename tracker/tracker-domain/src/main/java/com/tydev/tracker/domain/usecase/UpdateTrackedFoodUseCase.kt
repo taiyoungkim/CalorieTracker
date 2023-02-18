@@ -13,6 +13,7 @@ class UpdateTrackedFoodUseCase(
     ) {
         repository.updateTrackedFood(
             TrackedFood(
+                id = trackedFood.id,
                 name = trackedFood.name,
                 carbs = (trackedFood.carbsPerGram * amount).roundToInt(),
                 protein = (trackedFood.proteinPerGram * amount).roundToInt(),

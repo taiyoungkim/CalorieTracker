@@ -63,7 +63,7 @@ class TrackerOverViewViewModel @Inject constructor(
             }
             is TrackerOverViewEvent.OnUpdateTrackedFoodClick -> {
                 viewModelScope.launch {
-                    trackerUseCases.updateTrackedFoodUseCase(event.trackedFood, 100)
+                    trackerUseCases.updateTrackedFoodUseCase(event.trackedFood, event.amount)
                     refreshFoods()
                 }
             }
