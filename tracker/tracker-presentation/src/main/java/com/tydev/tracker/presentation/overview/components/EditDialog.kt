@@ -18,7 +18,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,9 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.tydev.core.R
-import com.tydev.core.domain.model.UserData
 import com.tydev.tracker.domain.model.TrackedFood
-import com.tydev.tracker.presentation.overview.TrackerOverViewState
 
 @Composable
 fun EditDialog(

@@ -2,7 +2,6 @@ package com.tydev.tracker.presentation.overview.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,10 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -42,15 +36,11 @@ import com.tydev.tracker.presentation.components.NutrientInfo
 @Composable
 fun TrackedFoodItem(
     trackedFood: TrackedFood,
-    onDeleteClick: () -> Unit,
-    onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(5.dp))
-            .padding(spacing.spaceExtraSmall)
             .shadow(
                 elevation = 1.dp,
                 shape = RoundedCornerShape(5.dp)
@@ -108,23 +98,6 @@ fun TrackedFoodItem(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
-            Row(
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = stringResource(id = R.string.delete),
-                    modifier = Modifier
-                        .clickable { onDeleteClick() }
-                )
-                Spacer(modifier = Modifier.width(spacing.spaceSmall))
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(id = R.string.edit),
-                    modifier = Modifier
-                        .clickable { onEditClick() }
-                )
-            }
             Spacer(modifier = Modifier.height(spacing.spaceExtraSmall))
             Row(
                 verticalAlignment = Alignment.CenterVertically

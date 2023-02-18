@@ -9,6 +9,8 @@ import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.tracker.domain.usecase.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -25,6 +27,9 @@ class TrackerOverViewViewModel @Inject constructor(
 
     private var getFoodsForDateJob: Job? = null
 
+    private val _revealedCardId = MutableStateFlow(-1)
+    val revealedCardId: StateFlow<Int> get() = _revealedCardId
+
     init {
         refreshFoods()
         viewModelScope.launch {
@@ -36,6 +41,7 @@ class TrackerOverViewViewModel @Inject constructor(
         when (event) {
             is TrackerOverViewEvent.OnDeleteTrackedFoodClick -> {
                 viewModelScope.launch {
+                    event.trackedFood.id?.let { onItemCollapsed(it) }
                     trackerUseCases.deleteTrackedFoodUseCase(event.trackedFood)
                     refreshFoods()
                 }
@@ -63,6 +69,7 @@ class TrackerOverViewViewModel @Inject constructor(
             }
             is TrackerOverViewEvent.OnUpdateTrackedFoodClick -> {
                 viewModelScope.launch {
+                    event.trackedFood.id?.let { onItemCollapsed(it) }
                     trackerUseCases.updateTrackedFoodUseCase(event.trackedFood, event.amount)
                     refreshFoods()
                 }
@@ -106,5 +113,15 @@ class TrackerOverViewViewModel @Inject constructor(
                     )
                 }.launchIn(viewModelScope)
             }.launchIn(viewModelScope)
+    }
+
+    fun onItemExpanded(cardId: Int) {
+        if (_revealedCardId.value == cardId) return
+        _revealedCardId.value = cardId
+    }
+
+    fun onItemCollapsed(cardId: Int) {
+        if (_revealedCardId.value != cardId) return
+        _revealedCardId.value = -1
     }
 }
