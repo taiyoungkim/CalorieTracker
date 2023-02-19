@@ -12,21 +12,21 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.tydev.core.ui.LocalSpacing
 
 @Composable
 fun ActionsRow(
     onDelete: () -> Unit,
     onEdit: () -> Unit,
 ) {
+    val spacing = LocalSpacing.current
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = spacing.spaceMedium, vertical = spacing.spaceSmall),
         horizontalArrangement = Arrangement.End,
     ) {
         IconButton(
-//            modifier = Modifier.size(actionIconSize),
             onClick = onDelete,
             content = {
                 Icon(
@@ -37,7 +37,6 @@ fun ActionsRow(
             }
         )
         IconButton(
-//            modifier = Modifier.size(actionIconSize),
             onClick = onEdit,
             content = {
                 Icon(

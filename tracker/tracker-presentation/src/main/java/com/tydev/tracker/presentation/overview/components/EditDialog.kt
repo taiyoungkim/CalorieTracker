@@ -70,8 +70,6 @@ fun EditDialog(
                             contentDescription = "",
                             tint = colorResource(android.R.color.darker_gray),
                             modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
                                 .clickable { setShowDialog(false) }
                         )
                     }
@@ -98,7 +96,7 @@ fun EditDialog(
                             ) {
                                 if (txtField.value.isEmpty()) {
                                     Text(
-                                        text = "Enter value",
+                                        text = stringResource(id = R.string.enterValue),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = Color.LightGray
                                     )
@@ -124,7 +122,7 @@ fun EditDialog(
                                 .fillMaxWidth()
                                 .height(50.dp)
                         ) {
-                            Text(text = "Done")
+                            Text(text = stringResource(id = R.string.done))
                         }
                     }
                 }

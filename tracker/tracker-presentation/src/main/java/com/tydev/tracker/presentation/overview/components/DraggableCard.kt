@@ -27,7 +27,6 @@ import com.tydev.tracker.domain.model.TrackedFood
 import kotlin.math.roundToInt
 
 const val ANIMATION_DURATION = 500
-const val MIN_DRAG_AMOUNT = 6
 
 @ExperimentalCoilApi
 @SuppressLint("UnusedTransitionTargetStateParameter")
@@ -47,24 +46,11 @@ fun DraggableCardComplex(
         }
     }
     val transition = updateTransition(transitionState, "cardTransition")
-//    val cardBgColor by transition.animateColor(
-//        label = "cardBgColorTransition",
-//        transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
-//        targetValueByState = {
-//            if (isRevealed) cardExpandedBackgroundColor else cardCollapsedBackgroundColor
-//        }
-//    )
     val offsetTransition by transition.animateFloat(
         label = "cardOffsetTransition",
         transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
         targetValueByState = { if (isRevealed) cardOffset - offsetX else -offsetX },
-
     )
-//    val cardElevation by transition.animateDp(
-//        label = "cardElevation",
-//        transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
-//        targetValueByState = { if (isRevealed) 40.dp else 2.dp }
-//    )
 
     Card(
         modifier = modifier
@@ -87,11 +73,9 @@ fun DraggableCardComplex(
                     offsetX = newValue.x
                 }
             },
-//        backgroundColor = cardBgColor,
         shape = remember {
             RoundedCornerShape(0.dp)
         },
-//        elevation = cardElevation,
         content = {
             TrackedFoodItem(trackedFood)
         }

@@ -63,4 +63,6 @@
     <string name="left">left</string>
     <string name="over">over</string>
     <string name="setGram">Set gram</string>
+    <string name="done">Done</string>
+    <string name="enterValue">Enter value</string>
 </resources>

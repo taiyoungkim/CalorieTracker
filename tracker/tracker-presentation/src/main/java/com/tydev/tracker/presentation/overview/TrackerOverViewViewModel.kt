@@ -11,7 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -78,41 +80,43 @@ class TrackerOverViewViewModel @Inject constructor(
     }
 
     private fun refreshFoods() {
-        // start the new job(cancel the old one)
         getFoodsForDateJob?.cancel()
         getFoodsForDateJob = trackerUseCases
             .getFoodsForDateUseCase(state.date)
-            .onEach { foods ->
-                trackerUseCases.calculateMealNutrientsUseCase(foods).onEach { nutrientsResult ->
-                    state = state.copy(
-                        totalCarbs = nutrientsResult.totalCarbs,
-                        totalProtein = nutrientsResult.totalProtein,
-                        totalFat = nutrientsResult.totalFat,
-                        totalCalories = nutrientsResult.totalCalories,
-                        carbsGoal = nutrientsResult.carbsGoal,
-                        proteinGoal = nutrientsResult.proteinGoal,
-                        fatGoal = nutrientsResult.fatGoal,
-                        caloriesGoal = nutrientsResult.caloriesGoal,
-                        trackedFoods = foods,
-                        meals = state.meals.map {
-                            val nutrientsForMeal =
-                                nutrientsResult.mealNutrients[it.mealType]
-                                    ?: return@map it.copy(
-                                        carbs = 0,
-                                        protein = 0,
-                                        fat = 0,
-                                        calories = 0
-                                    )
-                            it.copy(
-                                carbs = nutrientsForMeal.carbs,
-                                protein = nutrientsForMeal.protein,
-                                fat = nutrientsForMeal.fat,
-                                calories = nutrientsForMeal.calories
-                            )
-                        }
-                    )
-                }.launchIn(viewModelScope)
-            }.launchIn(viewModelScope)
+            .flatMapLatest { foods ->
+                trackerUseCases.calculateMealNutrientsUseCase(foods)
+                    .map { nutrientsResult -> Pair(foods, nutrientsResult) }
+            }
+            .onEach { (foods, nutrientsResult) ->
+                state = state.copy(
+                    totalCarbs = nutrientsResult.totalCarbs,
+                    totalProtein = nutrientsResult.totalProtein,
+                    totalFat = nutrientsResult.totalFat,
+                    totalCalories = nutrientsResult.totalCalories,
+                    carbsGoal = nutrientsResult.carbsGoal,
+                    proteinGoal = nutrientsResult.proteinGoal,
+                    fatGoal = nutrientsResult.fatGoal,
+                    caloriesGoal = nutrientsResult.caloriesGoal,
+                    trackedFoods = foods,
+                    meals = state.meals.map {
+                        val nutrientsForMeal =
+                            nutrientsResult.mealNutrients[it.mealType]
+                                ?: return@map it.copy(
+                                    carbs = 0,
+                                    protein = 0,
+                                    fat = 0,
+                                    calories = 0
+                                )
+                        it.copy(
+                            carbs = nutrientsForMeal.carbs,
+                            protein = nutrientsForMeal.protein,
+                            fat = nutrientsForMeal.fat,
+                            calories = nutrientsForMeal.calories
+                        )
+                    }
+                )
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onItemExpanded(cardId: Int) {

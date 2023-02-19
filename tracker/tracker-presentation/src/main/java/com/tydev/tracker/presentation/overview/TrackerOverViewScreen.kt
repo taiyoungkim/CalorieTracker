@@ -45,6 +45,7 @@ fun TrackerOverViewScreen(
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
+
     val showDialog = remember { mutableStateOf(false) }
     val selectedFood: MutableState<TrackedFood?> = remember { mutableStateOf(null) }
     val revealedCardId by viewModel.revealedCardId.collectAsStateWithLifecycle()
@@ -150,4 +151,3 @@ fun TrackerOverViewScreen(
     }
 }
 
-const val ACTION_ITEM_SIZE = 56
