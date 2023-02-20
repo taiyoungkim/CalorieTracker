@@ -18,8 +18,8 @@ class TrackFoodUseCase(
         date: LocalDate
     ) {
         val carbsPerGram = calculatePerGram(food.carbsPer100g)
-        val proteinPerGram = calculatePerGram(food.carbsPer100g)
-        val fatPerGram = calculatePerGram(food.carbsPer100g)
+        val proteinPerGram = calculatePerGram(food.proteinPer100g)
+        val fatPerGram = calculatePerGram(food.fatPer100g)
         val caloriePerGram = calculatePerGram(food.caloriesPer100g)
 
         repository.insertTrackedFood(
