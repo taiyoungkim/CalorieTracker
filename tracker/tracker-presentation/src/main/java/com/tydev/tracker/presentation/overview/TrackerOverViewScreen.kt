@@ -48,7 +48,7 @@ fun TrackerOverViewScreen(
 
     val showDialog = remember { mutableStateOf(false) }
     val selectedFood: MutableState<TrackedFood?> = remember { mutableStateOf(null) }
-    val revealedCardId by viewModel.revealedCardId.collectAsStateWithLifecycle()
+    val revealedCardIds by viewModel.revealedCardIdsList.collectAsStateWithLifecycle()
 
     if (showDialog.value && selectedFood.value != null)
         EditDialog(
@@ -117,10 +117,9 @@ fun TrackerOverViewScreen(
                                         showDialog.value = true
                                     },
                                 )
-                                // for advanced cases use DraggableCardComplex
                                 DraggableCardComplex(
                                     trackedFood = food,
-                                    isRevealed = revealedCardId == food.id,
+                                    isRevealed = revealedCardIds.contains(food.id),
                                     cardOffset = 300f,
                                     onExpand = { viewModel.onItemExpanded(food.id!!) },
                                     onCollapse = { viewModel.onItemCollapsed(food.id!!) },

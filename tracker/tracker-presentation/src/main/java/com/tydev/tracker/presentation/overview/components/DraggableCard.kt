@@ -9,7 +9,6 @@ import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -73,9 +72,6 @@ fun DraggableCardComplex(
                     offsetX = newValue.x
                 }
             },
-        shape = remember {
-            RoundedCornerShape(0.dp)
-        },
         content = {
             TrackedFoodItem(trackedFood)
         }

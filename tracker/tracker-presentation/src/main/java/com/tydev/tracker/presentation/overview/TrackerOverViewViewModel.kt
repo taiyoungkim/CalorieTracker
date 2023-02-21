@@ -29,8 +29,8 @@ class TrackerOverViewViewModel @Inject constructor(
 
     private var getFoodsForDateJob: Job? = null
 
-    private val _revealedCardId = MutableStateFlow(-1)
-    val revealedCardId: StateFlow<Int> get() = _revealedCardId
+    private val _revealedCardIdsList = MutableStateFlow(listOf<Int>())
+    val revealedCardIdsList: StateFlow<List<Int>> get() = _revealedCardIdsList
 
     init {
         refreshFoods()
@@ -120,12 +120,16 @@ class TrackerOverViewViewModel @Inject constructor(
     }
 
     fun onItemExpanded(cardId: Int) {
-        if (_revealedCardId.value == cardId) return
-        _revealedCardId.value = cardId
+        if (_revealedCardIdsList.value.contains(cardId)) return
+        _revealedCardIdsList.value = _revealedCardIdsList.value.toMutableList().also { list ->
+            list.add(cardId)
+        }
     }
 
     fun onItemCollapsed(cardId: Int) {
-        if (_revealedCardId.value != cardId) return
-        _revealedCardId.value = -1
+        if (!_revealedCardIdsList.value.contains(cardId)) return
+        _revealedCardIdsList.value = _revealedCardIdsList.value.toMutableList().also { list ->
+            list.remove(cardId)
+        }
     }
 }
