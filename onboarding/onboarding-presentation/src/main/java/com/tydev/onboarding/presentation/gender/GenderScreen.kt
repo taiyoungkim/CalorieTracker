@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -58,7 +59,7 @@ fun GenderScreen(
 
             Row {
                 SelectableButton(
-                    text = stringResource(id = R.string.male),
+                    text = "🙋‍♂️\n️${stringResource(id = R.string.male)}",
                     isSelected = viewModel.selectedGender == Gender.MALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -72,7 +73,7 @@ fun GenderScreen(
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 SelectableButton(
-                    text = stringResource(id = R.string.female),
+                    text = "🙋‍♀️\n️${stringResource(id = R.string.female)}",
                     isSelected = viewModel.selectedGender == Gender.FEMALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -89,7 +90,9 @@ fun GenderScreen(
         ActionButton(
             text = stringResource(id = R.string.next),
             onClick = viewModel::onNextClick,
-            modifier = Modifier.align(Alignment.BottomEnd)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .fillMaxWidth()
         )
     }
 }

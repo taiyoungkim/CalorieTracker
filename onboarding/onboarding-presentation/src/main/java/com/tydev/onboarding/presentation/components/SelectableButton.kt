@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tydev.core.ui.LocalSpacing
 
@@ -48,7 +49,8 @@ fun SelectableButton(
             text = text,
             style = textStyle,
             color = if (isSelected) selectedTextColor else color,
-            modifier = Modifier.padding(LocalSpacing.current.spaceSmall)
+            modifier = Modifier.padding(LocalSpacing.current.spaceSmall),
+            textAlign = TextAlign.Center
         )
     }
 }
