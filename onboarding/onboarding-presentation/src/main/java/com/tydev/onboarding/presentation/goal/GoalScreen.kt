@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -60,7 +61,7 @@ fun GoalScreen(
 
             Row {
                 SelectableButton(
-                    text = stringResource(id = R.string.lose),
+                    text = "↘️\n${stringResource(id = R.string.lose)}",
                     isSelected = viewModel.selectedGoal == GoalType.LOSE_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -75,7 +76,7 @@ fun GoalScreen(
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 SelectableButton(
-                    text = stringResource(id = R.string.keep),
+                    text = "➡️\n${stringResource(id = R.string.keep)}",
                     isSelected = viewModel.selectedGoal == GoalType.KEEP_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -90,7 +91,7 @@ fun GoalScreen(
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 SelectableButton(
-                    text = stringResource(id = R.string.gain),
+                    text = "↗️\n${stringResource(id = R.string.gain)}",
                     isSelected = viewModel.selectedGoal == GoalType.GAIN_WEIGHT,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -106,7 +107,9 @@ fun GoalScreen(
         ActionButton(
             text = stringResource(id = R.string.next),
             onClick = viewModel::onNextClick,
-            modifier = Modifier.align(Alignment.BottomEnd)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .fillMaxWidth()
         )
     }
 }
