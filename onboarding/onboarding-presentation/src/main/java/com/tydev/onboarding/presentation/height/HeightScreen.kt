@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +23,7 @@ import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.UnitTextField
+import com.tydev.onboarding.presentation.components.UpDownTextField
 
 @Composable
 fun HeightScreen(
@@ -62,16 +64,20 @@ fun HeightScreen(
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-            UnitTextField(
+            UpDownTextField(
                 value = viewModel.height,
                 onValueChange = viewModel::onHeightEnter,
                 unit = stringResource(id = R.string.cm),
+                upValue = viewModel::plusHeight,
+                downValue = viewModel::minusHeight
             )
         }
         ActionButton(
             text = stringResource(id = R.string.next),
             onClick = viewModel::onNextClick,
-            modifier = Modifier.align(Alignment.BottomEnd),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .fillMaxWidth()
         )
     }
 }

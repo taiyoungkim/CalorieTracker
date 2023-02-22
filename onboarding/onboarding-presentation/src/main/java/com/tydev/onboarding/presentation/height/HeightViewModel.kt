@@ -33,6 +33,14 @@ class HeightViewModel @Inject constructor(
         }
     }
 
+    fun plusHeight() {
+        height = height.toInt().plus(1).toString()
+    }
+
+    fun minusHeight() {
+        height = height.toInt().minus(1).toString()
+    }
+
     fun onNextClick() = viewModelScope.launch {
         val heightNumber = height.toIntOrNull() ?: run {
             _uiEvent.send(

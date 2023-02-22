@@ -32,6 +32,14 @@ class WeightViewModel @Inject constructor(
         }
     }
 
+    fun plusWeight() {
+        weight = weight.toFloat().plus(1).toString()
+    }
+
+    fun minusWeight() {
+        weight = weight.toFloat().minus(1).toString()
+    }
+
     fun onNextClick() = viewModelScope.launch {
         val weightNumber = weight.toFloatOrNull() ?: run {
             _uiEvent.send(

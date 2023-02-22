@@ -33,6 +33,14 @@ class AgeViewModel @Inject constructor(
         }
     }
 
+    fun plusAge() {
+        age = age.toInt().plus(1).toString()
+    }
+
+    fun minusAge() {
+        age = age.toInt().minus(1).toString()
+    }
+
     fun onNextClick() = viewModelScope.launch {
         val ageNumber = age.toIntOrNull() ?: run {
             _uiEvent.send(
