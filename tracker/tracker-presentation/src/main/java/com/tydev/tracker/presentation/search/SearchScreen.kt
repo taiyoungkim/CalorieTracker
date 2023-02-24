@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -33,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.util.OnBottomReached
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.presentation.search.components.SearchTextField
@@ -56,6 +58,7 @@ fun SearchScreen(
     val state = viewModel.state
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val listState = rememberLazyListState()
 
     LaunchedEffect(key1 = keyboardController) {
         viewModel.uiEvent.collect { event ->
@@ -71,6 +74,11 @@ fun SearchScreen(
             }
         }
     }
+
+    listState.OnBottomReached {
+        viewModel.onEvent(SearchEvent.OnSearch)
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -114,7 +122,10 @@ fun SearchScreen(
 
                 Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    state = listState
+                ) {
                     items(state.trackableFood) { food ->
                         TrackableFoodItem(
                             trackableFoodUiState = food,

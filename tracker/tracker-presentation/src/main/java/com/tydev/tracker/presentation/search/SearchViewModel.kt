@@ -31,7 +31,11 @@ class SearchViewModel @Inject constructor(
     fun onEvent(event: SearchEvent) {
         when (event) {
             is SearchEvent.OnQueryChange -> {
-                state = state.copy(query = event.query)
+                state = state.copy(
+                    trackableFood = emptyList(),
+                    query = event.query,
+                    lastPage = 0
+                )
             }
             is SearchEvent.OnAmountForFoodChange -> {
                 state = state.copy(
@@ -69,17 +73,18 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(
                 isSearching = true,
-                trackableFood = emptyList()
+                trackableFood = state.trackableFood,
+                lastPage = state.lastPage+1
             )
             trackerUseCases
-                .searchFoodUseCase(state.query)
+                .searchFoodUseCase(state.query, state.lastPage)
                 .onSuccess { foods ->
                     state = state.copy(
-                        trackableFood = foods.map {
+                        trackableFood = state.trackableFood.plus(foods.map {
                             TrackableFoodUiState(it)
-                        },
+                        }),
                         isSearching = false,
-                        query = ""
+                        query = state.query
                     )
                 }
                 .onFailure {
