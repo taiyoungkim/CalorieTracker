@@ -17,13 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
-import com.tydev.onboarding.presentation.components.UnitTextField
-import com.tydev.onboarding.presentation.components.UpDownTextField
+import com.tydev.onboarding.presentation.components.RulerSlider
 
 @Composable
 fun HeightScreen(
@@ -64,12 +64,25 @@ fun HeightScreen(
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-            UpDownTextField(
-                value = viewModel.height,
-                onValueChange = viewModel::onHeightEnter,
-                unit = stringResource(id = R.string.cm),
-                upValue = viewModel::plusHeight,
-                downValue = viewModel::minusHeight
+            RulerSlider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                currentValueLabel = { value ->
+                    Text(
+                        text = "${(value / 1)}${stringResource(id = R.string.cm)}",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    viewModel.updateHeight(value.toString())
+                },
+                indicatorLabel = { value ->
+                    if (value % 5 == 0) {
+                        Text(
+                            text = "${(value / 1)}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
             )
         }
         ActionButton(
