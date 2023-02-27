@@ -1,6 +1,7 @@
 package com.tydev.onboarding.presentation.welcome
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,29 +25,38 @@ fun WelcomeScreen(
     onNextClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
-    Column(
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(spacing.spaceLarge)
     ) {
-        GifImage(
-            gif = R.drawable.on_boarding_image,
-            modifier = Modifier.fillMaxWidth(0.8f),
-        )
-        Text(
-            text = stringResource(id = R.string.welcome_text),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineLarge
-        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            GifImage(
+                gif = R.drawable.on_boarding_image,
+                modifier = Modifier.fillMaxWidth(0.8f),
+            )
+            Text(
+                text = stringResource(id = R.string.welcome_text),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineLarge
+            )
+        }
+
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
+
         ActionButton(
             text = stringResource(id = R.string.next),
             // 보통 presentation 로직을 viewModel 을 통해 구현해야하지만
             // 해당 기능만 존재하는 화면이므로 뷰모델 없이 구현(오버엔지니어링이라 생각)
             onClick = { onNextClick() },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .fillMaxWidth()
         )
     }
 }
