@@ -1,6 +1,5 @@
 package com.tydev.onboarding.presentation.components
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FloatSpringSpec
 import androidx.compose.animation.core.Spring
@@ -9,10 +8,12 @@ import androidx.compose.animation.splineBasedDecay
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.horizontalDrag
+import androidx.compose.foundation.gestures.verticalDrag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -31,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.input.pointer.util.VelocityTracker
@@ -193,6 +194,62 @@ fun RulerSlider(
     }
 }
 
+@Composable
+fun RulerSliderVertical (
+    modifier: Modifier = Modifier,
+    state: RulerSliderState = rememberRulerSliderState(),
+    numSegments: Int = 11,
+    barColor: Color = MaterialTheme.colorScheme.onSurface,
+    currentValueLabel: @Composable (Int) -> Unit = { value -> Text(value.toString()) },
+    indicatorLabel: @Composable (Int) -> Unit = { value -> Text(value.toString()) },
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        currentValueLabel(state.currentValue.roundToInt())
+        Icon(Icons.Filled.PlayArrow, contentDescription = null)
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxHeight()
+                .verticalDrag(state, numSegments),
+            contentAlignment = Alignment.Center,
+        ) {
+            val segmentHeight = maxHeight / numSegments
+            val segmentHeightPx = constraints.maxHeight.toFloat() / numSegments.toFloat()
+            val halfSegments = (numSegments + 1) / 2
+            val start = (state.currentValue - halfSegments).toInt()
+                .coerceAtLeast(state.range.start)
+            val end = (state.currentValue + halfSegments).toInt()
+                .coerceAtMost(state.range.endInclusive)
+
+            val maxOffset = constraints.maxHeight / 2f
+            for (i in start..end) {
+                val offsetY = (i - state.currentValue) * segmentHeightPx
+                // indicator at center is at 1f, indicators at edges are at 0.25f
+                val alpha = 1f - (1f - MinAlpha) * (offsetY / maxOffset).absoluteValue
+                Row(
+                    modifier = Modifier
+                        .height(segmentHeight)
+                        .graphicsLayer(
+                            alpha = alpha,
+                            translationY = offsetY
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(BarHeight)
+                            .height(BarWidth)
+                            .background(barColor)
+                    )
+                    indicatorLabel(i)
+                }
+            }
+        }
+    }
+}
+
 private fun Modifier.drag(
     state: RulerSliderState,
     numSegments: Int,
@@ -210,6 +267,37 @@ private fun Modifier.drag(
                         state.currentValue - change.positionChange().x / segmentWidthPx
                     launch {
                         state.snapTo(horizontalDragOffset)
+                    }
+                    tracker.addPosition(change.uptimeMillis, change.position)
+                    if (change.positionChange() != Offset.Zero) change.consume()
+                }
+            }
+            val velocity = tracker.calculateVelocity().x / numSegments
+            val targetValue = decay.calculateTargetValue(state.currentValue, -velocity)
+            launch {
+                state.decayTo(velocity, targetValue)
+            }
+        }
+    }
+}
+
+private fun Modifier.verticalDrag(
+    state: RulerSliderState,
+    numSegments: Int,
+) = pointerInput(Unit) {
+    val decay = splineBasedDecay<Float>(this)
+    val segmentHeightPx = size.height / numSegments
+    coroutineScope { // lifecycleScope로 수정해야함
+        while (isActive) {
+            val pointerId = awaitPointerEventScope { awaitFirstDown().id }
+            state.stop()
+            val tracker = VelocityTracker()
+            awaitPointerEventScope {
+                verticalDrag(pointerId) { change ->
+                    val verticalDragOffset =
+                        state.currentValue - change.positionChange().y / segmentHeightPx
+                    launch {
+                        state.snapTo(verticalDragOffset)
                     }
                     tracker.addPosition(change.uptimeMillis, change.position)
                     if (change.positionChange() != Offset.Zero) change.consume()

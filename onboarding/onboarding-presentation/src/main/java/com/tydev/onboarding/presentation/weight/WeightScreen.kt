@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,13 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
+import com.tydev.onboarding.presentation.components.RulerSlider
 import com.tydev.onboarding.presentation.components.UnitTextField
 import com.tydev.onboarding.presentation.components.UpDownTextField
+import com.tydev.onboarding.presentation.components.rememberRulerSliderState
 
 @Composable
 fun WeightScreen(
@@ -64,12 +68,29 @@ fun WeightScreen(
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-            UpDownTextField(
-                value = viewModel.weight,
-                onValueChange = viewModel::onWeightEnter,
-                unit = stringResource(id = R.string.kg),
-                upValue = viewModel::plusWeight,
-                downValue = viewModel::minusWeight
+            RulerSlider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                state = rememberRulerSliderState(
+                    currentValue = 60f,
+                    range = 30..150,
+                ),
+                currentValueLabel = { value ->
+                    Text(
+                        text = "${(value / 1)}${stringResource(id = R.string.kg)}",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    viewModel.updateWeight(value.toString())
+                },
+                indicatorLabel = { value ->
+                    if (value % 5 == 0) {
+                        Text(
+                            text = "${(value / 1)}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
             )
         }
         ActionButton(

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +25,7 @@ import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.RulerSlider
+import com.tydev.onboarding.presentation.components.RulerSliderVertical
 
 @Composable
 fun HeightScreen(
@@ -64,9 +66,9 @@ fun HeightScreen(
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-            RulerSlider(
+            RulerSliderVertical(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxHeight()
                     .padding(vertical = 16.dp),
                 currentValueLabel = { value ->
                     Text(
