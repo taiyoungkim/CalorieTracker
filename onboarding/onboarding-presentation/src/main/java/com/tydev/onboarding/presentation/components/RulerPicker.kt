@@ -37,6 +37,7 @@ import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
@@ -198,8 +199,8 @@ private fun Modifier.drag(
 ) = pointerInput(Unit) {
     val decay = splineBasedDecay<Float>(this)
     val segmentWidthPx = size.width / numSegments
-    coroutineScope {
-        while (true) {
+    coroutineScope { // lifecycleScope로 수정해야함
+        while (isActive) {
             val pointerId = awaitPointerEventScope { awaitFirstDown().id }
             state.stop()
             val tracker = VelocityTracker()
