@@ -54,15 +54,16 @@ fun HeightScreen(
             .fillMaxSize()
             .padding(spacing.spaceLarge)
     ) {
+        Text(
+            text = stringResource(id = R.string.whats_your_height),
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.End,
         ) {
-            Text(
-                text = stringResource(id = R.string.whats_your_height),
-                style = MaterialTheme.typography.headlineSmall
-            )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
