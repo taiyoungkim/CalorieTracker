@@ -1,22 +1,7 @@
 plugins {
-    id("tydev.android.library")
-    id("tydev.android.library.compose")
-    id("tydev.android.hilt")
+    id("tydev.android.feature")
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-
-    implementation(libs.coil.kt)
-    implementation(libs.coil.kt.compose)
-
-    implementation(project(":core"))
-    implementation(project(":core-ui"))
-    implementation(project(":core-data"))
     implementation(project(":tracker::tracker-domain"))
 }
