@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":tracker::tracker-domain"))
+    implementation(project(":tracker::tracker-data"))
 }

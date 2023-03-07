@@ -1,4 +1,4 @@
-package com.tydev.core.data.repository
+package com.tydev.core.datastore.repository
 
 import com.tydev.core.datastore.UserPreferencesDataSource
 import com.tydev.core.domain.model.ActivityLevel
