@@ -1,4 +1,4 @@
-package com.tydev.onboarding.domain.di
+package com.tydev.core.di.usecase.onboarding
 
 import com.tydev.onboarding.domain.usecase.ValidateNutrientsUseCase
 import dagger.Module

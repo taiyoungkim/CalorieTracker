@@ -5,7 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.repository.UserDataRepository
+import com.tydev.core.domain.usecase.SetShouldShowOnboardingUseCase
+import com.tydev.tracker.domain.usecase.DeleteTrackedFoodUseCase
 import com.tydev.tracker.domain.usecase.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TrackerOverViewViewModel @Inject constructor(
     private val trackerUseCases: TrackerUseCases,
-    userDataRepository: UserDataRepository
+    private val setShouldShowOnboardingUseCase: SetShouldShowOnboardingUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(TrackerOverViewState())
@@ -35,7 +36,7 @@ class TrackerOverViewViewModel @Inject constructor(
     init {
         refreshFoods()
         viewModelScope.launch {
-            userDataRepository.setShouldShowOnboarding(false)
+            setShouldShowOnboardingUseCase(false)
         }
     }
 

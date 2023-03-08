@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
+import com.tydev.core.domain.usecase.SetCarbRatioUseCase
+import com.tydev.core.domain.usecase.SetFatRatioUseCase
+import com.tydev.core.domain.usecase.SetProteinRatioUseCase
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.core.ui.util.UiText
 import com.tydev.onboarding.domain.usecase.ValidateNutrientsUseCase
@@ -20,7 +23,9 @@ import javax.inject.Inject
 class NutrientViewModel @Inject constructor(
     private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
     private val validateNutrientsUseCase: ValidateNutrientsUseCase,
-    private val userDataRepository: UserDataRepository
+    private val setCarbRatioUseCase: SetCarbRatioUseCase,
+    private val setProteinRatioUseCase: SetProteinRatioUseCase,
+    private val setFatRatioUseCase: SetFatRatioUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(NutrientGoalState())
@@ -55,9 +60,9 @@ class NutrientViewModel @Inject constructor(
                 when (result) {
                     is ValidateNutrientsUseCase.Result.Success -> {
                         viewModelScope.launch {
-                            userDataRepository.setCarbRatio(result.carbsRatio)
-                            userDataRepository.setProteinRatio(result.proteinRatio)
-                            userDataRepository.setFatRatio(result.fatRatio)
+                            setCarbRatioUseCase(result.carbsRatio)
+                            setProteinRatioUseCase(result.proteinRatio)
+                            setFatRatioUseCase(result.fatRatio)
                             _uiEvent.send(UiEvent.Success)
                         }
                     }

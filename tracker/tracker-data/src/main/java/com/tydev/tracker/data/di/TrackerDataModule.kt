@@ -5,8 +5,6 @@ import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tydev.tracker.data.local.TrackerDatabase
 import com.tydev.tracker.data.remote.OpenFoodApi
-import com.tydev.tracker.data.repository.TrackerRepositoryImpl
-import com.tydev.tracker.domain.repository.TrackerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,17 +68,5 @@ object TrackerDataModule {
             TrackerDatabase::class.java,
             "tracker_db"
         ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideTrackerRepository(
-        api: OpenFoodApi,
-        db: TrackerDatabase
-    ): TrackerRepository {
-        return TrackerRepositoryImpl(
-            dao = db.dao,
-            api = api
-        )
     }
 }

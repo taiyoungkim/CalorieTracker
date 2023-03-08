@@ -4,7 +4,7 @@ import com.tydev.core.domain.model.ActivityLevel
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.domain.model.GoalType
 import com.tydev.core.domain.model.UserData
-import com.tydev.core.domain.repository.UserDataRepository
+import com.tydev.core.domain.usecase.GetUserDataUseCase
 import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.domain.model.TrackedFood
 import kotlinx.coroutines.flow.Flow
@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.map
 import kotlin.math.roundToInt
 
 class CalculateMealNutrientsUseCase(
-    private val userDataRepository: UserDataRepository
+    private val getUserDataUseCase: GetUserDataUseCase
 ) {
 
     operator fun invoke(trackedFoods: List<TrackedFood>): Flow<Result> =
-        userDataRepository.userData.map { userData ->
+        getUserDataUseCase().map { userData ->
             val allNutrients = trackedFoods
                 .groupBy { it.mealType }
                 .mapValues { entry ->

@@ -13,7 +13,7 @@ class UserDataRepositoryImpl @Inject constructor(
     private val userPreferencesDataSource: UserPreferencesDataSource,
 ) : UserDataRepository {
 
-    override val userData: Flow<UserData> = userPreferencesDataSource.userData
+    override fun getUserData(): Flow<UserData> = userPreferencesDataSource.userData
 
     override suspend fun setGender(gender: Gender) {
         userPreferencesDataSource.setGender(gender)

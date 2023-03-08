@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.R
 import com.tydev.core.domain.repository.UserDataRepository
+import com.tydev.core.domain.usecase.SetWeightUseCase
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.core.ui.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeightViewModel @Inject constructor(
-    private val userDataRepository: UserDataRepository
+    private val setWeightUseCase: SetWeightUseCase
 ) : ViewModel() {
 
     var weight by mutableStateOf(DEFAULT_WEIGHT)
@@ -45,7 +46,7 @@ class WeightViewModel @Inject constructor(
             )
             return@launch
         }
-        userDataRepository.setWeight(weightNumber)
+        setWeightUseCase(weightNumber)
         _uiEvent.send(UiEvent.Success)
     }
 }

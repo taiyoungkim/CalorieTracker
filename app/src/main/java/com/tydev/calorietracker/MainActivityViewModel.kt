@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.tydev.calorietracker.MainActivityUiState.Loading
 import com.tydev.calorietracker.MainActivityUiState.Success
 import com.tydev.core.domain.model.UserData
-import com.tydev.core.domain.repository.UserDataRepository
+import com.tydev.core.domain.usecase.GetUserDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,10 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    userDataRepository: UserDataRepository
+    getUserDataUseCase: GetUserDataUseCase
 ) : ViewModel() {
 
-    val uiState: StateFlow<MainActivityUiState> = userDataRepository.userData.map {
+    val uiState: StateFlow<MainActivityUiState> = getUserDataUseCase().map {
         Success(it)
     }.stateIn(
         scope = viewModelScope,

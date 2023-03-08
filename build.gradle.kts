@@ -19,6 +19,10 @@ plugins {
     alias(libs.plugins.code.detekt)
 }
 
+apply {
+    from("gradle/projectDependencyGraph.gradle")
+}
+
 allprojects {
     apply {
         plugin(rootProject.libs.plugins.code.ktlint.get().pluginId)

@@ -7,7 +7,7 @@ import com.tydev.core.domain.model.UserData
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {
-    val userData: Flow<UserData>
+    fun getUserData(): Flow<UserData>
 
     suspend fun setGender(gender: Gender)
 
