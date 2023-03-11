@@ -5,4 +5,6 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
