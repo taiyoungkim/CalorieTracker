@@ -1,5 +1,6 @@
 plugins {
     id("tydev.android.library")
+    id("tydev.android.library.jacoco")
     id("tydev.android.hilt")
     id("kotlinx-serialization")
     alias(libs.plugins.ksp)
@@ -20,4 +21,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":tracker:tracker-domain"))
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

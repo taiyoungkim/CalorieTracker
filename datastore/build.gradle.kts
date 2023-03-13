@@ -5,6 +5,7 @@ import com.google.protobuf.gradle.protoc
 
 plugins {
     id("tydev.android.library")
+    id("tydev.android.library.jacoco")
     id("tydev.android.hilt")
     alias(libs.plugins.protobuf)
 }

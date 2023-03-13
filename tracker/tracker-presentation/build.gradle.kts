@@ -1,5 +1,6 @@
 plugins {
     id("tydev.android.feature")
+    id("tydev.android.library.jacoco")
 }
 
 dependencies {
