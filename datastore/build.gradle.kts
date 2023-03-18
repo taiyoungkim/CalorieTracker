@@ -34,4 +34,7 @@ dependencies {
     implementation(libs.protobuf.kotlin.lite)
 
     implementation(project(":core"))
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
