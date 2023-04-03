@@ -17,8 +17,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
-//                    testInstrumentationRunner =
-//                        "com.tydev.buildlogicsample.core.testing.NiaTestRunner"
+                    testInstrumentationRunner =
+                        "androidx.support.test.runner.AndroidUnitRunner"
                 }
             }
 
