@@ -195,7 +195,7 @@ fun RulerSlider(
 }
 
 @Composable
-fun RulerSliderVertical (
+fun RulerSliderVertical(
     modifier: Modifier = Modifier,
     state: RulerSliderState = rememberRulerSliderState(),
     numSegments: Int = 11,
@@ -218,14 +218,14 @@ fun RulerSliderVertical (
             val segmentHeight = maxHeight / numSegments
             val segmentHeightPx = constraints.maxHeight.toFloat() / numSegments.toFloat()
             val halfSegments = (numSegments + 1) / 2
-            val start = (state.currentValue - halfSegments).toInt()
+            val start = (state.currentValue + halfSegments).toInt()
                 .coerceAtLeast(state.range.start)
-            val end = (state.currentValue + halfSegments).toInt()
+            val end = (state.currentValue - halfSegments).toInt()
                 .coerceAtMost(state.range.endInclusive)
 
             val maxOffset = constraints.maxHeight / 2f
-            for (i in start..end) {
-                val offsetY = (i - state.currentValue) * segmentHeightPx
+            for (i in start downTo end) {
+                val offsetY = (state.currentValue - i) * segmentHeightPx
                 // indicator at center is at 1f, indicators at edges are at 0.25f
                 val alpha = 1f - (1f - MinAlpha) * (offsetY / maxOffset).absoluteValue
                 Row(
@@ -287,7 +287,7 @@ private fun Modifier.verticalDrag(
 ) = pointerInput(Unit) {
     val decay = splineBasedDecay<Float>(this)
     val segmentHeightPx = size.height / numSegments
-    coroutineScope { // lifecycleScope로 수정해야함
+    coroutineScope {
         while (isActive) {
             val pointerId = awaitPointerEventScope { awaitFirstDown().id }
             state.stop()
@@ -295,7 +295,7 @@ private fun Modifier.verticalDrag(
             awaitPointerEventScope {
                 verticalDrag(pointerId) { change ->
                     val verticalDragOffset =
-                        state.currentValue - change.positionChange().y / segmentHeightPx
+                        state.currentValue + change.positionChange().y / segmentHeightPx
                     launch {
                         state.snapTo(verticalDragOffset)
                     }
