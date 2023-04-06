@@ -49,7 +49,7 @@ fun HeightScreen(
             }
         }
     }
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(spacing.spaceLarge)
@@ -57,42 +57,47 @@ fun HeightScreen(
         Text(
             text = stringResource(id = R.string.whats_your_height),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.End,
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
         ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+                Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
-            RulerSliderVertical(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(vertical = 16.dp),
-                currentValueLabel = { value ->
-                    Text(
-                        text = "${(value / 1)}${stringResource(id = R.string.cm)}",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    viewModel.updateHeight(value.toString())
-                },
-                indicatorLabel = { value ->
-                    if (value % 5 == 0) {
+                RulerSliderVertical(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(vertical = 16.dp),
+                    currentValueLabel = { value ->
                         Text(
-                            text = "${(value / 1)}",
-                            style = MaterialTheme.typography.bodySmall,
+                            text = "${(value / 1)}${stringResource(id = R.string.cm)}",
+                            style = MaterialTheme.typography.headlineMedium
                         )
+                        viewModel.updateHeight(value.toString())
+                    },
+                    indicatorLabel = { value ->
+                        if (value % 5 == 0) {
+                            Text(
+                                text = "${(value / 1)}",
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         }
         ActionButton(
             text = stringResource(id = R.string.next),
             onClick = viewModel::onNextClick,
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
         )
     }
