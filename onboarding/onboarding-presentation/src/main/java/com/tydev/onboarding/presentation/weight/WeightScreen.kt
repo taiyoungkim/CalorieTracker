@@ -24,6 +24,7 @@ import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
+import com.tydev.onboarding.presentation.components.AnimatedWeightImage
 import com.tydev.onboarding.presentation.components.RulerSlider
 import com.tydev.onboarding.presentation.components.UnitTextField
 import com.tydev.onboarding.presentation.components.UpDownTextField
@@ -67,6 +68,11 @@ fun WeightScreen(
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
+
+            AnimatedWeightImage(
+                weight = viewModel.weight.toDouble(),
+                height = 200,
+                imageResId = com.tydev.onboarding.presentation.R.drawable.man_standing_with_a_computer_svgrepo_com)
 
             RulerSlider(
                 modifier = Modifier

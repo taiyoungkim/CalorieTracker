@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
@@ -83,9 +84,11 @@ fun TrackableFoodItem(
                     painter = rememberAsyncImagePainter(
                         ImageRequest.Builder(LocalContext.current).data(data = food.imageUrl)
                             .apply(block = fun ImageRequest.Builder.() {
+                                size(70)
                                 crossfade(true)
                                 error(R.drawable.ic_burger)
                                 fallback(R.drawable.ic_burger)
+                                memoryCachePolicy(CachePolicy.ENABLED)
                             }).build()
                     ),
                     contentDescription = food.name,

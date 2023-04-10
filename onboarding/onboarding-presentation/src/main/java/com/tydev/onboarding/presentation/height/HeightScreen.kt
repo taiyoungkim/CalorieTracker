@@ -1,8 +1,8 @@
 package com.tydev.onboarding.presentation.height
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +24,7 @@ import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
-import com.tydev.onboarding.presentation.components.RulerSlider
+import com.tydev.onboarding.presentation.components.AnimatedHeightImage
 import com.tydev.onboarding.presentation.components.RulerSliderVertical
 
 @Composable
@@ -64,33 +64,50 @@ fun HeightScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Row(
+                modifier = Modifier
             ) {
-
-                Spacer(modifier = Modifier.height(spacing.spaceMedium))
-
-                RulerSliderVertical(
+                Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(vertical = 16.dp),
-                    currentValueLabel = { value ->
-                        Text(
-                            text = "${(value / 1)}${stringResource(id = R.string.cm)}",
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                        viewModel.updateHeight(value.toString())
-                    },
-                    indicatorLabel = { value ->
-                        if (value % 5 == 0) {
+                        .fillMaxSize()
+                        .weight(1f)
+                        .padding(bottom = 10.dp)
+                ) {
+                    AnimatedHeightImage(
+                        number = viewModel.height.toInt(),
+                        imageResId = com.tydev.onboarding.presentation.R.drawable.man_standing_with_a_computer_svgrepo_com,
+                        modifier = Modifier.align(Alignment.BottomEnd)
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Spacer(modifier = Modifier.height(spacing.spaceMedium))
+
+                    RulerSliderVertical(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(vertical = 16.dp),
+                        currentValueLabel = { value ->
                             Text(
-                                text = "${(value / 1)}",
-                                style = MaterialTheme.typography.bodySmall,
+                                text = "${(value / 1)}${stringResource(id = R.string.cm)}",
+                                style = MaterialTheme.typography.headlineMedium
                             )
+                            viewModel.updateHeight(value.toString())
+                        },
+                        indicatorLabel = { value ->
+                            if (value % 5 == 0) {
+                                Text(
+                                    text = "${(value / 1)}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
         ActionButton(
