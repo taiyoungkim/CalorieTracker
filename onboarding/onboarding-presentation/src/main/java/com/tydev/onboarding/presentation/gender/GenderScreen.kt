@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,13 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tydev.core.R
+import com.tydev.onboarding.presentation.R
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
-import com.tydev.onboarding.presentation.components.SelectableButton
+import com.tydev.onboarding.presentation.components.SelectableImageButton
 
 @Composable
 fun GenderScreen(
@@ -52,14 +54,15 @@ fun GenderScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.whats_your_gender),
+                text = stringResource(id = com.tydev.core.R.string.whats_your_gender),
                 style = MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             Row {
-                SelectableButton(
-                    text = "🙋‍♂️\n️${stringResource(id = R.string.male)}",
+                SelectableImageButton(
+                    modifier = Modifier.weight(1f).defaultMinSize(minHeight = 350.dp),
+                    text = stringResource(id = com.tydev.core.R.string.male),
                     isSelected = viewModel.selectedGender == Gender.MALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -68,12 +71,14 @@ fun GenderScreen(
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
-                    )
+                    ),
+                    imageResId = if (viewModel.selectedGender == Gender.MALE) R.drawable.ic_man_select else R.drawable.ic_man_unselect
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
-                SelectableButton(
-                    text = "🙋‍♀️\n️${stringResource(id = R.string.female)}",
+                SelectableImageButton(
+                    modifier = Modifier.weight(1f).defaultMinSize(minHeight = 350.dp),
+                    text = stringResource(id = com.tydev.core.R.string.female),
                     isSelected = viewModel.selectedGender == Gender.FEMALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
@@ -82,13 +87,14 @@ fun GenderScreen(
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
-                    )
+                    ),
+                    imageResId = if (viewModel.selectedGender == Gender.FEMALE) R.drawable.ic_woman_select else R.drawable.ic_woman_unselect
                 )
             }
         }
 
         ActionButton(
-            text = stringResource(id = R.string.next),
+            text = stringResource(id = com.tydev.core.R.string.next),
             onClick = viewModel::onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)

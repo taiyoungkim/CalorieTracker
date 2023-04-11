@@ -16,6 +16,7 @@ import com.tydev.onboarding.presentation.navigation.goalScreen
 import com.tydev.onboarding.presentation.navigation.heightScreen
 import com.tydev.onboarding.presentation.navigation.navigateToActivity
 import com.tydev.onboarding.presentation.navigation.navigateToAge
+import com.tydev.onboarding.presentation.navigation.navigateToGender
 import com.tydev.onboarding.presentation.navigation.navigateToGoal
 import com.tydev.onboarding.presentation.navigation.navigateToHeight
 import com.tydev.onboarding.presentation.navigation.navigateToNutrientGoal
@@ -40,7 +41,7 @@ fun AppNavHost(
         startDestination = if (userData.shouldShowOnboarding) WELCOME else TRACKER_OVERVIEW,
         modifier = Modifier.padding(padding)
     ) {
-        welcomeScreen { navController.navigateToAge() }
+        welcomeScreen { navController.navigateToGender() }
         genderScreen { navController.navigateToAge() }
         ageScreen({ navController.navigateToHeight() }, snackbarHostState)
         heightScreen({ navController.navigateToWeight() }, snackbarHostState)
