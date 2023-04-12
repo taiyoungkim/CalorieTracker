@@ -127,7 +127,7 @@ class RulerSliderStateImpl(
 @Composable
 fun rememberRulerSliderState(
     currentValue: Float = 180f,
-    range: ClosedRange<Int> = 50..300,
+    range: ClosedRange<Int> = 50..250,
 ): RulerSliderState {
     val state = rememberSaveable(saver = RulerSliderStateImpl.Saver) {
         RulerSliderStateImpl(currentValue, range)

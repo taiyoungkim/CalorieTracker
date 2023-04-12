@@ -75,8 +75,9 @@ fun HeightScreen(
                 ) {
                     AnimatedHeightImage(
                         number = viewModel.height.toInt(),
-                        imageResId = com.tydev.onboarding.presentation.R.drawable.man_standing_with_a_computer_svgrepo_com,
-                        modifier = Modifier.align(Alignment.BottomEnd)
+                        imageResId = com.tydev.onboarding.presentation.R.drawable.ic_man_standing,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
                     )
                 }
                 Column(
