@@ -1,10 +1,15 @@
 package com.tydev.onboarding.presentation.navigation
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.tydev.core.domain.model.Gender
 import com.tydev.onboarding.presentation.activity.ActivityScreen
 import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
@@ -31,7 +36,6 @@ fun NavGraphBuilder.activityScreen(onNextClick: (String) -> Unit) {
     composable(route = ACTIVITY) {
         ActivityScreen(
             onNextClick = {
-//                navController.navigate(Route.Goal.route)
                 onNextClick("")
             }
         )
@@ -57,11 +61,11 @@ fun NavController.navigateToGender(navOptions: NavOptions? = null) {
     this.navigate(GENDER, navOptions)
 }
 
-fun NavGraphBuilder.genderScreen(onNextClick: () -> Unit) {
+fun NavGraphBuilder.genderScreen(onNextClick: (String) -> Unit) {
     composable(route = GENDER) {
         GenderScreen(
             onNextClick = {
-                onNextClick()
+                onNextClick(it.name)
             }
         )
     }
@@ -81,15 +85,17 @@ fun NavGraphBuilder.goalScreen(onNextClick: () -> Unit) {
     }
 }
 
-fun NavController.navigateToHeight(navOptions: NavOptions? = null) {
-    this.navigate(HEIGHT, navOptions)
+fun NavController.navigateToHeight(gender: String, navOptions: NavOptions? = null) {
+    this.navigate("$HEIGHT?gender=$gender", navOptions)
 }
 
-fun NavGraphBuilder.heightScreen(onNextClick: () -> Unit, snackbarHostState: SnackbarHostState) {
-    composable(route = HEIGHT) {
+fun NavGraphBuilder.heightScreen(onNextClick: (String) -> Unit, snackbarHostState: SnackbarHostState) {
+    composable(route = "$HEIGHT?gender={gender}") { backStackEntry ->
+        val gender = backStackEntry.arguments?.getString("gender") ?: ""
         HeightScreen(
+            gender = gender,
             onNextClick = {
-                onNextClick()
+                onNextClick(gender)
             },
             snackbarHostState = snackbarHostState
         )
@@ -111,13 +117,15 @@ fun NavGraphBuilder.nutrientGoalScreen(onNextClick: () -> Unit, snackbarHostStat
     }
 }
 
-fun NavController.navigateToWeight(navOptions: NavOptions? = null) {
-    this.navigate(WEIGHT, navOptions)
+fun NavController.navigateToWeight(gender: String, navOptions: NavOptions? = null) {
+    this.navigate("$WEIGHT?gender=$gender", navOptions)
 }
 
 fun NavGraphBuilder.weightScreen(onNextClick: () -> Unit, snackbarHostState: SnackbarHostState) {
-    composable(route = WEIGHT) {
+    composable(route = "$WEIGHT?gender={gender}") { backStackEntry ->
+        val gender = backStackEntry.arguments?.getString("gender") ?: ""
         WeightScreen(
+            gender = gender,
             onNextClick = {
                 onNextClick()
             },

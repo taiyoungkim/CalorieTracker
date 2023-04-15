@@ -31,14 +31,14 @@ import com.tydev.onboarding.presentation.components.SelectableImageButton
 
 @Composable
 fun GenderScreen(
-    onNextClick: () -> Unit,
+    onNextClick: (Gender) -> Unit,
     viewModel: GenderViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is UiEvent.Success -> onNextClick()
+                is UiEvent.Success -> onNextClick(viewModel.selectedGender)
                 else -> Unit
             }
         }

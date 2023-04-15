@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
+import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
@@ -30,11 +31,16 @@ import com.tydev.onboarding.presentation.components.rememberRulerSliderState
 @Composable
 fun WeightScreen(
     snackbarHostState: SnackbarHostState,
+    gender: String,
     onNextClick: () -> Unit,
     viewModel: WeightViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
+    val resId = if (gender.equals(Gender.MALE.name))
+        com.tydev.onboarding.presentation.R.drawable.ic_man_standing
+    else
+        com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -69,7 +75,7 @@ fun WeightScreen(
             AnimatedWeightImage(
                 weight = viewModel.weight.toDouble(),
                 height = 200,
-                imageResId = com.tydev.onboarding.presentation.R.drawable.ic_man_standing)
+                imageResId = resId)
 
             RulerSlider(
                 modifier = Modifier

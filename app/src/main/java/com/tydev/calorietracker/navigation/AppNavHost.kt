@@ -41,10 +41,10 @@ fun AppNavHost(
         startDestination = if (userData.shouldShowOnboarding) WELCOME else TRACKER_OVERVIEW,
         modifier = Modifier.padding(padding)
     ) {
-        welcomeScreen { navController.navigateToGender() }
-        genderScreen { navController.navigateToAge() }
-        ageScreen({ navController.navigateToHeight() }, snackbarHostState)
-        heightScreen({ navController.navigateToWeight() }, snackbarHostState)
+        welcomeScreen { navController.navigateToAge() }
+        ageScreen({ navController.navigateToGender() }, snackbarHostState)
+        genderScreen { navController.navigateToHeight(it) }
+        heightScreen({ navController.navigateToWeight(it) }, snackbarHostState)
         weightScreen({ navController.navigateToActivity() }, snackbarHostState)
         activityScreen { navController.navigateToGoal() }
         goalScreen { navController.navigateToNutrientGoal() }
