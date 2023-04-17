@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.tydev.core.domain.model.Gender
 import com.tydev.onboarding.presentation.activity.ActivityScreen
+import com.tydev.onboarding.presentation.age.AgeRoute
 import com.tydev.onboarding.presentation.age.AgeScreen
 import com.tydev.onboarding.presentation.gender.GenderScreen
 import com.tydev.onboarding.presentation.goal.GoalScreen
@@ -48,7 +49,7 @@ fun NavController.navigateToAge(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.ageScreen(onNextClick: () -> Unit, snackbarHostState: SnackbarHostState) {
     composable(route = AGE) {
-        AgeScreen(
+        AgeRoute(
             onNextClick = {
                 onNextClick()
             },

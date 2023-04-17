@@ -13,24 +13,28 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.UpDownTextField
 
 @Composable
-fun AgeScreen(
-    snackbarHostState: SnackbarHostState,
+internal fun AgeRoute(
     onNextClick: () -> Unit,
-    viewModel: AgeViewModel = hiltViewModel()
+    viewModel: AgeViewModel = hiltViewModel(),
+    snackbarHostState: SnackbarHostState,
 ) {
-    val spacing = LocalSpacing.current
     val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
@@ -46,6 +50,28 @@ fun AgeScreen(
             }
         }
     }
+
+    val age = remember(viewModel.age) { mutableStateOf(viewModel.age) }
+
+    AgeScreen(
+        age = age,
+        onAgeEnter = viewModel::onAgeEnter,
+        plusAge = viewModel::plusAge,
+        minusAge = viewModel::minusAge,
+        onNextClick = viewModel::onNextClick,
+    )
+}
+
+@Composable
+internal fun AgeScreen(
+    age: MutableState<String>,
+    onAgeEnter: (String) -> Unit,
+    plusAge: () -> Unit,
+    minusAge: () -> Unit,
+    onNextClick: () -> Unit,
+) {
+    val spacing = LocalSpacing.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -63,20 +89,36 @@ fun AgeScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             UpDownTextField(
-                value = viewModel.age,
-                onValueChange = viewModel::onAgeEnter,
+                value = age.value,
+                onValueChange = onAgeEnter,
                 unit = stringResource(id = R.string.years),
-                upValue = viewModel::plusAge,
-                downValue = viewModel::minusAge
+                upValue = plusAge,
+                downValue = minusAge
             )
         }
 
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = viewModel::onNextClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "AgeScreen Preview")
+@Composable
+fun AgeScreenPreview() {
+    val age = remember { mutableStateOf("20") }
+
+    CalorieTrackerTheme {
+        AgeScreen(
+            age = age,
+            onAgeEnter = {},
+            plusAge = {},
+            minusAge = {},
+            onNextClick = {},
         )
     }
 }

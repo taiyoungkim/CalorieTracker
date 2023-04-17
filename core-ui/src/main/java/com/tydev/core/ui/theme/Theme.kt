@@ -1,4 +1,4 @@
-package com.tydev.calorietracker.ui.theme
+package com.tydev.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

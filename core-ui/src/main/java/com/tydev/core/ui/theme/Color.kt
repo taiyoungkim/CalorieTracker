@@ -1,4 +1,4 @@
-package com.tydev.calorietracker.ui.theme
+package com.tydev.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

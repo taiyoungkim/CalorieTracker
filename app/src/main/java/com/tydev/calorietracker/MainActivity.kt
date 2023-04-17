@@ -23,7 +23,7 @@ import coil.annotation.ExperimentalCoilApi
 import com.tydev.calorietracker.MainActivityUiState.Loading
 import com.tydev.calorietracker.MainActivityUiState.Success
 import com.tydev.calorietracker.navigation.AppNavHost
-import com.tydev.calorietracker.ui.theme.CalorieTrackerTheme
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
