@@ -18,31 +18,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.AnimatedHeightImage
 import com.tydev.onboarding.presentation.components.RulerSliderVertical
 
 @Composable
-fun HeightScreen(
+internal fun HeightRoute(
     gender: String,
     snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
     viewModel: HeightViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
     val context = LocalContext.current
-    val resId = if (gender.equals(Gender.MALE.name))
-        com.tydev.onboarding.presentation.R.drawable.ic_man_standing
-    else
-        com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Success -> onNextClick()
@@ -55,6 +52,28 @@ fun HeightScreen(
             }
         }
     }
+
+    HeightScreen(
+        gender = gender,
+        height = viewModel.height.toInt(),
+        updateHeight = { viewModel.updateHeight(it) },
+        onNextClick = viewModel::onNextClick
+    )
+}
+
+@Composable
+internal fun HeightScreen(
+    gender: String,
+    height: Int,
+    updateHeight: (String) -> Unit,
+    onNextClick: () -> Unit,
+) {
+    val spacing = LocalSpacing.current
+    val resId = if (gender.equals(Gender.MALE.name))
+        com.tydev.onboarding.presentation.R.drawable.ic_man_standing
+    else
+        com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +99,7 @@ fun HeightScreen(
                         .padding(bottom = 10.dp)
                 ) {
                     AnimatedHeightImage(
-                        number = viewModel.height.toInt(),
+                        number = height,
                         imageResId = resId,
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -103,7 +122,7 @@ fun HeightScreen(
                                 text = "${(value / 1)}${stringResource(id = R.string.cm)}",
                                 style = MaterialTheme.typography.headlineMedium
                             )
-                            viewModel.updateHeight(value.toString())
+                            updateHeight(value.toString())
                         },
                         indicatorLabel = { value ->
                             if (value % 5 == 0) {
@@ -119,10 +138,23 @@ fun HeightScreen(
         }
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = viewModel::onNextClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "HeightScreen Preview")
+@Composable
+fun HeightScreenPreview() {
+    CalorieTrackerTheme {
+        HeightScreen(
+            gender = "MALE",
+            height = 180,
+            updateHeight = {},
+            onNextClick = {},
         )
     }
 }

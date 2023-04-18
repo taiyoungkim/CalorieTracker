@@ -15,8 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.GifImage
 
@@ -57,6 +59,16 @@ fun WelcomeScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "WelcomePreview")
+@Composable
+fun WelcomePreview() {
+    CalorieTrackerTheme {
+        WelcomeScreen(
+            onNextClick = {}
         )
     }
 }

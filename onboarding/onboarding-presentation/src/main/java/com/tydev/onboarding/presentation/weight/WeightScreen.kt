@@ -17,11 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.AnimatedWeightImage
@@ -29,20 +31,15 @@ import com.tydev.onboarding.presentation.components.RulerSlider
 import com.tydev.onboarding.presentation.components.rememberRulerSliderState
 
 @Composable
-fun WeightScreen(
-    snackbarHostState: SnackbarHostState,
+internal fun WeightRoute(
     gender: String,
+    snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
     viewModel: WeightViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
     val context = LocalContext.current
-    val resId = if (gender.equals(Gender.MALE.name))
-        com.tydev.onboarding.presentation.R.drawable.ic_man_standing
-    else
-        com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Success -> onNextClick()
@@ -55,6 +52,27 @@ fun WeightScreen(
             }
         }
     }
+
+    WeightScreen(
+        gender = gender,
+        weight = viewModel.weight.toDouble(),
+        updateWeight = { viewModel.updateWeight(it.toString()) },
+        onNextClick = viewModel::onNextClick
+    )
+}
+@Composable
+internal fun WeightScreen(
+    gender: String,
+    weight: Double,
+    updateWeight: (Int) -> Unit,
+    onNextClick: () -> Unit,
+) {
+    val spacing = LocalSpacing.current
+    val resId = if (gender.equals(Gender.MALE.name))
+        com.tydev.onboarding.presentation.R.drawable.ic_man_standing
+    else
+        com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +91,7 @@ fun WeightScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             AnimatedWeightImage(
-                weight = viewModel.weight.toDouble(),
+                weight = weight,
                 height = 200,
                 imageResId = resId)
 
@@ -90,7 +108,7 @@ fun WeightScreen(
                         text = "${(value / 1)}${stringResource(id = R.string.kg)}",
                         style = MaterialTheme.typography.headlineMedium
                     )
-                    viewModel.updateWeight(value.toString())
+                    updateWeight(value)
                 },
                 indicatorLabel = { value ->
                     if (value % 5 == 0) {
@@ -104,10 +122,23 @@ fun WeightScreen(
         }
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = viewModel::onNextClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "WeightScreen Preview")
+@Composable
+fun WeightScreenPreview() {
+    CalorieTrackerTheme {
+        WeightScreen(
+            gender = "MALE",
+            weight = 60.0,
+            updateWeight = {},
+            onNextClick = {},
         )
     }
 }

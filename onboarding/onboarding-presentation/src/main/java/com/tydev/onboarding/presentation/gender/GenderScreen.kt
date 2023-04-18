@@ -20,22 +20,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.onboarding.presentation.R
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.SelectableImageButton
 
 @Composable
-fun GenderScreen(
+internal fun GenderRoute(
     onNextClick: (Gender) -> Unit,
     viewModel: GenderViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Success -> onNextClick(viewModel.selectedGender)
@@ -43,6 +44,22 @@ fun GenderScreen(
             }
         }
     }
+
+    GenderScreen(
+        selectedGender = viewModel.selectedGender,
+        onGenderClick = { viewModel.onGenderClick(it) },
+        onNextClick = viewModel::onNextClick
+    )
+}
+
+@Composable
+fun GenderScreen(
+    selectedGender: Gender,
+    onGenderClick: (Gender) -> Unit,
+    onNextClick: () -> Unit,
+) {
+    val spacing = LocalSpacing.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,44 +78,60 @@ fun GenderScreen(
 
             Row {
                 SelectableImageButton(
-                    modifier = Modifier.weight(1f).defaultMinSize(minHeight = 350.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .defaultMinSize(minHeight = 350.dp),
                     text = stringResource(id = com.tydev.core.R.string.male),
-                    isSelected = viewModel.selectedGender == Gender.MALE,
+                    isSelected = selectedGender == Gender.MALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGenderClick(Gender.MALE)
+                        onGenderClick(Gender.MALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
-                    imageResId = if (viewModel.selectedGender == Gender.MALE) R.drawable.ic_man_select else R.drawable.ic_man_unselect
+                    imageResId = if (selectedGender == Gender.MALE) R.drawable.ic_man_select else R.drawable.ic_man_unselect
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 SelectableImageButton(
-                    modifier = Modifier.weight(1f).defaultMinSize(minHeight = 350.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .defaultMinSize(minHeight = 350.dp),
                     text = stringResource(id = com.tydev.core.R.string.female),
-                    isSelected = viewModel.selectedGender == Gender.FEMALE,
+                    isSelected = selectedGender == Gender.FEMALE,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onGenderClick(Gender.FEMALE)
+                        onGenderClick(Gender.FEMALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
-                    imageResId = if (viewModel.selectedGender == Gender.FEMALE) R.drawable.ic_woman_select else R.drawable.ic_woman_unselect
+                    imageResId = if (selectedGender == Gender.FEMALE) R.drawable.ic_woman_select else R.drawable.ic_woman_unselect
                 )
             }
         }
 
         ActionButton(
             text = stringResource(id = com.tydev.core.R.string.next),
-            onClick = viewModel::onNextClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "GenderScreen Preview")
+@Composable
+fun GenderScreenPreview() {
+    CalorieTrackerTheme {
+        GenderScreen(
+            selectedGender = Gender.MALE,
+            onGenderClick = {},
+            onNextClick = {},
         )
     }
 }

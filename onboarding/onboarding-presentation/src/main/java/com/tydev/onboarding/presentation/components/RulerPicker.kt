@@ -66,7 +66,7 @@ class RulerSliderStateImpl(
     private val animatable = Animatable(currentValue)
     private val decayAnimationSpec = FloatSpringSpec(
         dampingRatio = Spring.DampingRatioLowBouncy,
-        stiffness = Spring.StiffnessLow,
+//        stiffness = Spring.StiffnessLow,
     )
 
     override val currentValue: Float

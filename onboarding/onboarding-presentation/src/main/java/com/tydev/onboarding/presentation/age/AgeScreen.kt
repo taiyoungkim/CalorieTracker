@@ -64,7 +64,7 @@ internal fun AgeRoute(
 
 @Composable
 internal fun AgeScreen(
-    age: MutableState<String>,
+    age: MutableState<Int>,
     onAgeEnter: (String) -> Unit,
     plusAge: () -> Unit,
     minusAge: () -> Unit,
@@ -89,7 +89,7 @@ internal fun AgeScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             UpDownTextField(
-                value = age.value,
+                value = age.value.toString(),
                 onValueChange = onAgeEnter,
                 unit = stringResource(id = R.string.years),
                 upValue = plusAge,
@@ -110,7 +110,7 @@ internal fun AgeScreen(
 @Preview(showBackground = true, name = "AgeScreen Preview")
 @Composable
 fun AgeScreenPreview() {
-    val age = remember { mutableStateOf("20") }
+    val age = remember { mutableStateOf(20) }
 
     CalorieTrackerTheme {
         AgeScreen(

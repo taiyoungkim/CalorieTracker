@@ -19,22 +19,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.domain.model.ActivityLevel
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.SelectableButton
 
 @Composable
-fun ActivityScreen(
+fun ActivityRoute(
     onNextClick: () -> Unit,
     viewModel: ActivityViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
-
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Success -> onNextClick()
@@ -42,6 +42,22 @@ fun ActivityScreen(
             }
         }
     }
+
+    ActivityScreen(
+        selectedActivityLevel = viewModel.selectedActivityLevel,
+        onActivityLevelSelect = { viewModel.onActivityLevelSelect(it) },
+        onNextClick = viewModel::onNextClick
+    )
+}
+
+@Composable
+fun ActivityScreen(
+    selectedActivityLevel: ActivityLevel,
+    onActivityLevelSelect: (ActivityLevel) -> Unit,
+    onNextClick: () -> Unit,
+) {
+    val spacing = LocalSpacing.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -62,11 +78,11 @@ fun ActivityScreen(
             Row {
                 SelectableButton(
                     text = "💤\n${stringResource(id = R.string.low)}",
-                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.LOW,
+                    isSelected = selectedActivityLevel == ActivityLevel.LOW,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.LOW)
+                        onActivityLevelSelect(ActivityLevel.LOW)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -77,11 +93,11 @@ fun ActivityScreen(
 
                 SelectableButton(
                     text = "👟\n${stringResource(id = R.string.medium)}",
-                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.MEDIUM,
+                    isSelected = selectedActivityLevel == ActivityLevel.MEDIUM,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.MEDIUM)
+                        onActivityLevelSelect(ActivityLevel.MEDIUM)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -92,11 +108,11 @@ fun ActivityScreen(
 
                 SelectableButton(
                     text = "🏋️\n${stringResource(id = R.string.high)}",
-                    isSelected = viewModel.selectedActivityLevel == ActivityLevel.HIGH,
+                    isSelected = selectedActivityLevel == ActivityLevel.HIGH,
                     color = MaterialTheme.colorScheme.primary,
                     selectedTextColor = Color.White,
                     onClick = {
-                        viewModel.onActivityLevelSelect(ActivityLevel.HIGH)
+                        onActivityLevelSelect(ActivityLevel.HIGH)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
@@ -107,10 +123,22 @@ fun ActivityScreen(
 
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = viewModel::onNextClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .fillMaxWidth()
         )
+    }
+}
+
+@Preview(showBackground = true, name = "ActivityScreen Preview")
+@Composable
+fun ActivityPreview() {
+    CalorieTrackerTheme {
+        ActivityScreen(
+            selectedActivityLevel = ActivityLevel.MEDIUM,
+            onActivityLevelSelect = {}
+        ) {
+        }
     }
 }

@@ -29,20 +29,21 @@ class AgeViewModel @Inject constructor(
 
     fun onAgeEnter(age: String) {
         if (age.length <= VALIDATE_AGE_LENGTH) {
-            this.age = filterOutDigitsUseCase(age)
+            this.age = filterOutDigitsUseCase(age).toInt()
         }
     }
 
     fun plusAge() {
-        age = age.toInt().plus(1).toString()
+        age = age.plus(1)
     }
 
     fun minusAge() {
-        age = age.toInt().minus(1).toString()
+        if (age > 0)
+            age = age.minus(1)
     }
 
     fun onNextClick() = viewModelScope.launch {
-        val ageNumber = age.toIntOrNull() ?: run {
+        val ageNumber = age ?: run {
             _uiEvent.send(
                 // viewModel 에 context 를 참조해야하는 문제
                 // -> helper class 를 통해 해결
@@ -57,5 +58,5 @@ class AgeViewModel @Inject constructor(
     }
 }
 
-const val DEFAULT_AGE = "20"
+const val DEFAULT_AGE = 20
 const val VALIDATE_AGE_LENGTH = 3

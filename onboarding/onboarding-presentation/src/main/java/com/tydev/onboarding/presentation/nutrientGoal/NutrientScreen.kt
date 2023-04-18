@@ -17,20 +17,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.UnitTextField
 
 @Composable
-fun NutrientScreen(
+fun NutrientRoute(
     snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
     viewModel: NutrientViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
     val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
@@ -46,6 +47,24 @@ fun NutrientScreen(
             }
         }
     }
+
+    NutrientScreen(
+        carbsRatio = viewModel.state.carbsRatio,
+        proteinRatio = viewModel.state.proteinRatio,
+        fatRatio = viewModel.state.fatRatio,
+        onEvent = { viewModel.onEvent(it) }
+    )
+}
+
+@Composable
+fun NutrientScreen(
+    carbsRatio: String,
+    proteinRatio: String,
+    fatRatio: String,
+    onEvent: (NutrientGoalEvent) -> Unit,
+) {
+    val spacing = LocalSpacing.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -64,9 +83,9 @@ fun NutrientScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             UnitTextField(
-                value = viewModel.state.carbsRatio,
+                value = carbsRatio,
                 onValueChange = {
-                    viewModel.onEvent(NutrientGoalEvent.OnCarbRatioEnter(it))
+                    onEvent(NutrientGoalEvent.OnCarbRatioEnter(it))
                 },
                 unit = stringResource(id = R.string.percent_carbs)
             )
@@ -74,9 +93,9 @@ fun NutrientScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             UnitTextField(
-                value = viewModel.state.proteinRatio,
+                value = proteinRatio,
                 onValueChange = {
-                    viewModel.onEvent(NutrientGoalEvent.OnProteinRatioEnter(it))
+                    onEvent(NutrientGoalEvent.OnProteinRatioEnter(it))
                 },
                 unit = stringResource(id = R.string.percent_proteins)
             )
@@ -84,9 +103,9 @@ fun NutrientScreen(
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             UnitTextField(
-                value = viewModel.state.fatRatio,
+                value = fatRatio,
                 onValueChange = {
-                    viewModel.onEvent(NutrientGoalEvent.OnFatRatioEnter(it))
+                    onEvent(NutrientGoalEvent.OnFatRatioEnter(it))
                 },
                 unit = stringResource(id = R.string.percent_fats)
             )
@@ -94,7 +113,7 @@ fun NutrientScreen(
         ActionButton(
             text = stringResource(id = R.string.next),
             onClick = {
-                viewModel.onEvent(NutrientGoalEvent.OnNextClick)
+                onEvent(NutrientGoalEvent.OnNextClick)
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -102,3 +121,17 @@ fun NutrientScreen(
         )
     }
 }
+
+@Preview(showBackground = true, name = "NutrientScreen Preview")
+@Composable
+fun NutrientPreview() {
+    CalorieTrackerTheme {
+        NutrientScreen(
+            carbsRatio = "30",
+            proteinRatio = "40",
+            fatRatio = "30",
+            onEvent = {}
+        )
+    }
+}
+
