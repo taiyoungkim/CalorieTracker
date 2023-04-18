@@ -29,24 +29,27 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.R
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.OnBottomReached
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.presentation.search.components.SearchTextField
 import com.tydev.tracker.presentation.search.components.TrackableFoodItem
 import java.time.LocalDate
+import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
-fun SearchScreen(
+fun SearchRoute(
     snackbarHostState: SnackbarHostState,
     mealName: String,
     dayOfMonth: Int,
@@ -55,11 +58,8 @@ fun SearchScreen(
     onNavigateUp: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
-    val state = viewModel.state
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    val listState = rememberLazyListState()
 
     LaunchedEffect(key1 = keyboardController) {
         viewModel.uiEvent.collect { event ->
@@ -76,8 +76,37 @@ fun SearchScreen(
         }
     }
 
+    SearchScreen(
+        mealName = mealName,
+        dayOfMonth = dayOfMonth,
+        month = month,
+        year = year,
+        state = viewModel.state,
+        keyboardController = keyboardController,
+        onNavigateUp = onNavigateUp,
+        onEvent = { viewModel.onEvent(it) }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalCoilApi
+@ExperimentalComposeUiApi
+@Composable
+fun SearchScreen(
+    mealName: String,
+    dayOfMonth: Int,
+    month: Int,
+    year: Int,
+    state: SearchState,
+    keyboardController: SoftwareKeyboardController?,
+    onNavigateUp: () -> Unit,
+    onEvent: (SearchEvent) -> Unit,
+) {
+    val spacing = LocalSpacing.current
+    val listState = rememberLazyListState()
+
     listState.OnBottomReached {
-        viewModel.onEvent(SearchEvent.OnSearch)
+        onEvent(SearchEvent.OnSearch)
     }
 
     Scaffold(
@@ -109,15 +138,15 @@ fun SearchScreen(
                 SearchTextField(
                     text = state.query,
                     onValueChange = {
-                        viewModel.onEvent(SearchEvent.OnQueryChange(it))
+                        onEvent(SearchEvent.OnQueryChange(it))
                     },
                     shouldShowHint = state.isHintVisible,
                     onSearch = {
                         keyboardController?.hide()
-                        viewModel.onEvent(SearchEvent.OnSearch)
+                        onEvent(SearchEvent.OnSearch)
                     },
                     onFocusChanged = {
-                        viewModel.onEvent(SearchEvent.OnSearchFocusChange(it.isFocused))
+                        onEvent(SearchEvent.OnSearchFocusChange(it.isFocused))
                     }
                 )
 
@@ -131,10 +160,10 @@ fun SearchScreen(
                         TrackableFoodItem(
                             trackableFoodUiState = food,
                             onClick = {
-                                viewModel.onEvent(SearchEvent.OnToggleTrackableFood(food.food))
+                                onEvent(SearchEvent.OnToggleTrackableFood(food.food))
                             },
                             onAmountChange = {
-                                viewModel.onEvent(
+                                onEvent(
                                     SearchEvent.OnAmountForFoodChange(
                                         food.food, it
                                     )
@@ -142,7 +171,7 @@ fun SearchScreen(
                             },
                             onTrack = {
                                 keyboardController?.hide()
-                                viewModel.onEvent(
+                                onEvent(
                                     SearchEvent.OnTrackFoodClick(
                                         food = food.food,
                                         mealType = MealType.fromString(mealName),
@@ -172,4 +201,25 @@ fun SearchScreen(
             }
         }
     )
+}
+
+@ExperimentalCoilApi
+@ExperimentalComposeUiApi
+@Preview(showBackground = true, name = "SearchPreview")
+@Composable
+fun SearchPreview() {
+    val calendar = Calendar.getInstance()
+
+    CalorieTrackerTheme {
+        SearchScreen(
+            mealName = MealType.Breakfast.name,
+            dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH),
+            month = calendar.get(Calendar.MONTH),
+            year = calendar.get(Calendar.YEAR),
+            state = SearchState(),
+            keyboardController = null,
+            onNavigateUp = {},
+            onEvent = {}
+        )
+    }
 }

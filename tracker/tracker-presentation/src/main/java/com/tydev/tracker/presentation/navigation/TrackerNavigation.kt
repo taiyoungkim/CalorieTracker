@@ -12,8 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.domain.model.UserData
-import com.tydev.tracker.presentation.overview.TrackerOverViewScreen
-import com.tydev.tracker.presentation.search.SearchScreen
+import com.tydev.tracker.presentation.overview.TrackerOverViewRoute
+import com.tydev.tracker.presentation.search.SearchRoute
 
 const val TRACKER_OVERVIEW = "tracker_overview"
 const val SEARCH = "search"
@@ -25,7 +25,7 @@ fun NavController.navigateToTrackerOverview(navOptions: NavOptions? = null) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalCoilApi::class)
 fun NavGraphBuilder.trackerOverViewScreen(navController: NavHostController, userData: UserData) {
     composable(route = TrackerRoute.TrackerOverview.route) {
-        TrackerOverViewScreen(
+        TrackerOverViewRoute(
             userData = userData,
             onNavigateToSearch = { mealName, day, month, year ->
                 TrackerRoute.Search.navigate(
@@ -62,7 +62,7 @@ fun NavGraphBuilder.searchScreen(navController: NavHostController, snackbarHostS
         val dayOfMonth = backStackEntry.arguments?.getInt("dayOfMonth")!!
         val month = backStackEntry.arguments?.getInt("month")!!
         val year = backStackEntry.arguments?.getInt("year")!!
-        SearchScreen(
+        SearchRoute(
             snackbarHostState = snackbarHostState,
             mealName = mealName,
             dayOfMonth = dayOfMonth,

@@ -18,12 +18,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.annotation.ExperimentalCoilApi
 import com.tydev.core.R
+import com.tydev.core.domain.model.ActivityLevel
+import com.tydev.core.domain.model.Gender
+import com.tydev.core.domain.model.GoalType
 import com.tydev.core.domain.model.UserData
 import com.tydev.core.ui.LocalSpacing
+import com.tydev.core.ui.theme.CalorieTrackerTheme
+import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.domain.model.TrackedFood
 import com.tydev.tracker.presentation.overview.components.ActionsRow
 import com.tydev.tracker.presentation.overview.components.AddButton
@@ -37,18 +43,42 @@ import com.tydev.tracker.presentation.overview.components.TopHeader
 @ExperimentalMaterial3Api
 @ExperimentalCoilApi
 @Composable
-fun TrackerOverViewScreen(
+fun TrackerOverViewRoute(
     onNavigateToSearch: (String, Int, Int, Int) -> Unit,
     userData: UserData,
     viewModel: TrackerOverViewViewModel = hiltViewModel()
 ) {
-    val spacing = LocalSpacing.current
     val state = viewModel.state
+    val revealedCardIds by viewModel.revealedCardIdsList.collectAsStateWithLifecycle()
+
+    TrackerOverViewScreen(
+        onNavigateToSearch = onNavigateToSearch,
+        userData = userData,
+        state = state,
+        revealedCardIds = revealedCardIds,
+        onEvent = { viewModel.onEvent(it) },
+        onItemExpanded = { viewModel.onItemExpanded(it) },
+        onItemCollapsed = { viewModel.onItemCollapsed(it) },
+    )
+}
+
+@ExperimentalMaterial3Api
+@ExperimentalCoilApi
+@Composable
+fun TrackerOverViewScreen(
+    onNavigateToSearch: (String, Int, Int, Int) -> Unit,
+    userData: UserData,
+    state: TrackerOverViewState,
+    revealedCardIds: List<Int>,
+    onEvent: (TrackerOverViewEvent) -> Unit,
+    onItemExpanded: (Int) -> Unit,
+    onItemCollapsed: (Int) -> Unit,
+) {
+    val spacing = LocalSpacing.current
     val context = LocalContext.current
 
     val showDialog = remember { mutableStateOf(false) }
     val selectedFood: MutableState<TrackedFood?> = remember { mutableStateOf(null) }
-    val revealedCardIds by viewModel.revealedCardIdsList.collectAsStateWithLifecycle()
 
     if (showDialog.value && selectedFood.value != null)
         EditDialog(
@@ -57,7 +87,7 @@ fun TrackerOverViewScreen(
                 showDialog.value = it
             }
         ) {
-            viewModel.onEvent(
+            onEvent(
                 TrackerOverViewEvent
                     .OnUpdateTrackedFoodClick(selectedFood.value!!, it.toInt())
             )
@@ -77,10 +107,10 @@ fun TrackerOverViewScreen(
             DaySelector(
                 date = state.date,
                 onPreviousDayClick = {
-                    viewModel.onEvent(TrackerOverViewEvent.OnPreviousDayClick)
+                    onEvent(TrackerOverViewEvent.OnPreviousDayClick)
                 },
                 onNextDayClick = {
-                    viewModel.onEvent(TrackerOverViewEvent.OnNextDayClick)
+                    onEvent(TrackerOverViewEvent.OnNextDayClick)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,7 +122,7 @@ fun TrackerOverViewScreen(
             ExpandableMeal(
                 meal = meal,
                 onToggleClick = {
-                    viewModel.onEvent(TrackerOverViewEvent.OnToggleMealClick(meal))
+                    onEvent(TrackerOverViewEvent.OnToggleMealClick(meal))
                 },
                 content = {
                     Column(
@@ -107,7 +137,7 @@ fun TrackerOverViewScreen(
                             Box(Modifier.fillMaxWidth()) {
                                 ActionsRow(
                                     onDelete = {
-                                        viewModel.onEvent(
+                                        onEvent(
                                             TrackerOverViewEvent
                                                 .OnDeleteTrackedFoodClick(food)
                                         )
@@ -121,8 +151,8 @@ fun TrackerOverViewScreen(
                                     trackedFood = food,
                                     isRevealed = revealedCardIds.contains(food.id),
                                     cardOffset = 300f,
-                                    onExpand = { viewModel.onItemExpanded(food.id!!) },
-                                    onCollapse = { viewModel.onItemCollapsed(food.id!!) },
+                                    onExpand = { onItemExpanded(food.id!!) },
+                                    onCollapse = { onItemCollapsed(food.id!!) },
                                 )
                             }
                             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -150,3 +180,33 @@ fun TrackerOverViewScreen(
     }
 }
 
+@ExperimentalMaterial3Api
+@ExperimentalCoilApi
+@Preview(showBackground = true, name = "TrackerOverViewPreView")
+@Composable
+fun TrackerOverViewPreView() {
+    val mockUserData = UserData(
+        gender = Gender.MALE,
+        age = 25,
+        weight = 70f,
+        height = 180,
+        activityLevel = ActivityLevel.HIGH,
+        goalType = GoalType.LOSE_WEIGHT,
+        carbRatio = 0.5f,
+        proteinRatio = 0.3f,
+        fatRatio = 0.2f,
+        shouldShowOnboarding = false
+    )
+
+    CalorieTrackerTheme {
+        TrackerOverViewScreen(
+            onNavigateToSearch = { _, _, _, _ -> },
+            userData = mockUserData,
+            state = TrackerOverViewState(),
+            revealedCardIds = listOf(),
+            onEvent = {},
+            onItemExpanded = {},
+            onItemCollapsed = {},
+        )
+    }
+}
