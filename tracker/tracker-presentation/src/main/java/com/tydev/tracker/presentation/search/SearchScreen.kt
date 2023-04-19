@@ -84,7 +84,7 @@ fun SearchRoute(
         state = viewModel.state,
         keyboardController = keyboardController,
         onNavigateUp = onNavigateUp,
-        onEvent = { viewModel.onEvent(it) }
+        onEvent = viewModel::onEvent
     )
 }
 

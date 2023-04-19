@@ -47,7 +47,7 @@ internal fun GenderRoute(
 
     GenderScreen(
         selectedGender = viewModel.selectedGender,
-        onGenderClick = { viewModel.onGenderClick(it) },
+        onGenderClick = viewModel::onGenderClick,
         onNextClick = viewModel::onNextClick
     )
 }

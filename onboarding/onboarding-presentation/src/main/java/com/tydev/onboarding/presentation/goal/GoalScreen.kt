@@ -45,7 +45,7 @@ fun GoalRoute(
 
     GoalScreen(
         selectedGoal = viewModel.selectedGoal,
-        onGoalTypeSelect = { viewModel.onGoalTypeSelect(it) },
+        onGoalTypeSelect = viewModel::onGoalTypeSelect,
         onNextClick = viewModel::onNextClick
     )
 }

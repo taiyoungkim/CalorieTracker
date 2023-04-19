@@ -56,9 +56,9 @@ fun TrackerOverViewRoute(
         userData = userData,
         state = state,
         revealedCardIds = revealedCardIds,
-        onEvent = { viewModel.onEvent(it) },
-        onItemExpanded = { viewModel.onItemExpanded(it) },
-        onItemCollapsed = { viewModel.onItemCollapsed(it) },
+        onEvent = viewModel::onEvent,
+        onItemExpanded = viewModel::onItemExpanded,
+        onItemCollapsed = viewModel::onItemCollapsed,
     )
 }
 

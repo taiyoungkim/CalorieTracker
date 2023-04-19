@@ -52,7 +52,7 @@ fun NutrientRoute(
         carbsRatio = viewModel.state.carbsRatio,
         proteinRatio = viewModel.state.proteinRatio,
         fatRatio = viewModel.state.fatRatio,
-        onEvent = { viewModel.onEvent(it) }
+        onEvent = viewModel::onEvent
     )
 }
 

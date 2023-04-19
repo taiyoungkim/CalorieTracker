@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tydev.core.R
-import com.tydev.core.ui.CarbColor
-import com.tydev.core.ui.FatColor
+import com.tydev.core.ui.theme.CarbColor
+import com.tydev.core.ui.theme.FatColor
 import com.tydev.core.ui.LocalSpacing
-import com.tydev.core.ui.ProteinColor
+import com.tydev.core.ui.theme.ProteinColor
 import com.tydev.tracker.presentation.overview.TrackerOverViewState
 
 @Composable

@@ -45,7 +45,7 @@ fun ActivityRoute(
 
     ActivityScreen(
         selectedActivityLevel = viewModel.selectedActivityLevel,
-        onActivityLevelSelect = { viewModel.onActivityLevelSelect(it) },
+        onActivityLevelSelect = viewModel::onActivityLevelSelect,
         onNextClick = viewModel::onNextClick
     )
 }

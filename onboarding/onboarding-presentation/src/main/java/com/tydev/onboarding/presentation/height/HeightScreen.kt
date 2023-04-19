@@ -56,7 +56,7 @@ internal fun HeightRoute(
     HeightScreen(
         gender = gender,
         height = viewModel.height.toInt(),
-        updateHeight = { viewModel.updateHeight(it) },
+        updateHeight = viewModel::updateHeight,
         onNextClick = viewModel::onNextClick
     )
 }
