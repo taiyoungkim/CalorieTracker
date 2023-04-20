@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
     val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
         var uiState: MainActivityUiState by mutableStateOf(Loading)
@@ -49,6 +51,12 @@ class MainActivity : ComponentActivity() {
                         uiState = it
                     }
                     .collect()
+            }
+        }
+        splashScreen.setKeepOnScreenCondition {
+            when (uiState) {
+                Loading -> true
+                is Success -> false
             }
         }
         setContent {

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.CalorieTracker" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="NightAdjusted.Theme.CalorieTracker" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="PlatformAdjusted.Theme.CalorieTracker" parent="NightAdjusted.Theme.CalorieTracker">
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="Theme.CalorieTracker" parent="PlatformAdjusted.Theme.CalorieTracker" />
+
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="Theme.CalorieTracker.Splash" parent="NightAdjusted.Theme.Splash">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.CalorieTracker</item>
+    </style>
+
 </resources>
