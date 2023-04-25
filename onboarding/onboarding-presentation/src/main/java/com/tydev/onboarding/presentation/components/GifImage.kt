@@ -1,5 +1,6 @@
 package com.tydev.onboarding.presentation.components
 
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +22,7 @@ fun GifImage(
     val context = LocalContext.current
     val imageLoader = ImageLoader.Builder(context)
         .components {
-            if (SDK_INT >= 28) {
+            if (SDK_INT >= Build.VERSION_CODES.P) {
                 add(ImageDecoderDecoder.Factory())
             } else {
                 add(GifDecoder.Factory())
@@ -32,7 +33,8 @@ fun GifImage(
         painter = rememberAsyncImagePainter(
             ImageRequest.Builder(context).data(data = gif).apply(block = {
                 size(Size.ORIGINAL)
-            }).build(), imageLoader = imageLoader
+            }).build(),
+            imageLoader = imageLoader
         ),
         contentDescription = null,
         modifier = modifier.fillMaxWidth(),

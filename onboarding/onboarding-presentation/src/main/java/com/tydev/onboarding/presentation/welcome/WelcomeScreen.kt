@@ -40,7 +40,7 @@ fun WelcomeScreen(
         ) {
             GifImage(
                 gif = R.drawable.on_boarding_image,
-                modifier = Modifier.fillMaxWidth(0.8f),
+                modifier = Modifier.fillMaxWidth(WIDTH_RATIO),
             )
             Text(
                 text = stringResource(id = R.string.welcome_text),
@@ -72,3 +72,5 @@ fun WelcomePreview() {
         )
     }
 }
+
+private const val WIDTH_RATIO = 0.8f

@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tydev.onboarding.presentation.R
 import com.tydev.core.domain.model.Gender
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.theme.CalorieTrackerTheme
 import com.tydev.core.ui.util.UiEvent
+import com.tydev.onboarding.presentation.R
 import com.tydev.onboarding.presentation.components.ActionButton
 import com.tydev.onboarding.presentation.components.SelectableImageButton
 
@@ -80,7 +80,7 @@ fun GenderScreen(
                 SelectableImageButton(
                     modifier = Modifier
                         .weight(1f)
-                        .defaultMinSize(minHeight = 350.dp),
+                        .defaultMinSize(minHeight = DEFAULT_HEIGHT.dp),
                     text = stringResource(id = com.tydev.core.R.string.male),
                     isSelected = selectedGender == Gender.MALE,
                     color = MaterialTheme.colorScheme.primary,
@@ -91,14 +91,17 @@ fun GenderScreen(
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
-                    imageResId = if (selectedGender == Gender.MALE) R.drawable.ic_man_select else R.drawable.ic_man_unselect
+                    imageResId = if (selectedGender == Gender.MALE)
+                        R.drawable.ic_man_select
+                    else
+                        R.drawable.ic_man_unselect
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 SelectableImageButton(
                     modifier = Modifier
                         .weight(1f)
-                        .defaultMinSize(minHeight = 350.dp),
+                        .defaultMinSize(minHeight = DEFAULT_HEIGHT.dp),
                     text = stringResource(id = com.tydev.core.R.string.female),
                     isSelected = selectedGender == Gender.FEMALE,
                     color = MaterialTheme.colorScheme.primary,
@@ -109,7 +112,10 @@ fun GenderScreen(
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
-                    imageResId = if (selectedGender == Gender.FEMALE) R.drawable.ic_woman_select else R.drawable.ic_woman_unselect
+                    imageResId = if (selectedGender == Gender.FEMALE)
+                        R.drawable.ic_woman_select
+                    else
+                        R.drawable.ic_woman_unselect
                 )
             }
         }
@@ -135,3 +141,5 @@ fun GenderScreenPreview() {
         )
     }
 }
+
+private const val DEFAULT_HEIGHT = 350

@@ -50,7 +50,10 @@ fun ExpandableMeal(
         ) {
             Image(
                 painter = painterResource(id = meal.drawableRes),
-                colorFilter = if (meal.calories > 0) ColorFilter.tint(color = MaterialTheme.colorScheme.primary) else null,
+                colorFilter = if (meal.calories > 0)
+                    ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
+                else
+                    null,
                 contentDescription = meal.name.asString(context)
             )
             Spacer(modifier = Modifier.width(spacing.spaceMedium))

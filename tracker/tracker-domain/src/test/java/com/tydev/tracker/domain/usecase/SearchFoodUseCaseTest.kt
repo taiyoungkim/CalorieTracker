@@ -58,7 +58,9 @@ class SearchFoodUseCaseTest {
                 imageUrl = "https://example.com/caesar.jpg"
             )
         )
-        coEvery { trackerRepository.searchFood(query, DEFAULT_PAGE, DEFAULT_PAGE_SIZE) } returns Result.success(expectedFoods)
+        coEvery {
+            trackerRepository.searchFood(query, DEFAULT_PAGE, DEFAULT_PAGE_SIZE)
+        } returns Result.success(expectedFoods)
 
         // When
         val result = searchFoodUseCase(query)

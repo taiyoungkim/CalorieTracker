@@ -5,7 +5,6 @@ import com.tydev.tracker.data.dto.Product
 import com.tydev.tracker.data.dto.SearchDto
 import com.tydev.tracker.data.entity.TrackedFoodEntity
 import com.tydev.tracker.data.local.TrackerDao
-import com.tydev.tracker.data.mapper.toTrackableFood
 import com.tydev.tracker.data.mapper.toTrackedFood
 import com.tydev.tracker.data.mapper.toTrackedFoodEntity
 import com.tydev.tracker.data.remote.OpenFoodApi

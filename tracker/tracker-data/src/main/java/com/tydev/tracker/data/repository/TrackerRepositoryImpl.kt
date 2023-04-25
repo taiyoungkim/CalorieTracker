@@ -1,3 +1,4 @@
+@file:Suppress("MagicNumber")
 package com.tydev.tracker.data.repository
 
 import com.tydev.tracker.data.local.TrackerDao
@@ -10,6 +11,8 @@ import com.tydev.tracker.domain.model.TrackedFood
 import com.tydev.tracker.domain.repository.TrackerRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import retrofit2.HttpException
+import java.io.IOException
 import java.time.LocalDate
 
 class TrackerRepositoryImpl(
@@ -41,7 +44,9 @@ class TrackerRepositoryImpl(
                     }
                     .mapNotNull { it.toTrackableFood() }
             )
-        } catch (e: Exception) {
+        } catch (e: IOException) {
+            Result.failure(e)
+        } catch (e: HttpException) {
             Result.failure(e)
         }
     }

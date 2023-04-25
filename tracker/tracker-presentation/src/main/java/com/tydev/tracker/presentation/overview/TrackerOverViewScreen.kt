@@ -29,7 +29,6 @@ import com.tydev.core.domain.model.GoalType
 import com.tydev.core.domain.model.UserData
 import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.theme.CalorieTrackerTheme
-import com.tydev.tracker.domain.model.MealType
 import com.tydev.tracker.domain.model.TrackedFood
 import com.tydev.tracker.presentation.overview.components.ActionsRow
 import com.tydev.tracker.presentation.overview.components.AddButton

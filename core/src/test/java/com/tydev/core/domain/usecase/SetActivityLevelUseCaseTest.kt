@@ -26,7 +26,7 @@ class SetActivityLevelUseCaseTest {
     @Test
     fun `setActivityLevel should call UserDataRepository setActivityLevel with correct activityLevel`() = runBlocking {
         val activityLevel = mockk<ActivityLevel>()
-        coEvery { userDataRepository.setActivityLevel(activityLevel) }just Runs
+        coEvery { userDataRepository.setActivityLevel(activityLevel) } just Runs
 
         setActivityLevelUseCase(activityLevel)
 

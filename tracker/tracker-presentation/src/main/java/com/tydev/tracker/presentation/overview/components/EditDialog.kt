@@ -78,7 +78,7 @@ fun EditDialog(
                     BasicTextField(
                         value = txtField.value,
                         onValueChange = {
-                            txtField.value = it.take(10)
+                            txtField.value = it.take(MAX_LENGTH)
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         decorationBox = { innerTextField ->
@@ -88,9 +88,12 @@ fun EditDialog(
                                     .border(
                                         BorderStroke(
                                             width = 2.dp,
-                                            color = if (txtFieldError.value.isEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                                            color = if (txtFieldError.value.isEmpty())
+                                                MaterialTheme.colorScheme.primary
+                                            else
+                                                MaterialTheme.colorScheme.error
                                         ),
-                                        shape = RoundedCornerShape(50)
+                                        shape = RoundedCornerShape(CORNER_RADIUS)
                                     )
                                     .padding(horizontal = 16.dp, vertical = 12.dp), // inner padding
                             ) {
@@ -130,3 +133,6 @@ fun EditDialog(
         }
     }
 }
+
+private const val MAX_LENGTH = 10
+private const val CORNER_RADIUS = 50

@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.FilterOutDigitsUseCase
 import com.tydev.core.domain.usecase.SetCarbRatioUseCase
 import com.tydev.core.domain.usecase.SetFatRatioUseCase

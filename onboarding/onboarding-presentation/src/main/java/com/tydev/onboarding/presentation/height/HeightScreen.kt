@@ -125,7 +125,7 @@ internal fun HeightScreen(
                             updateHeight(value.toString())
                         },
                         indicatorLabel = { value ->
-                            if (value % 5 == 0) {
+                            if (value % DIVIDER == 0) {
                                 Text(
                                     text = "${(value / 1)}",
                                     style = MaterialTheme.typography.bodySmall,
@@ -158,3 +158,5 @@ fun HeightScreenPreview() {
         )
     }
 }
+
+private const val DIVIDER = 5

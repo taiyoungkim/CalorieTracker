@@ -74,15 +74,17 @@ class SearchViewModel @Inject constructor(
             state = state.copy(
                 isSearching = true,
                 trackableFood = state.trackableFood,
-                lastPage = state.lastPage+1
+                lastPage = state.lastPage + 1
             )
             trackerUseCases
                 .searchFoodUseCase(state.query, state.lastPage)
                 .onSuccess { foods ->
                     state = state.copy(
-                        trackableFood = state.trackableFood.plus(foods.map {
-                            TrackableFoodUiState(it)
-                        }),
+                        trackableFood = state.trackableFood.plus(
+                            foods.map {
+                                TrackableFoodUiState(it)
+                            }
+                        ),
                         isSearching = false,
                         query = state.query
                     )

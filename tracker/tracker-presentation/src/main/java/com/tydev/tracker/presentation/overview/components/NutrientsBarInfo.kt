@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.tydev.core.R
 import kotlin.math.absoluteValue
 
+@Suppress("MagicNumber")
 @Composable
 fun NutrientsBarInfo(
     value: Int,

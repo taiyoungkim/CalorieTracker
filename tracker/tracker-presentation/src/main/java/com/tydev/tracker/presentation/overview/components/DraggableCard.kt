@@ -54,14 +54,14 @@ fun DraggableCardComplex(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(70.dp)
+            .height(DEFAULT_HEIGHT.dp)
             .offset { IntOffset((offsetX - offsetTransition).roundToInt(), 0) }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     val original = Offset(offsetX, 0f)
                     val summed = original - Offset(x = dragAmount, y = 0f)
                     val newValue = Offset(x = summed.x.coerceIn(0f, cardOffset), y = 0f)
-                    if (newValue.x >= 10) {
+                    if (newValue.x >= MIN_EXPAND_VALUE) {
                         onExpand()
                         return@detectHorizontalDragGestures
                     } else if (newValue.x <= 0) {
@@ -77,3 +77,6 @@ fun DraggableCardComplex(
         }
     )
 }
+
+private const val DEFAULT_HEIGHT = 70
+private const val MIN_EXPAND_VALUE = 10

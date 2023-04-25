@@ -19,13 +19,13 @@ class SetShouldShowOnboardingUseCaseTest {
         setShouldShowOnboardingUseCase = SetShouldShowOnboardingUseCase(userDataRepository)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `setShouldShowOnboarding should call UserDataRepository setShouldShowOnboarding with correct value`() = runTest {
-            val shouldShowOnboarding = true
+        val shouldShowOnboarding = true
 
-            setShouldShowOnboardingUseCase(shouldShowOnboarding)
+        setShouldShowOnboardingUseCase(shouldShowOnboarding)
 
-            coVerify { userDataRepository.setShouldShowOnboarding(shouldShowOnboarding) }
-        }
-
+        coVerify { userDataRepository.setShouldShowOnboarding(shouldShowOnboarding) }
+    }
 }

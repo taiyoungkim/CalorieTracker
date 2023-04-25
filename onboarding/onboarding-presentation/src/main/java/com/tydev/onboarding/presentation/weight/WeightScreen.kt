@@ -60,6 +60,7 @@ internal fun WeightRoute(
         onNextClick = viewModel::onNextClick
     )
 }
+
 @Composable
 internal fun WeightScreen(
     gender: String,
@@ -92,16 +93,16 @@ internal fun WeightScreen(
 
             AnimatedWeightImage(
                 weight = weight,
-                height = 200,
-                imageResId = resId)
+                imageResId = resId
+            )
 
             RulerSlider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 state = rememberRulerSliderState(
-                    currentValue = 60f,
-                    range = 30..150,
+                    currentValue = INITIAL_WEIGHT_KG,
+                    range = WEIGHT_RANGE_FROM..WEIGHT_RANGE_TO,
                 ),
                 currentValueLabel = { value ->
                     Text(
@@ -111,7 +112,7 @@ internal fun WeightScreen(
                     updateWeight(value)
                 },
                 indicatorLabel = { value ->
-                    if (value % 5 == 0) {
+                    if (value % DIVIDER == 0) {
                         Text(
                             text = "${(value / 1)}",
                             style = MaterialTheme.typography.bodySmall,
@@ -142,3 +143,8 @@ fun WeightScreenPreview() {
         )
     }
 }
+
+private const val INITIAL_WEIGHT_KG = 60f
+private const val WEIGHT_RANGE_FROM = 30
+private const val WEIGHT_RANGE_TO = 150
+private const val DIVIDER = 5

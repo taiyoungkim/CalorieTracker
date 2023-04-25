@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.R
-import com.tydev.core.domain.repository.UserDataRepository
 import com.tydev.core.domain.usecase.SetWeightUseCase
 import com.tydev.core.ui.util.UiEvent
 import com.tydev.core.ui.util.UiText

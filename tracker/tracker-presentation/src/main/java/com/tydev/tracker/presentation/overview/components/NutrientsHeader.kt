@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tydev.core.R
+import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.theme.CarbColor
 import com.tydev.core.ui.theme.FatColor
-import com.tydev.core.ui.LocalSpacing
 import com.tydev.core.ui.theme.ProteinColor
 import com.tydev.tracker.presentation.overview.TrackerOverViewState
 
@@ -43,7 +43,7 @@ fun NutrientsHeader(
                 value = animatedCalorieCount.value,
                 goal = state.caloriesGoal,
                 name = stringResource(id = R.string.kcal),
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.fillMaxWidth(HALF)
             )
             Spacer(modifier = Modifier.width(spacing.spaceExtraLarge))
             Column(
@@ -58,7 +58,7 @@ fun NutrientsHeader(
                     name = "CARB",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(10.dp)
+                        .height(DEFAULT_HEIGHT.dp)
                 )
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
                 NutrientsBar(
@@ -68,7 +68,7 @@ fun NutrientsHeader(
                     name = "PROTEIN",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(10.dp)
+                        .height(DEFAULT_HEIGHT.dp)
                 )
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
                 NutrientsBar(
@@ -78,9 +78,12 @@ fun NutrientsHeader(
                     name = "FAT",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(10.dp)
+                        .height(DEFAULT_HEIGHT.dp)
                 )
             }
         }
     }
 }
+
+private const val DEFAULT_HEIGHT = 10
+private const val HALF = 0.5f

@@ -84,7 +84,7 @@ fun TrackableFoodItem(
                     painter = rememberAsyncImagePainter(
                         ImageRequest.Builder(LocalContext.current).data(data = food.imageUrl)
                             .apply(block = fun ImageRequest.Builder.() {
-                                size(70)
+                                size(DEFAULT_SIZE)
                                 crossfade(true)
                                 error(R.drawable.ic_burger)
                                 fallback(R.drawable.ic_burger)
@@ -210,3 +210,5 @@ fun TrackableFoodItem(
         }
     }
 }
+
+private const val DEFAULT_SIZE = 70

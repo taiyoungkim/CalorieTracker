@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tydev.core.domain.usecase.SetShouldShowOnboardingUseCase
-import com.tydev.tracker.domain.usecase.DeleteTrackedFoodUseCase
 import com.tydev.tracker.domain.usecase.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

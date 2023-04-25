@@ -19,7 +19,7 @@ style:
   MagicNumber:
     ignorePropertyDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotated: [ 'AllowMagicNumber' ]
+    ignoreAnnotated: [ 'AllowMagicNumber', 'preview' ]
   ForbiddenComment:
     active: false
   UnusedPrivateMember:

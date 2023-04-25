@@ -110,7 +110,7 @@ internal fun AgeScreen(
 @Preview(showBackground = true, name = "AgeScreen Preview")
 @Composable
 fun AgeScreenPreview() {
-    val age = remember { mutableStateOf(20) }
+    val age = remember { mutableStateOf(DEFAULT_AGE) }
 
     CalorieTrackerTheme {
         AgeScreen(
