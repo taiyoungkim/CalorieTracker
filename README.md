@@ -3,9 +3,9 @@
 ![titleImage](assets/inapp/a237c004015b25bacdd767e3b6788621.webp)
 
 <div>
-    ![selectSex](assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png)
-    ![main](assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png)
-    ![selecteFood](assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png)
+    <img src="assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png"/>
+    <img src="assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png"/>
+    <img src="assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png"/>
 </div>
 
 ### RulerSliderSelecter
