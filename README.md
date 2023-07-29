@@ -1,4 +1,5 @@
 # CalorieTracker
+![titleImage](assets/inapp/a237c004015b25bacdd767e3b6788621.webp)
 **CalorieTracker** is a simple calorieTracking 🍽️ Android application built to describe the use of Modern Android development tools.
 
 ## Built With 🛠
