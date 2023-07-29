@@ -4,15 +4,17 @@
 
 ScreenShots
 -----------
-<div>
-    <img width="200" src="assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png"/>
-    <img width="200" src="assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png"/>
-    <img width="200" src="assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png"/>
-</div>
+<p align="center">
+    <img width="32%" src="assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png"/>
+    <img width="32%" src="assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png"/>
+    <img width="32%" src="assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png"/>
+</p>
 
 ### RulerSliderSelecter
-![height_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/2535fcc7-a28f-46d3-bd97-8f8ff957e13b)
-![weigh_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/f2c7985a-f4fb-4171-a5a2-2bed62342f70)
+<p align="center">
+    <img width="40%" src="https://github.com/taiyoungkim/CalorieTracker/assets/38140436/2535fcc7-a28f-46d3-bd97-8f8ff957e13b"/>
+    <img width="40%" src="https://github.com/taiyoungkim/CalorieTracker/assets/38140436/f2c7985a-f4fb-4171-a5a2-2bed62342f70"/>
+</p>
 
 ## Built With 🛠
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
