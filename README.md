@@ -2,17 +2,17 @@
 **CalorieTracker** is a simple calorieTracking 🍽️ Android application built to describe the use of Modern Android development tools.
 ![titleImage](assets/inapp/a237c004015b25bacdd767e3b6788621.webp)
 
+ScreenShots
+-----------
 <div>
-    <img src="assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png"/>
-    <img src="assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png"/>
-    <img src="assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png"/>
+    <img width="200" src="assets/inapp/Screenshot_20230725_092416_CalorieTracker_framed.png"/>
+    <img width="200" src="assets/inapp/Screenshot_20230725_092556_CalorieTracker_framed.png"/>
+    <img width="200" src="assets/inapp/Screenshot_20230725_092730_CalorieTracker_framed.png"/>
 </div>
 
 ### RulerSliderSelecter
-<div>
-    ![height_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/2535fcc7-a28f-46d3-bd97-8f8ff957e13b)
-    ![weigh_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/f2c7985a-f4fb-4171-a5a2-2bed62342f70)
-</div>
+![height_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/2535fcc7-a28f-46d3-bd97-8f8ff957e13b)
+![weigh_mov](https://github.com/taiyoungkim/CalorieTracker/assets/38140436/f2c7985a-f4fb-4171-a5a2-2bed62342f70)
 
 ## Built With 🛠
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
