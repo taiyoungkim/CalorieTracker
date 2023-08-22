@@ -14,6 +14,8 @@ plugins {
     alias(libs.plugins.secrets) apply false
     alias(libs.plugins.code.ktlint)
     alias(libs.plugins.code.detekt)
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.android) apply false
 }
 
 apply {
