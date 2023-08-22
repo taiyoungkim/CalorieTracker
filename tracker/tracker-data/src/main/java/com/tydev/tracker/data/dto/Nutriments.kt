@@ -12,5 +12,5 @@ data class Nutriments(
     @SerialName("fat_100g")
     val fat100g: Double = 0.0,
     @SerialName("proteins_100g")
-    val proteins100g: Double = 0.0
+    val proteins100g: Double = 0.0,
 )

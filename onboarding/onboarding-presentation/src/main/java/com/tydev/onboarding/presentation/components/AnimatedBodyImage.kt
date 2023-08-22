@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.times
 fun AnimatedHeightImage(
     number: Int,
     imageResId: Int,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp - HEIGHT_INNER_MARGIN.dp
@@ -34,7 +34,7 @@ fun AnimatedHeightImage(
         label = "",
         animationSpec = spring(
             stiffness = Spring.StiffnessLow,
-        )
+        ),
     )
 
     Image(
@@ -42,7 +42,7 @@ fun AnimatedHeightImage(
         contentDescription = "Height measurement image",
         modifier = modifier
             .height(animatedHeight),
-        contentScale = ContentScale.FillHeight
+        contentScale = ContentScale.FillHeight,
     )
 }
 
@@ -51,7 +51,7 @@ fun AnimatedHeightImage(
 fun AnimatedWeightImage(
     weight: Double,
     height: Int = 170,
-    imageResId: Int
+    imageResId: Int,
 ) {
     val targetWidth = (weight * 2.5).dp
     val animatedWidth by animateDpAsState(
@@ -59,7 +59,7 @@ fun AnimatedWeightImage(
         label = "",
         animationSpec = spring(
             stiffness = Spring.StiffnessLow,
-        )
+        ),
     )
 
     Image(
@@ -68,7 +68,7 @@ fun AnimatedWeightImage(
         modifier = Modifier
             .width(animatedWidth)
             .height(height.dp),
-        contentScale = ContentScale.FillBounds
+        contentScale = ContentScale.FillBounds,
     )
 }
 

@@ -8,14 +8,14 @@ import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class TrackFoodUseCase(
-    private val repository: TrackerRepository
+    private val repository: TrackerRepository,
 ) {
 
     suspend operator fun invoke(
         food: TrackableFood,
         amount: Int,
         mealType: MealType,
-        date: LocalDate
+        date: LocalDate,
     ) {
         val carbsPerGram = calculatePerGram(food.carbsPer100g)
         val proteinPerGram = calculatePerGram(food.proteinPer100g)
@@ -36,8 +36,8 @@ class TrackFoodUseCase(
                 carbsPerGram = carbsPerGram,
                 proteinPerGram = proteinPerGram,
                 fatPerGram = fatPerGram,
-                caloriePerGram = caloriePerGram
-            )
+                caloriePerGram = caloriePerGram,
+            ),
         )
     }
 

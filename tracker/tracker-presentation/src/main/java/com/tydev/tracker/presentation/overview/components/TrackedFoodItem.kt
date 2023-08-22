@@ -36,20 +36,20 @@ import com.tydev.tracker.presentation.components.NutrientInfo
 @Composable
 fun TrackedFoodItem(
     trackedFood: TrackedFood,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val spacing = LocalSpacing.current
     Row(
         modifier = modifier
             .shadow(
                 elevation = 1.dp,
-                shape = RoundedCornerShape(5.dp)
+                shape = RoundedCornerShape(5.dp),
             )
             .background(MaterialTheme.colorScheme.surface)
             .padding(end = spacing.spaceMedium)
             .height(70.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             painter = rememberAsyncImagePainter(
@@ -58,7 +58,7 @@ fun TrackedFoodItem(
                         crossfade(true)
                         error(R.drawable.ic_burger)
                         fallback(R.drawable.ic_burger)
-                    }).build()
+                    }).build(),
             ),
             contentDescription = trackedFood.name,
             contentScale = ContentScale.Crop,
@@ -68,39 +68,39 @@ fun TrackedFoodItem(
                 .clip(
                     RoundedCornerShape(
                         topStart = 5.dp,
-                        bottomStart = 5.dp
-                    )
+                        bottomStart = 5.dp,
+                    ),
                 )
-                .padding(spacing.spaceSmall)
+                .padding(spacing.spaceSmall),
         )
         Spacer(modifier = Modifier.width(spacing.spaceMedium))
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = trackedFood.name,
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 2
+                maxLines = 2,
             )
             Spacer(modifier = Modifier.height(spacing.spaceExtraSmall))
             Text(
                 text = stringResource(
                     id = R.string.nutrient_info,
                     trackedFood.amount,
-                    trackedFood.calories
+                    trackedFood.calories,
                 ),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
         Spacer(modifier = Modifier.width(spacing.spaceMedium))
         Column(
             modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Spacer(modifier = Modifier.height(spacing.spaceExtraSmall))
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 NutrientInfo(
                     name = stringResource(id = R.string.carbs),

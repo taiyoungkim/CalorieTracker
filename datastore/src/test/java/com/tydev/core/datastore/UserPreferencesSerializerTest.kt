@@ -16,7 +16,7 @@ class UserPreferencesSerializerTest {
             userPreferences {
                 shouldShowOnboarding = true
             },
-            userPreferencesSerializer.defaultValue
+            userPreferencesSerializer.defaultValue,
         )
     }
 

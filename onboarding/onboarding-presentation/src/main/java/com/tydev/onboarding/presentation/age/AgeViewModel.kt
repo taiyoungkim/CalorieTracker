@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AgeViewModel @Inject constructor(
     private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
-    private val setAgeUseCase: SetAgeUseCase
+    private val setAgeUseCase: SetAgeUseCase,
 ) : ViewModel() {
 
     var age by mutableStateOf(DEFAULT_AGE)
@@ -38,8 +38,9 @@ class AgeViewModel @Inject constructor(
     }
 
     fun minusAge() {
-        if (age > 0)
+        if (age > 0) {
             age = age.minus(1)
+        }
     }
 
     fun onNextClick() = viewModelScope.launch {
@@ -48,8 +49,8 @@ class AgeViewModel @Inject constructor(
                 // viewModel 에 context 를 참조해야하는 문제
                 // -> helper class 를 통해 해결
                 UiEvent.ShowSnackbar(
-                    UiText.StringResource(com.tydev.core.R.string.error_age_cant_be_empty)
-                )
+                    UiText.StringResource(com.tydev.core.R.string.error_age_cant_be_empty),
+                ),
             )
             return@launch
         }

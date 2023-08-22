@@ -23,7 +23,7 @@ object TrackerDomainModule {
     @Provides
     fun provideTrackerUseCases(
         trackerRepository: TrackerRepository,
-        getUserDataUseCase: GetUserDataUseCase
+        getUserDataUseCase: GetUserDataUseCase,
     ): TrackerUseCases {
         return TrackerUseCases(
             trackFoodUseCase = TrackFoodUseCase(trackerRepository),
@@ -31,7 +31,7 @@ object TrackerDomainModule {
             getFoodsForDateUseCase = GetFoodsForDateUseCase(trackerRepository),
             deleteTrackedFoodUseCase = DeleteTrackedFoodUseCase(trackerRepository),
             calculateMealNutrientsUseCase = CalculateMealNutrientsUseCase(getUserDataUseCase),
-            updateTrackedFoodUseCase = UpdateTrackedFoodUseCase(trackerRepository)
+            updateTrackedFoodUseCase = UpdateTrackedFoodUseCase(trackerRepository),
         )
     }
 }

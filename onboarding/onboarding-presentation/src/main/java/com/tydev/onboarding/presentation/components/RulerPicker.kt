@@ -1,4 +1,5 @@
 @file:Suppress("MagicNumber")
+
 package com.tydev.onboarding.presentation.components
 
 import androidx.compose.animation.core.Animatable
@@ -118,9 +119,9 @@ class RulerSliderStateImpl(
             restore = {
                 RulerSliderStateImpl(
                     currentValue = it[0] as Float,
-                    range = (it[1] as Int)..(it[2] as Int)
+                    range = (it[1] as Int)..(it[2] as Int),
                 )
-            }
+            },
         )
     }
 }
@@ -150,7 +151,7 @@ fun RulerSlider(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         currentValueLabel(state.currentValue.roundToInt())
         Icon(Icons.Filled.ArrowDropDown, contentDescription = null)
@@ -178,7 +179,7 @@ fun RulerSlider(
                         .width(segmentWidth)
                         .graphicsLayer(
                             alpha = alpha,
-                            translationX = offsetX
+                            translationX = offsetX,
                         ),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -186,7 +187,7 @@ fun RulerSlider(
                         modifier = Modifier
                             .width(BarWidth)
                             .height(BarHeight)
-                            .background(barColor)
+                            .background(barColor),
                     )
                     indicatorLabel(i)
                 }
@@ -206,7 +207,7 @@ fun RulerSliderVertical(
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         currentValueLabel(state.currentValue.roundToInt())
         Icon(Icons.Filled.PlayArrow, contentDescription = null)
@@ -234,7 +235,7 @@ fun RulerSliderVertical(
                         .height(segmentHeight)
                         .graphicsLayer(
                             alpha = alpha,
-                            translationY = offsetY
+                            translationY = offsetY,
                         ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -242,7 +243,7 @@ fun RulerSliderVertical(
                         modifier = Modifier
                             .width(BarHeight)
                             .height(BarWidth)
-                            .background(barColor)
+                            .background(barColor),
                     )
                     indicatorLabel(i)
                 }

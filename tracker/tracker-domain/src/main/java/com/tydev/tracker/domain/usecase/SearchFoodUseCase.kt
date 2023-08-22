@@ -4,13 +4,13 @@ import com.tydev.tracker.domain.model.TrackableFood
 import com.tydev.tracker.domain.repository.TrackerRepository
 
 class SearchFoodUseCase(
-    private val repository: TrackerRepository
+    private val repository: TrackerRepository,
 ) {
 
     suspend operator fun invoke(
         query: String,
         page: Int = DEFAULT_PAGE,
-        pageSize: Int = DEFAULT_PAGE_SIZE
+        pageSize: Int = DEFAULT_PAGE_SIZE,
     ): Result<List<TrackableFood>> {
         if (query.isBlank()) {
             return Result.success(emptyList())

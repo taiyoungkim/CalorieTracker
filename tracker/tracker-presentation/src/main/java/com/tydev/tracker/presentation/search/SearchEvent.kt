@@ -10,12 +10,12 @@ sealed class SearchEvent {
     data class OnToggleTrackableFood(val food: TrackableFood) : SearchEvent()
     data class OnAmountForFoodChange(
         val food: TrackableFood,
-        val amount: String
+        val amount: String,
     ) : SearchEvent()
     data class OnTrackFoodClick(
         val food: TrackableFood,
         val mealType: MealType,
-        val date: LocalDate
+        val date: LocalDate,
     ) : SearchEvent()
     data class OnSearchFocusChange(val isFocused: Boolean) : SearchEvent()
 }

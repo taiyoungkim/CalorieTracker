@@ -42,7 +42,7 @@ class GetFoodsForDateUseCaseTest {
                 carbsPerGram = 0f,
                 proteinPerGram = 0.155f,
                 fatPerGram = 0.015f,
-                caloriePerGram = 0.825f
+                caloriePerGram = 0.825f,
             ),
             TrackedFood(
                 name = "Broccoli",
@@ -57,8 +57,8 @@ class GetFoodsForDateUseCaseTest {
                 carbsPerGram = 0.02f,
                 proteinPerGram = 0.03f,
                 fatPerGram = 0f,
-                caloriePerGram = 0.3f
-            )
+                caloriePerGram = 0.3f,
+            ),
         )
         coEvery { trackerRepository.getFoodsForDate(date) } returns flowOf(expectedFoods)
 

@@ -28,7 +28,7 @@ fun AddButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary
+    color: Color = MaterialTheme.colorScheme.primary,
 ) {
     val spacing = LocalSpacing.current
     Row(
@@ -38,22 +38,22 @@ fun AddButton(
             .border(
                 width = 1.dp,
                 color = color,
-                shape = RoundedCornerShape(CORNER_RADIUS)
+                shape = RoundedCornerShape(CORNER_RADIUS),
             )
             .padding(spacing.spaceMedium),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(id = R.string.add),
-            tint = color
+            tint = color,
         )
         Spacer(modifier = Modifier.width(spacing.spaceMedium))
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            color = color
+            color = color,
         )
     }
 }

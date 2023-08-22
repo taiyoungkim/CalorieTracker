@@ -16,5 +16,5 @@ data class TrackedFood(
     val proteinPerGram: Float,
     val fatPerGram: Float,
     val caloriePerGram: Float,
-    val id: Int? = null
+    val id: Int? = null,
 )

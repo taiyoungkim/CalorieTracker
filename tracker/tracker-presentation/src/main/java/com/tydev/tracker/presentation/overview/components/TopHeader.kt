@@ -26,7 +26,7 @@ import com.tydev.core.ui.LocalSpacing
 @Composable
 fun TopHeader(
     goalType: GoalType,
-    activityLevel: ActivityLevel
+    activityLevel: ActivityLevel,
 ) {
     val spacing = LocalSpacing.current
 
@@ -36,20 +36,20 @@ fun TopHeader(
             .clip(
                 RoundedCornerShape(
                     bottomStart = 30.dp,
-                    bottomEnd = 30.dp
-                )
+                    bottomEnd = 30.dp,
+                ),
             )
             .background(MaterialTheme.colorScheme.primary)
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Text(
             text = "You Can Do It🔥",
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.onPrimary,
         )
         Spacer(modifier = Modifier.height(spacing.spaceSmall))
         Row(
-            Modifier.height(IntrinsicSize.Min)
+            Modifier.height(IntrinsicSize.Min),
         ) {
             Text(
                 text = when (goalType) {
@@ -65,14 +65,14 @@ fun TopHeader(
                 },
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
             )
             Spacer(modifier = Modifier.width(spacing.spaceSmall))
             Divider(
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .fillMaxHeight() // fill the max height
-                    .width(2.dp)
+                    .width(2.dp),
             )
             Spacer(modifier = Modifier.width(spacing.spaceSmall))
             Text(
@@ -89,7 +89,7 @@ fun TopHeader(
                 },
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
             )
         }
     }

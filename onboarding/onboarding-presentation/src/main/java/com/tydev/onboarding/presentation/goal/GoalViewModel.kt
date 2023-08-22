@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalViewModel @Inject constructor(
-    private val setGoalTypeUseCase: SetGoalTypeUseCase
+    private val setGoalTypeUseCase: SetGoalTypeUseCase,
 ) : ViewModel() {
 
     var selectedGoal by mutableStateOf(GoalType.KEEP_WEIGHT)

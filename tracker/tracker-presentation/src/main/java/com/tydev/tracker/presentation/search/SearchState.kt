@@ -5,5 +5,5 @@ data class SearchState(
     val isHintVisible: Boolean = false,
     val isSearching: Boolean = false,
     val trackableFood: List<TrackableFoodUiState> = emptyList(),
-    val lastPage: Int = 0
+    val lastPage: Int = 0,
 )

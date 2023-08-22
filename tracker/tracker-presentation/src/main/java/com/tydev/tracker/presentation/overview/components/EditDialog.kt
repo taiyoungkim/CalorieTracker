@@ -40,37 +40,35 @@ import com.tydev.tracker.domain.model.TrackedFood
 fun EditDialog(
     trackedFood: TrackedFood,
     setShowDialog: (Boolean) -> Unit,
-    setValue: (String) -> Unit
+    setValue: (String) -> Unit,
 ) {
-
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(trackedFood.amount.toString()) }
 
     Dialog(onDismissRequest = { setShowDialog(false) }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surface
+            color = MaterialTheme.colorScheme.surface,
         ) {
             Box(
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
                             text = stringResource(id = R.string.setGram),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
                         )
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = "",
                             tint = colorResource(android.R.color.darker_gray),
                             modifier = Modifier
-                                .clickable { setShowDialog(false) }
+                                .clickable { setShowDialog(false) },
                         )
                     }
 
@@ -88,12 +86,13 @@ fun EditDialog(
                                     .border(
                                         BorderStroke(
                                             width = 2.dp,
-                                            color = if (txtFieldError.value.isEmpty())
+                                            color = if (txtFieldError.value.isEmpty()) {
                                                 MaterialTheme.colorScheme.primary
-                                            else
+                                            } else {
                                                 MaterialTheme.colorScheme.error
+                                            },
                                         ),
-                                        shape = RoundedCornerShape(CORNER_RADIUS)
+                                        shape = RoundedCornerShape(CORNER_RADIUS),
                                     )
                                     .padding(horizontal = 16.dp, vertical = 12.dp), // inner padding
                             ) {
@@ -101,12 +100,12 @@ fun EditDialog(
                                     Text(
                                         text = stringResource(id = R.string.enterValue),
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = Color.LightGray
+                                        color = Color.LightGray,
                                     )
                                 }
                                 innerTextField()
                             }
-                        }
+                        },
                     )
                     Spacer(modifier = Modifier.height(20.dp))
 
@@ -123,7 +122,7 @@ fun EditDialog(
                             shape = RoundedCornerShape(50.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(50.dp)
+                                .height(50.dp),
                         ) {
                             Text(text = stringResource(id = R.string.done))
                         }

@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val trackerUseCases: TrackerUseCases,
-    private val filterOutDigitsUseCase: FilterOutDigitsUseCase
+    private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(SearchState())
@@ -34,7 +34,7 @@ class SearchViewModel @Inject constructor(
                 state = state.copy(
                     trackableFood = emptyList(),
                     query = event.query,
-                    lastPage = 0
+                    lastPage = 0,
                 )
             }
             is SearchEvent.OnAmountForFoodChange -> {
@@ -42,8 +42,10 @@ class SearchViewModel @Inject constructor(
                     trackableFood = state.trackableFood.map {
                         if (it.food == event.food) {
                             it.copy(amount = filterOutDigitsUseCase(event.amount))
-                        } else it
-                    }
+                        } else {
+                            it
+                        }
+                    },
                 )
             }
             is SearchEvent.OnSearch -> {
@@ -54,13 +56,15 @@ class SearchViewModel @Inject constructor(
                     trackableFood = state.trackableFood.map {
                         if (it.food == event.food) {
                             it.copy(isExpanded = !it.isExpanded)
-                        } else it
-                    }
+                        } else {
+                            it
+                        }
+                    },
                 )
             }
             is SearchEvent.OnSearchFocusChange -> {
                 state = state.copy(
-                    isHintVisible = !event.isFocused && state.query.isBlank()
+                    isHintVisible = !event.isFocused && state.query.isBlank(),
                 )
             }
             is SearchEvent.OnTrackFoodClick -> {
@@ -74,7 +78,7 @@ class SearchViewModel @Inject constructor(
             state = state.copy(
                 isSearching = true,
                 trackableFood = state.trackableFood,
-                lastPage = state.lastPage + 1
+                lastPage = state.lastPage + 1,
             )
             trackerUseCases
                 .searchFoodUseCase(state.query, state.lastPage)
@@ -83,18 +87,18 @@ class SearchViewModel @Inject constructor(
                         trackableFood = state.trackableFood.plus(
                             foods.map {
                                 TrackableFoodUiState(it)
-                            }
+                            },
                         ),
                         isSearching = false,
-                        query = state.query
+                        query = state.query,
                     )
                 }
                 .onFailure {
                     state = state.copy(isSearching = false)
                     _uiEvent.send(
                         UiEvent.ShowSnackbar(
-                            UiText.StringResource(R.string.error_something_went_wrong)
-                        )
+                            UiText.StringResource(R.string.error_something_went_wrong),
+                        ),
                     )
                 }
         }
@@ -107,7 +111,7 @@ class SearchViewModel @Inject constructor(
                 food = uiState?.food ?: return@launch,
                 amount = uiState.amount.toIntOrNull() ?: return@launch,
                 mealType = event.mealType,
-                date = event.date
+                date = event.date,
             )
             _uiEvent.send(UiEvent.NavigateUp)
         }

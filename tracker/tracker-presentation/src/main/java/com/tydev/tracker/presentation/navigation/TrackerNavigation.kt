@@ -31,10 +31,13 @@ fun NavGraphBuilder.trackerOverViewScreen(navController: NavHostController, user
                 TrackerRoute.Search.navigate(
                     navController,
                     args = arrayOf(
-                        mealName, day, month, year
-                    )
+                        mealName,
+                        day,
+                        month,
+                        year,
+                    ),
                 )
-            }
+            },
         )
     }
 }
@@ -55,7 +58,7 @@ fun NavGraphBuilder.searchScreen(navController: NavHostController, snackbarHostS
             },
             navArgument("year") {
                 type = NavType.IntType
-            }
+            },
         ),
     ) { backStackEntry ->
         val mealName = backStackEntry.arguments?.getString("mealName")!!
@@ -68,7 +71,7 @@ fun NavGraphBuilder.searchScreen(navController: NavHostController, snackbarHostS
             dayOfMonth = dayOfMonth,
             month = month,
             year = year,
-            onNavigateUp = { navController.navigateUp() }
+            onNavigateUp = { navController.navigateUp() },
         )
     }
 }

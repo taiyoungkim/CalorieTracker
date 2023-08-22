@@ -35,7 +35,7 @@ fun ActionsRow(
                     style = MaterialTheme.typography.labelSmall,
                 )
             },
-            modifier = Modifier.background(Color.Red)
+            modifier = Modifier.background(Color.Red),
         )
         IconButton(
             onClick = onEdit,
@@ -46,7 +46,7 @@ fun ActionsRow(
                     style = MaterialTheme.typography.labelSmall,
                 )
             },
-            modifier = Modifier.background(Color.Unspecified)
+            modifier = Modifier.background(Color.Unspecified),
         )
     }
 }
@@ -56,6 +56,6 @@ fun ActionsRow(
 fun ActionsRowPreview() {
     ActionsRow(
         onDelete = {},
-        onEdit = {}
+        onEdit = {},
     )
 }

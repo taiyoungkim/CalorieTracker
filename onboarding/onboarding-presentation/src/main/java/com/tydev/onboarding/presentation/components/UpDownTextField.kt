@@ -18,18 +18,18 @@ fun UpDownTextField(
     IconButton(onClick = upValue) {
         Icon(
             imageVector = Icons.Default.KeyboardArrowUp,
-            contentDescription = null
+            contentDescription = null,
         )
     }
     UnitTextField(
         value = value,
         onValueChange = onValueChange,
-        unit = unit
+        unit = unit,
     )
     IconButton(onClick = downValue) {
         Icon(
             imageVector = Icons.Default.KeyboardArrowDown,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }

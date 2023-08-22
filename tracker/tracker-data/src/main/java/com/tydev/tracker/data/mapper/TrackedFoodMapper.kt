@@ -41,6 +41,6 @@ fun TrackedFood.toTrackedFoodEntity(): TrackedFoodEntity {
         proteinPerGram = proteinPerGram,
         fatPerGram = fatPerGram,
         caloriePerGram = caloriePerGram,
-        id = id
+        id = id,
     )
 }

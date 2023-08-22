@@ -21,7 +21,7 @@ fun UnitDisplay(
     amountTextSize: TextUnit = 20.sp,
     amountColor: Color = MaterialTheme.colorScheme.onBackground,
     unitTextSize: TextUnit = 14.sp,
-    unitColor: Color = MaterialTheme.colorScheme.onBackground
+    unitColor: Color = MaterialTheme.colorScheme.onBackground,
 ) {
     val spacing = LocalSpacing.current
 
@@ -31,7 +31,7 @@ fun UnitDisplay(
             style = MaterialTheme.typography.headlineLarge,
             fontSize = amountTextSize,
             color = amountColor,
-            modifier = Modifier.alignBy(LastBaseline)
+            modifier = Modifier.alignBy(LastBaseline),
         )
 
         Spacer(modifier = Modifier.width(spacing.spaceExtraSmall))
@@ -41,7 +41,7 @@ fun UnitDisplay(
             style = MaterialTheme.typography.bodyLarge,
             fontSize = unitTextSize,
             color = unitColor,
-            modifier = Modifier.alignBy(LastBaseline)
+            modifier = Modifier.alignBy(LastBaseline),
         )
     }
 }

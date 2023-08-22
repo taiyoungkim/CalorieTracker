@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserPreferencesDataSource @Inject constructor(
-    private val userPreferences: DataStore<UserPreferences>
+    private val userPreferences: DataStore<UserPreferences>,
 ) {
 
     val userData = userPreferences.data
@@ -38,7 +38,7 @@ class UserPreferencesDataSource @Inject constructor(
                 carbRatio = it.carbRatio,
                 proteinRatio = it.proteinRatio,
                 fatRatio = it.fatRatio,
-                shouldShowOnboarding = it.shouldShowOnboarding
+                shouldShowOnboarding = it.shouldShowOnboarding,
             )
         }
 

@@ -26,7 +26,7 @@ fun SelectableButton(
     selectedTextColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -35,22 +35,22 @@ fun SelectableButton(
             .border(
                 width = 2.dp,
                 color = color,
-                shape = RoundedCornerShape(100.dp)
+                shape = RoundedCornerShape(100.dp),
             )
             .background(
-                color = if (isSelected) color else Color.Transparent
+                color = if (isSelected) color else Color.Transparent,
             )
             .clickable {
                 onClick()
             }
-            .padding(LocalSpacing.current.spaceMedium)
+            .padding(LocalSpacing.current.spaceMedium),
     ) {
         Text(
             text = text,
             style = textStyle,
             color = if (isSelected) selectedTextColor else color,
             modifier = Modifier.padding(LocalSpacing.current.spaceSmall),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

@@ -20,7 +20,7 @@ object ProvidesModule {
     @Provides
     @Singleton
     fun provideUserRepository(
-        userPreferencesDataSource: UserPreferencesDataSource
+        userPreferencesDataSource: UserPreferencesDataSource,
     ): UserDataRepository {
         return UserDataRepositoryImpl(userPreferencesDataSource)
     }
@@ -29,11 +29,11 @@ object ProvidesModule {
     @Singleton
     fun provideTrackerRepository(
         api: OpenFoodApi,
-        db: TrackerDatabase
+        db: TrackerDatabase,
     ): TrackerRepository {
         return TrackerRepositoryImpl(
             dao = db.dao,
-            api = api
+            api = api,
         )
     }
 }

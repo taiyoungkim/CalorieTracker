@@ -55,7 +55,7 @@ fun SearchRoute(
     month: Int,
     year: Int,
     onNavigateUp: () -> Unit,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -65,7 +65,7 @@ fun SearchRoute(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
                     )
                     keyboardController?.hide()
                 }
@@ -83,7 +83,7 @@ fun SearchRoute(
         state = viewModel.state,
         keyboardController = keyboardController,
         onNavigateUp = onNavigateUp,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
     )
 }
 
@@ -114,24 +114,24 @@ fun SearchScreen(
                 title = {
                     Text(
                         text = stringResource(id = R.string.add_meal, mealName),
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.headlineMedium,
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { onNavigateUp() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
                         )
                     }
-                }
+                },
             )
         },
         content = { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(spacing.spaceMedium)
+                    .padding(spacing.spaceMedium),
             ) {
                 Spacer(modifier = Modifier.padding(padding))
                 SearchTextField(
@@ -146,14 +146,14 @@ fun SearchScreen(
                     },
                     onFocusChanged = {
                         onEvent(SearchEvent.OnSearchFocusChange(it.isFocused))
-                    }
+                    },
                 )
 
                 Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    state = listState
+                    state = listState,
                 ) {
                     itemsIndexed(state.trackableFood) { index, food ->
                         TrackableFoodItem(
@@ -164,8 +164,9 @@ fun SearchScreen(
                             onAmountChange = {
                                 onEvent(
                                     SearchEvent.OnAmountForFoodChange(
-                                        food.food, it
-                                    )
+                                        food.food,
+                                        it,
+                                    ),
                                 )
                             },
                             onTrack = {
@@ -174,18 +175,18 @@ fun SearchScreen(
                                     SearchEvent.OnTrackFoodClick(
                                         food = food.food,
                                         mealType = MealType.fromString(mealName),
-                                        date = LocalDate.of(year, month, dayOfMonth)
-                                    )
+                                        date = LocalDate.of(year, month, dayOfMonth),
+                                    ),
                                 )
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 }
             }
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 when {
                     state.isSearching -> CircularProgressIndicator()
@@ -193,12 +194,12 @@ fun SearchScreen(
                         Text(
                             text = stringResource(id = R.string.no_results),
                             style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
                     }
                 }
             }
-        }
+        },
     )
 }
 
@@ -218,7 +219,7 @@ fun SearchPreview() {
             state = SearchState(),
             keyboardController = null,
             onNavigateUp = {},
-            onEvent = {}
+            onEvent = {},
         )
     }
 }

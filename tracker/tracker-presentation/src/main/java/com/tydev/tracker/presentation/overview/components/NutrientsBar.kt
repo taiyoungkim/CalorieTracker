@@ -27,7 +27,7 @@ fun NutrientsBar(
     goal: Int,
     color: Color,
     name: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val background = Color.LightGray
     val goalExceededColor = MaterialTheme.colorScheme.error
@@ -35,16 +35,19 @@ fun NutrientsBar(
         Animatable(0f)
     }
 
-    val data = if (value <= goal)
+    val data = if (value <= goal) {
         stringResource(id = R.string.left)
-    else
+    } else {
         stringResource(id = R.string.over)
+    }
 
     LaunchedEffect(key1 = value) {
         widthRatio.animateTo(
             targetValue = if (goal > 0) {
                 value / goal.toFloat()
-            } else 0f,
+            } else {
+                0f
+            },
         )
     }
     Column {
@@ -61,21 +64,21 @@ fun NutrientsBar(
                 drawRoundRect(
                     color = background,
                     size = size,
-                    cornerRadius = CornerRadius(100f)
+                    cornerRadius = CornerRadius(100f),
                 )
                 drawRoundRect(
                     color = color,
                     size = Size(
                         width = valueWidth,
-                        height = size.height
+                        height = size.height,
                     ),
-                    cornerRadius = CornerRadius(100f)
+                    cornerRadius = CornerRadius(100f),
                 )
             } else {
                 drawRoundRect(
                     color = goalExceededColor,
                     size = size,
-                    cornerRadius = CornerRadius(100f)
+                    cornerRadius = CornerRadius(100f),
                 )
             }
         }

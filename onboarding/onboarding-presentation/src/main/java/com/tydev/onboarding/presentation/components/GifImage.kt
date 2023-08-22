@@ -34,7 +34,7 @@ fun GifImage(
             ImageRequest.Builder(context).data(data = gif).apply(block = {
                 size(Size.ORIGINAL)
             }).build(),
-            imageLoader = imageLoader
+            imageLoader = imageLoader,
         ),
         contentDescription = null,
         modifier = modifier.fillMaxWidth(),

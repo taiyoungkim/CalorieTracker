@@ -32,7 +32,7 @@ import com.tydev.onboarding.presentation.components.SelectableButton
 @Composable
 fun ActivityRoute(
     onNextClick: () -> Unit,
-    viewModel: ActivityViewModel = hiltViewModel()
+    viewModel: ActivityViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
@@ -46,7 +46,7 @@ fun ActivityRoute(
     ActivityScreen(
         selectedActivityLevel = viewModel.selectedActivityLevel,
         onActivityLevelSelect = viewModel::onActivityLevelSelect,
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
     )
 }
 
@@ -61,16 +61,16 @@ fun ActivityScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = R.string.whats_your_activity_level),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -85,8 +85,8 @@ fun ActivityScreen(
                         onActivityLevelSelect(ActivityLevel.LOW)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
@@ -100,8 +100,8 @@ fun ActivityScreen(
                         onActivityLevelSelect(ActivityLevel.MEDIUM)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
@@ -115,8 +115,8 @@ fun ActivityScreen(
                         onActivityLevelSelect(ActivityLevel.HIGH)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
             }
         }
@@ -126,7 +126,7 @@ fun ActivityScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }
@@ -137,7 +137,7 @@ fun ActivityPreview() {
     CalorieTrackerTheme {
         ActivityScreen(
             selectedActivityLevel = ActivityLevel.MEDIUM,
-            onActivityLevelSelect = {}
+            onActivityLevelSelect = {},
         ) {
         }
     }

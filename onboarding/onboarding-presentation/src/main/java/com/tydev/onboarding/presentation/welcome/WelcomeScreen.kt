@@ -31,7 +31,7 @@ fun WelcomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -45,7 +45,7 @@ fun WelcomeScreen(
             Text(
                 text = stringResource(id = R.string.welcome_text),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineLarge
+                style = MaterialTheme.typography.headlineLarge,
             )
         }
 
@@ -58,7 +58,7 @@ fun WelcomeScreen(
             onClick = { onNextClick() },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }
@@ -68,7 +68,7 @@ fun WelcomeScreen(
 fun WelcomePreview() {
     CalorieTrackerTheme {
         WelcomeScreen(
-            onNextClick = {}
+            onNextClick = {},
         )
     }
 }

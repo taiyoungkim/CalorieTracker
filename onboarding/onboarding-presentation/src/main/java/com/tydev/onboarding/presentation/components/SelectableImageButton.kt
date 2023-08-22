@@ -32,7 +32,7 @@ fun SelectableImageButton(
     selectedTextColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Column(
         modifier = modifier
@@ -40,17 +40,17 @@ fun SelectableImageButton(
             .border(
                 width = 2.dp,
                 color = color,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
             )
             .background(
-                color = if (isSelected) color else Color.Transparent
+                color = if (isSelected) color else Color.Transparent,
             )
             .clickable {
                 onClick()
             }
             .padding(LocalSpacing.current.spaceMedium),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(id = imageResId),
@@ -62,7 +62,7 @@ fun SelectableImageButton(
             style = textStyle,
             color = if (isSelected) selectedTextColor else color,
             modifier = Modifier.padding(LocalSpacing.current.spaceSmall),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

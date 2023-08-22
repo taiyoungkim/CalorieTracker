@@ -74,7 +74,7 @@ fun DraggableCardComplex(
             },
         content = {
             TrackedFoodItem(trackedFood)
-        }
+        },
     )
 }
 

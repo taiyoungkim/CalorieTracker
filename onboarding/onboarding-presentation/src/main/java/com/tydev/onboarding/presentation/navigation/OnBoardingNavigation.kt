@@ -32,7 +32,7 @@ fun NavGraphBuilder.activityScreen(onNextClick: (String) -> Unit) {
         ActivityRoute(
             onNextClick = {
                 onNextClick("")
-            }
+            },
         )
     }
 }
@@ -47,7 +47,7 @@ fun NavGraphBuilder.ageScreen(onNextClick: () -> Unit, snackbarHostState: Snackb
             onNextClick = {
                 onNextClick()
             },
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
         )
     }
 }
@@ -61,7 +61,7 @@ fun NavGraphBuilder.genderScreen(onNextClick: (String) -> Unit) {
         GenderRoute(
             onNextClick = {
                 onNextClick(it.name)
-            }
+            },
         )
     }
 }
@@ -75,7 +75,7 @@ fun NavGraphBuilder.goalScreen(onNextClick: () -> Unit) {
         GoalRoute(
             onNextClick = {
                 onNextClick()
-            }
+            },
         )
     }
 }
@@ -92,7 +92,7 @@ fun NavGraphBuilder.heightScreen(onNextClick: (String) -> Unit, snackbarHostStat
             onNextClick = {
                 onNextClick(gender)
             },
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
         )
     }
 }
@@ -107,7 +107,7 @@ fun NavGraphBuilder.nutrientGoalScreen(onNextClick: () -> Unit, snackbarHostStat
             onNextClick = {
                 onNextClick()
             },
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
         )
     }
 }
@@ -124,7 +124,7 @@ fun NavGraphBuilder.weightScreen(onNextClick: () -> Unit, snackbarHostState: Sna
             onNextClick = {
                 onNextClick()
             },
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
         )
     }
 }
@@ -138,7 +138,7 @@ fun NavGraphBuilder.welcomeScreen(onNextClick: () -> Unit) {
         WelcomeScreen(
             onNextClick = {
                 onNextClick()
-            }
+            },
         )
     }
 }

@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeightViewModel @Inject constructor(
-    private val setWeightUseCase: SetWeightUseCase
+    private val setWeightUseCase: SetWeightUseCase,
 ) : ViewModel() {
 
     var weight by mutableStateOf(DEFAULT_WEIGHT)
@@ -40,8 +40,8 @@ class WeightViewModel @Inject constructor(
         val weightNumber = weight.toFloatOrNull() ?: run {
             _uiEvent.send(
                 UiEvent.ShowSnackbar(
-                    UiText.StringResource(R.string.error_weight_cant_be_empty)
-                )
+                    UiText.StringResource(R.string.error_weight_cant_be_empty),
+                ),
             )
             return@launch
         }

@@ -37,7 +37,7 @@ class DeleteTrackedFoodUseCaseTest {
             carbsPerGram = 1f,
             proteinPerGram = 2f,
             fatPerGram = 0.5f,
-            caloriePerGram = 20f
+            caloriePerGram = 20f,
         )
 
         coEvery { trackerRepository.deleteTrackedFood(trackedFood) } just Runs

@@ -30,7 +30,7 @@ import com.tydev.onboarding.presentation.components.UnitTextField
 fun NutrientRoute(
     snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
-    viewModel: NutrientViewModel = hiltViewModel()
+    viewModel: NutrientViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -40,7 +40,7 @@ fun NutrientRoute(
                 is UiEvent.Success -> onNextClick()
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
                     )
                 }
                 else -> Unit
@@ -52,7 +52,7 @@ fun NutrientRoute(
         carbsRatio = viewModel.state.carbsRatio,
         proteinRatio = viewModel.state.proteinRatio,
         fatRatio = viewModel.state.fatRatio,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
     )
 }
 
@@ -68,16 +68,16 @@ fun NutrientScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = R.string.what_are_your_nutrient_goals),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -87,7 +87,7 @@ fun NutrientScreen(
                 onValueChange = {
                     onEvent(NutrientGoalEvent.OnCarbRatioEnter(it))
                 },
-                unit = stringResource(id = R.string.percent_carbs)
+                unit = stringResource(id = R.string.percent_carbs),
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -97,7 +97,7 @@ fun NutrientScreen(
                 onValueChange = {
                     onEvent(NutrientGoalEvent.OnProteinRatioEnter(it))
                 },
-                unit = stringResource(id = R.string.percent_proteins)
+                unit = stringResource(id = R.string.percent_proteins),
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -107,7 +107,7 @@ fun NutrientScreen(
                 onValueChange = {
                     onEvent(NutrientGoalEvent.OnFatRatioEnter(it))
                 },
-                unit = stringResource(id = R.string.percent_fats)
+                unit = stringResource(id = R.string.percent_fats),
             )
         }
         ActionButton(
@@ -117,7 +117,7 @@ fun NutrientScreen(
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }
@@ -130,7 +130,7 @@ fun NutrientPreview() {
             carbsRatio = "30",
             proteinRatio = "40",
             fatRatio = "30",
-            onEvent = {}
+            onEvent = {},
         )
     }
 }

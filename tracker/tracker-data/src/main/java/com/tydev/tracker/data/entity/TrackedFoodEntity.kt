@@ -20,5 +20,5 @@ data class TrackedFoodEntity(
     val proteinPerGram: Float,
     val fatPerGram: Float,
     val caloriePerGram: Float,
-    @PrimaryKey val id: Int? = null
+    @PrimaryKey val id: Int? = null,
 )

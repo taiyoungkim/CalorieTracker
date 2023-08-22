@@ -9,11 +9,10 @@ import androidx.compose.runtime.snapshotFlow
 
 @Composable
 fun LazyListState.OnBottomReached(
-    loadMore: () -> Unit
+    loadMore: () -> Unit,
 ) {
     val shouldLoadMore = remember {
         derivedStateOf {
-
             val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
                 ?: return@derivedStateOf true
 

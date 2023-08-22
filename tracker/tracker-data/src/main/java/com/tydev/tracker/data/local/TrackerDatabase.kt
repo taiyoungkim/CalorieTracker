@@ -6,7 +6,7 @@ import com.tydev.tracker.data.entity.TrackedFoodEntity
 
 @Database(
     entities = [TrackedFoodEntity::class],
-    version = 1
+    version = 1,
 )
 abstract class TrackerDatabase : RoomDatabase() {
 

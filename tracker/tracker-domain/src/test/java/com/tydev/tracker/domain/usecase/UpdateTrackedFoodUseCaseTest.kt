@@ -43,7 +43,7 @@ class UpdateTrackedFoodUseCaseTest {
             carbsPerGram = 0.15f,
             proteinPerGram = 0f,
             fatPerGram = 0f,
-            caloriePerGram = 0.6f
+            caloriePerGram = 0.6f,
         )
 
         val updatedAmount = 2
@@ -57,7 +57,7 @@ class UpdateTrackedFoodUseCaseTest {
             protein = (trackedFood.proteinPerGram * updatedAmount).roundToInt(),
             fat = (trackedFood.fatPerGram * updatedAmount).roundToInt(),
             calories = (trackedFood.caloriePerGram * updatedAmount).roundToInt(),
-            amount = updatedAmount
+            amount = updatedAmount,
         )
 
         coVerify { trackerRepository.updateTrackedFood(updatedTrackedFood) }

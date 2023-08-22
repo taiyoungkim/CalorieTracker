@@ -12,7 +12,7 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.tydev.calorietracker"
-        versionCode = 1
+        versionCode = 2
         versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         vectorDrawables {
@@ -56,6 +56,9 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+    }
+    lint {
+        baseline = file("lint-baseline.xml")
     }
     namespace = "com.tydev.calorietracker"
 }

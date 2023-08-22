@@ -36,7 +36,7 @@ object TrackerDataModule {
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
-                }
+                },
             )
             .build()
     }
@@ -45,13 +45,13 @@ object TrackerDataModule {
     @Singleton
     fun provideOpenFoodApi(
         client: OkHttpClient,
-        networkJson: Json
+        networkJson: Json,
     ): OpenFoodApi {
         return Retrofit.Builder()
             .baseUrl(OpenFoodApi.BASE_URL)
             .addConverterFactory(
                 @OptIn(ExperimentalSerializationApi::class)
-                networkJson.asConverterFactory("application/json".toMediaType())
+                networkJson.asConverterFactory("application/json".toMediaType()),
             )
             .client(client)
             .build()
@@ -66,7 +66,7 @@ object TrackerDataModule {
         return Room.databaseBuilder(
             context,
             TrackerDatabase::class.java,
-            "tracker_db"
+            "tracker_db",
         ).build()
     }
 }
