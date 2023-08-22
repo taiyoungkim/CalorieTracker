@@ -43,7 +43,7 @@ internal fun AgeRoute(
                 is UiEvent.Success -> onNextClick()
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
                     )
                 }
                 else -> Unit
@@ -75,16 +75,16 @@ internal fun AgeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = R.string.whats_your_age),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
@@ -93,7 +93,7 @@ internal fun AgeScreen(
                 onValueChange = onAgeEnter,
                 unit = stringResource(id = R.string.years),
                 upValue = plusAge,
-                downValue = minusAge
+                downValue = minusAge,
             )
         }
 
@@ -102,7 +102,7 @@ internal fun AgeScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }

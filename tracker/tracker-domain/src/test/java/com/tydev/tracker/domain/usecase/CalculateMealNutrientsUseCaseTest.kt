@@ -41,8 +41,8 @@ class CalculateMealNutrientsUseCaseTest {
                     carbRatio = 50f,
                     proteinRatio = 20f,
                     fatRatio = 30f,
-                    shouldShowOnboarding = false
-                )
+                    shouldShowOnboarding = false,
+                ),
             )
         }
 
@@ -61,7 +61,7 @@ class CalculateMealNutrientsUseCaseTest {
                 fatPerGram = Random.nextFloat(),
                 proteinPerGram = Random.nextFloat(),
                 mealType = MealType.fromString(
-                    listOf("Breakfast", "Lunch", "Dinner", "Snacks").random()
+                    listOf("Breakfast", "Lunch", "Dinner", "Snacks").random(),
                 ),
                 imageUrl = null,
                 amount = 100,
@@ -99,7 +99,7 @@ class CalculateMealNutrientsUseCaseTest {
                 fatPerGram = Random.nextFloat(),
                 proteinPerGram = Random.nextFloat(),
                 mealType = MealType.fromString(
-                    listOf("Breakfast", "Lunch", "Dinner", "Snacks").random()
+                    listOf("Breakfast", "Lunch", "Dinner", "Snacks").random(),
                 ),
                 imageUrl = null,
                 amount = 100,

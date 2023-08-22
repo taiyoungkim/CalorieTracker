@@ -45,7 +45,7 @@ import com.tydev.tracker.presentation.overview.components.TopHeader
 fun TrackerOverViewRoute(
     onNavigateToSearch: (String, Int, Int, Int) -> Unit,
     userData: UserData,
-    viewModel: TrackerOverViewViewModel = hiltViewModel()
+    viewModel: TrackerOverViewViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state
     val revealedCardIds by viewModel.revealedCardIdsList.collectAsStateWithLifecycle()
@@ -79,28 +79,29 @@ fun TrackerOverViewScreen(
     val showDialog = remember { mutableStateOf(false) }
     val selectedFood: MutableState<TrackedFood?> = remember { mutableStateOf(null) }
 
-    if (showDialog.value && selectedFood.value != null)
+    if (showDialog.value && selectedFood.value != null) {
         EditDialog(
             trackedFood = selectedFood.value!!,
             setShowDialog = {
                 showDialog.value = it
-            }
+            },
         ) {
             onEvent(
                 TrackerOverViewEvent
-                    .OnUpdateTrackedFoodClick(selectedFood.value!!, it.toInt())
+                    .OnUpdateTrackedFoodClick(selectedFood.value!!, it.toInt()),
             )
         }
+    }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = spacing.spaceMedium)
+            .padding(bottom = spacing.spaceMedium),
     ) {
         item {
             TopHeader(
                 goalType = userData.goalType,
-                activityLevel = userData.activityLevel
+                activityLevel = userData.activityLevel,
             )
             Spacer(modifier = Modifier.height(spacing.spaceSmall))
             DaySelector(
@@ -113,7 +114,7 @@ fun TrackerOverViewScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = spacing.spaceMedium)
+                    .padding(horizontal = spacing.spaceMedium),
             )
             NutrientsHeader(state = state)
         }
@@ -127,7 +128,7 @@ fun TrackerOverViewScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = spacing.spaceSmall)
+                            .padding(horizontal = spacing.spaceSmall),
                     ) {
                         val foods = state.trackedFoods.filter {
                             it.mealType == meal.mealType
@@ -138,7 +139,7 @@ fun TrackerOverViewScreen(
                                     onDelete = {
                                         onEvent(
                                             TrackerOverViewEvent
-                                                .OnDeleteTrackedFoodClick(food)
+                                                .OnDeleteTrackedFoodClick(food),
                                         )
                                     },
                                     onEdit = {
@@ -159,21 +160,21 @@ fun TrackerOverViewScreen(
                         AddButton(
                             text = stringResource(
                                 id = R.string.add_meal,
-                                meal.name.asString(context)
+                                meal.name.asString(context),
                             ),
                             onClick = {
                                 onNavigateToSearch(
                                     meal.name.asString(context),
                                     state.date.dayOfMonth,
                                     state.date.monthValue,
-                                    state.date.year
+                                    state.date.year,
                                 )
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -194,7 +195,7 @@ fun TrackerOverViewPreView() {
         carbRatio = 0.5f,
         proteinRatio = 0.3f,
         fatRatio = 0.2f,
-        shouldShowOnboarding = false
+        shouldShowOnboarding = false,
     )
 
     CalorieTrackerTheme {

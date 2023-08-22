@@ -32,13 +32,13 @@ fun UnitTextField(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle(
         color = MaterialTheme.colorScheme.primary,
-        fontSize = UNIT_TEXT_FIELD_FONT_SIZE.sp
-    )
+        fontSize = UNIT_TEXT_FIELD_FONT_SIZE.sp,
+    ),
 ) {
     val spacing = LocalSpacing.current
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         AnimatedContent(
             targetState = value,
@@ -48,7 +48,7 @@ fun UnitTextField(
                 } else {
                     slideInVertically { it } with slideOutVertically { -it }
                 }
-            }
+            },
         ) {
             BasicTextField(
                 value = value,
@@ -61,17 +61,17 @@ fun UnitTextField(
                 },
                 textStyle = textStyle,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
                 ),
                 modifier = Modifier
                     .width(IntrinsicSize.Min)
-                    .alignBy(LastBaseline)
+                    .alignBy(LastBaseline),
             )
         }
         Spacer(modifier = Modifier.width(spacing.spaceSmall))
         Text(
             text = unit,
-            modifier = Modifier.alignBy(LastBaseline)
+            modifier = Modifier.alignBy(LastBaseline),
         )
     }
 }
@@ -82,7 +82,7 @@ fun UnitTextFieldPreview() {
     UnitTextField(
         value = "20",
         onValueChange = {},
-        unit = "unit"
+        unit = "unit",
     )
 }
 

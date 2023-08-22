@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 import java.time.LocalDate
 
 class TrackerRepositoryImplTest {
@@ -59,9 +60,9 @@ class TrackerRepositoryImplTest {
                         energyKcal100g = 95.0,
                         carbohydrates100g = 22.5,
                         proteins100g = 1.2,
-                        fat100g = 0.1
+                        fat100g = 0.1,
                     ),
-                    imageFrontThumbUrl = "https://banana.com/image.jpg"
+                    imageFrontThumbUrl = "https://banana.com/image.jpg",
                 ),
                 Product(
                     productName = "Orange",
@@ -69,11 +70,11 @@ class TrackerRepositoryImplTest {
                         energyKcal100g = 89.0,
                         carbohydrates100g = 23.43,
                         proteins100g = 1.09,
-                        fat100g = 0.33
+                        fat100g = 0.33,
                     ),
-                    imageFrontThumbUrl = "https://orange.com/image2.jpg"
-                )
-            )
+                    imageFrontThumbUrl = "https://orange.com/image2.jpg",
+                ),
+            ),
         )
         coEvery { openFoodApi.searchFood(query, page, pageSize) } returns searchDto
 
@@ -93,7 +94,13 @@ class TrackerRepositoryImplTest {
         val query = "banana"
         val page = 1
         val pageSize = 10
-        coEvery { openFoodApi.searchFood(query, page, pageSize) } throws Exception()
+
+        val openFoodApi = mockk<OpenFoodApi>()
+        val trackerDao = mockk<TrackerDao>()
+
+        coEvery { openFoodApi.searchFood(query, page, pageSize) } throws IOException()
+
+        val trackerRepository = TrackerRepositoryImpl(trackerDao, openFoodApi)
 
         // When
         val result = trackerRepository.searchFood(query, page, pageSize)
@@ -158,7 +165,7 @@ class TrackerRepositoryImplTest {
                 carbsPerGram = 0.23f,
                 proteinPerGram = 0.01f,
                 fatPerGram = 0f,
-                caloriePerGram = 0.89f
+                caloriePerGram = 0.89f,
             ),
             TrackedFoodEntity(
                 id = 2,
@@ -176,8 +183,8 @@ class TrackerRepositoryImplTest {
                 carbsPerGram = 0.25f,
                 proteinPerGram = 0.01f,
                 fatPerGram = 0f,
-                caloriePerGram = 0.95f
-            )
+                caloriePerGram = 0.95f,
+            ),
         )
         val expected = entities.map { it.toTrackedFood() }
 

@@ -22,11 +22,11 @@ fun NutrientInfo(
     amountColor: Color = MaterialTheme.colorScheme.onBackground,
     unitTextSize: TextUnit = 10.sp,
     unitColor: Color = MaterialTheme.colorScheme.onBackground,
-    nameTextStyle: TextStyle = MaterialTheme.typography.labelSmall
+    nameTextStyle: TextStyle = MaterialTheme.typography.labelSmall,
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         UnitDisplay(
             amount = amount,
@@ -34,13 +34,13 @@ fun NutrientInfo(
             amountTextSize = amountTextSize,
             amountColor = amountColor,
             unitTextSize = unitTextSize,
-            unitColor = unitColor
+            unitColor = unitColor,
         )
         Text(
             text = name,
             color = MaterialTheme.colorScheme.onBackground,
             style = nameTextStyle,
-            fontWeight = FontWeight.Light
+            fontWeight = FontWeight.Light,
         )
     }
 }

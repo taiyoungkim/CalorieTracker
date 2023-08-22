@@ -12,7 +12,7 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.tydev.calorietracker"
-        versionCode = 1
+        versionCode = 2
         versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         vectorDrawables {
@@ -34,17 +34,17 @@ android {
             // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
             signingConfig = signingConfigs.getByName("debug")
         }
-//        val benchmark by creating {
-//            // Enable all the optimizations from release build through initWith(release).
-//            initWith(release)
-//            matchingFallbacks.add("release")
-//            // Debug key signing is available to everyone.
-//            signingConfig = signingConfigs.getByName("debug")
-//            // Only use benchmark proguard rules
-//            proguardFiles("benchmark-rules.pro")
-//            isMinifyEnabled = true
-//            applicationIdSuffix = TyBuildType.BENCHMARK.applicationIdSuffix
-//        }
+        val benchmark by creating {
+            // Enable all the optimizations from release build through initWith(release).
+            initWith(release)
+            matchingFallbacks.add("release")
+            // Debug key signing is available to everyone.
+            signingConfig = signingConfigs.getByName("debug")
+            // Only use benchmark proguard rules
+            proguardFiles("benchmark-rules.pro")
+            isMinifyEnabled = true
+            applicationIdSuffix = TyBuildType.BENCHMARK.applicationIdSuffix
+        }
     }
 
     packagingOptions {
@@ -56,6 +56,9 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+    }
+    lint {
+        baseline = file("lint-baseline.xml")
     }
     namespace = "com.tydev.calorietracker"
 }

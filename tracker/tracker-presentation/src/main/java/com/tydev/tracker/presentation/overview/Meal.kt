@@ -18,31 +18,31 @@ data class Meal(
     val protein: Int = 0,
     val fat: Int = 0,
     val calories: Int = 0,
-    val isExpanded: Boolean = false
+    val isExpanded: Boolean = false,
 )
 
 val defaultMeals = listOf(
     Meal(
         name = UiText.StringResource(R.string.breakfast),
         drawableRes = R.drawable.ic_breakfast,
-        mealType = MealType.Breakfast
+        mealType = MealType.Breakfast,
     ),
 
     Meal(
         name = UiText.StringResource(R.string.lunch),
         drawableRes = R.drawable.ic_lunch,
-        mealType = MealType.Lunch
+        mealType = MealType.Lunch,
     ),
 
     Meal(
         name = UiText.StringResource(R.string.dinner),
         drawableRes = R.drawable.ic_dinner,
-        mealType = MealType.Dinner
+        mealType = MealType.Dinner,
     ),
 
     Meal(
         name = UiText.StringResource(R.string.snacks),
         drawableRes = R.drawable.ic_snack,
-        mealType = MealType.Snack
-    )
+        mealType = MealType.Snack,
+    ),
 )

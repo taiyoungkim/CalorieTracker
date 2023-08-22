@@ -25,25 +25,25 @@ import com.tydev.tracker.presentation.overview.TrackerOverViewState
 @Composable
 fun NutrientsHeader(
     state: TrackerOverViewState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val spacing = LocalSpacing.current
     val animatedCalorieCount = animateIntAsState(
-        targetValue = state.totalCalories
+        targetValue = state.totalCalories,
     )
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Row(
-            modifier = Modifier.padding(spacing.spaceSmall)
+            modifier = Modifier.padding(spacing.spaceSmall),
         ) {
             NutrientsBarInfo(
                 value = animatedCalorieCount.value,
                 goal = state.caloriesGoal,
                 name = stringResource(id = R.string.kcal),
-                modifier = Modifier.fillMaxWidth(HALF)
+                modifier = Modifier.fillMaxWidth(HALF),
             )
             Spacer(modifier = Modifier.width(spacing.spaceExtraLarge))
             Column(
@@ -58,7 +58,7 @@ fun NutrientsHeader(
                     name = "CARB",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(DEFAULT_HEIGHT.dp)
+                        .height(DEFAULT_HEIGHT.dp),
                 )
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
                 NutrientsBar(
@@ -68,7 +68,7 @@ fun NutrientsHeader(
                     name = "PROTEIN",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(DEFAULT_HEIGHT.dp)
+                        .height(DEFAULT_HEIGHT.dp),
                 )
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
                 NutrientsBar(
@@ -78,7 +78,7 @@ fun NutrientsHeader(
                     name = "FAT",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(DEFAULT_HEIGHT.dp)
+                        .height(DEFAULT_HEIGHT.dp),
                 )
             }
         }

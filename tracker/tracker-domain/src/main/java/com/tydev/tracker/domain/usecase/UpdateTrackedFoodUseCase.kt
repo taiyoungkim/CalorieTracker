@@ -5,11 +5,11 @@ import com.tydev.tracker.domain.repository.TrackerRepository
 import kotlin.math.roundToInt
 
 class UpdateTrackedFoodUseCase(
-    private val repository: TrackerRepository
+    private val repository: TrackerRepository,
 ) {
     suspend operator fun invoke(
         trackedFood: TrackedFood,
-        amount: Int
+        amount: Int,
     ) {
         repository.updateTrackedFood(
             TrackedFood(
@@ -26,8 +26,8 @@ class UpdateTrackedFoodUseCase(
                 carbsPerGram = trackedFood.carbsPerGram,
                 proteinPerGram = trackedFood.proteinPerGram,
                 fatPerGram = trackedFood.fatPerGram,
-                caloriePerGram = trackedFood.caloriePerGram
-            )
+                caloriePerGram = trackedFood.caloriePerGram,
+            ),
         )
     }
 }

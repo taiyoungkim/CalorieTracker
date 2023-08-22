@@ -35,7 +35,7 @@ internal fun HeightRoute(
     gender: String,
     snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
-    viewModel: HeightViewModel = hiltViewModel()
+    viewModel: HeightViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -45,7 +45,7 @@ internal fun HeightRoute(
                 is UiEvent.Success -> onNextClick()
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
                     )
                 }
                 else -> Unit
@@ -57,7 +57,7 @@ internal fun HeightRoute(
         gender = gender,
         height = viewModel.height.toInt(),
         updateHeight = viewModel::updateHeight,
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
     )
 }
 
@@ -69,40 +69,41 @@ internal fun HeightScreen(
     onNextClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
-    val resId = if (gender.equals(Gender.MALE.name))
+    val resId = if (gender.equals(Gender.MALE.name)) {
         com.tydev.onboarding.presentation.R.drawable.ic_man_standing
-    else
+    } else {
         com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Text(
             text = stringResource(id = R.string.whats_your_height),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
         ) {
             Row(
-                modifier = Modifier
+                modifier = Modifier,
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .weight(1f)
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = 10.dp),
                 ) {
                     AnimatedHeightImage(
                         number = height,
                         imageResId = resId,
                         modifier = Modifier
-                            .align(Alignment.BottomCenter)
+                            .align(Alignment.BottomCenter),
                     )
                 }
                 Column(
@@ -120,7 +121,7 @@ internal fun HeightScreen(
                         currentValueLabel = { value ->
                             Text(
                                 text = "${(value / 1)}${stringResource(id = R.string.cm)}",
-                                style = MaterialTheme.typography.headlineMedium
+                                style = MaterialTheme.typography.headlineMedium,
                             )
                             updateHeight(value.toString())
                         },
@@ -131,7 +132,7 @@ internal fun HeightScreen(
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -141,7 +142,7 @@ internal fun HeightScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }

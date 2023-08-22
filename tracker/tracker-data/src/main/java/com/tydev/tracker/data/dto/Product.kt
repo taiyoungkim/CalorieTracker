@@ -9,5 +9,5 @@ data class Product(
     val imageFrontThumbUrl: String? = null,
     val nutriments: Nutriments,
     @SerialName("product_name")
-    val productName: String? = null
+    val productName: String? = null,
 )

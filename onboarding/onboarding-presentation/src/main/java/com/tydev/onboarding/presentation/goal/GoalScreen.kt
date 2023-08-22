@@ -32,7 +32,7 @@ import com.tydev.onboarding.presentation.components.SelectableButton
 @Composable
 fun GoalRoute(
     onNextClick: () -> Unit,
-    viewModel: GoalViewModel = hiltViewModel()
+    viewModel: GoalViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -46,7 +46,7 @@ fun GoalRoute(
     GoalScreen(
         selectedGoal = viewModel.selectedGoal,
         onGoalTypeSelect = viewModel::onGoalTypeSelect,
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
     )
 }
 
@@ -61,16 +61,16 @@ fun GoalScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = R.string.lose_keep_or_gain_weight),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -85,8 +85,8 @@ fun GoalScreen(
                         onGoalTypeSelect(GoalType.LOSE_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
@@ -100,8 +100,8 @@ fun GoalScreen(
                         onGoalTypeSelect(GoalType.KEEP_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
@@ -115,8 +115,8 @@ fun GoalScreen(
                         onGoalTypeSelect(GoalType.GAIN_WEIGHT)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    )
+                        fontWeight = FontWeight.Normal,
+                    ),
                 )
             }
         }
@@ -125,7 +125,7 @@ fun GoalScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }

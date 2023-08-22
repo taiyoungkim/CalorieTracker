@@ -35,7 +35,7 @@ internal fun WeightRoute(
     gender: String,
     snackbarHostState: SnackbarHostState,
     onNextClick: () -> Unit,
-    viewModel: WeightViewModel = hiltViewModel()
+    viewModel: WeightViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -45,7 +45,7 @@ internal fun WeightRoute(
                 is UiEvent.Success -> onNextClick()
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
                     )
                 }
                 else -> Unit
@@ -57,7 +57,7 @@ internal fun WeightRoute(
         gender = gender,
         weight = viewModel.weight.toDouble(),
         updateWeight = { viewModel.updateWeight(it.toString()) },
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
     )
 }
 
@@ -69,15 +69,16 @@ internal fun WeightScreen(
     onNextClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
-    val resId = if (gender.equals(Gender.MALE.name))
+    val resId = if (gender.equals(Gender.MALE.name)) {
         com.tydev.onboarding.presentation.R.drawable.ic_man_standing
-    else
+    } else {
         com.tydev.onboarding.presentation.R.drawable.ic_woman_standing
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -86,14 +87,14 @@ internal fun WeightScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.whats_your_weight),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
 
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
             AnimatedWeightImage(
                 weight = weight,
-                imageResId = resId
+                imageResId = resId,
             )
 
             RulerSlider(
@@ -107,7 +108,7 @@ internal fun WeightScreen(
                 currentValueLabel = { value ->
                     Text(
                         text = "${(value / 1)}${stringResource(id = R.string.kg)}",
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.headlineMedium,
                     )
                     updateWeight(value)
                 },
@@ -118,7 +119,7 @@ internal fun WeightScreen(
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
-                }
+                },
             )
         }
         ActionButton(
@@ -126,7 +127,7 @@ internal fun WeightScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }

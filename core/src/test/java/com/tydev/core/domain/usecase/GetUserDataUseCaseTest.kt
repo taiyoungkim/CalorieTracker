@@ -47,7 +47,7 @@ class GetUserDataUseCaseTest {
             0.5f,
             0.3f,
             0.2f,
-            true
+            true,
         )
 
         val flow = flowOf(expectedUserData)

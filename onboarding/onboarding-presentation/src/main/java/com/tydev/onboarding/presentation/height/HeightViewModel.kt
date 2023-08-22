@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HeightViewModel @Inject constructor(
     private val filterOutDigitsUseCase: FilterOutDigitsUseCase,
-    private val setHeightUseCase: SetHeightUseCase
+    private val setHeightUseCase: SetHeightUseCase,
 ) : ViewModel() {
 
     var height by mutableStateOf(DEFAULT_HEIGHT)
@@ -41,8 +41,8 @@ class HeightViewModel @Inject constructor(
         val heightNumber = height.toIntOrNull() ?: run {
             _uiEvent.send(
                 UiEvent.ShowSnackbar(
-                    UiText.StringResource(com.tydev.core.R.string.error_height_cant_be_empty)
-                )
+                    UiText.StringResource(com.tydev.core.R.string.error_height_cant_be_empty),
+                ),
             )
             return@launch
         }

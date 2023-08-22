@@ -43,9 +43,9 @@
     <string name="no_results">No results</string>
     <string name="error_invalid_values">These are not valid values</string>
     <string name="what_are_your_nutrient_goals">What are your nutrient goals?</string>
-    <string name="percent_proteins">% proteins</string>
-    <string name="percent_fats">% fats</string>
-    <string name="percent_carbs">% carbs</string>
+    <string name="percent_proteins">proteins %</string>
+    <string name="percent_fats">fats %</string>
+    <string name="percent_carbs">carbs %</string>
     <string name="high">High</string>
     <string name="medium">Medium</string>
     <string name="years">years</string>

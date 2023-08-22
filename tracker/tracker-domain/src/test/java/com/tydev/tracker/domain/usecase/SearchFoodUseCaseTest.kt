@@ -47,7 +47,7 @@ class SearchFoodUseCaseTest {
                 proteinPer100g = 31,
                 fatPer100g = 3,
                 caloriesPer100g = 165,
-                imageUrl = "https://example.com/chicken.jpg"
+                imageUrl = "https://example.com/chicken.jpg",
             ),
             TrackableFood(
                 name = "Chicken Caesar salad",
@@ -55,8 +55,8 @@ class SearchFoodUseCaseTest {
                 proteinPer100g = 17,
                 fatPer100g = 14,
                 caloriesPer100g = 233,
-                imageUrl = "https://example.com/caesar.jpg"
-            )
+                imageUrl = "https://example.com/caesar.jpg",
+            ),
         )
         coEvery {
             trackerRepository.searchFood(query, DEFAULT_PAGE, DEFAULT_PAGE_SIZE)

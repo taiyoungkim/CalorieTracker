@@ -31,7 +31,7 @@ fun NutrientsBarInfo(
     goal: Int,
     name: String,
     modifier: Modifier = Modifier,
-    strokeWidth: Dp = 8.dp
+    strokeWidth: Dp = 8.dp,
 ) {
     val background = Color.LightGray
     val primaryColor = MaterialTheme.colorScheme.primary
@@ -40,29 +40,32 @@ fun NutrientsBarInfo(
         Animatable(0f)
     }
 
-    val data = if (value <= goal)
+    val data = if (value <= goal) {
         stringResource(id = R.string.left)
-    else
+    } else {
         stringResource(id = R.string.over)
+    }
 
     LaunchedEffect(key1 = value) {
         angelRatio.animateTo(
             targetValue = if (goal > 0) {
                 value / goal.toFloat()
-            } else 0f,
+            } else {
+                0f
+            },
             animationSpec = tween(
-                durationMillis = 300
-            )
+                durationMillis = 300,
+            ),
         )
     }
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1f)
+                .aspectRatio(1f),
         ) {
             drawArc(
                 color = if (value <= goal) background else goalExceededColor,
@@ -72,8 +75,8 @@ fun NutrientsBarInfo(
                 size = size,
                 style = Stroke(
                     width = strokeWidth.toPx(),
-                    cap = StrokeCap.Round
-                )
+                    cap = StrokeCap.Round,
+                ),
             )
             if (value <= goal) {
                 drawArc(
@@ -84,29 +87,33 @@ fun NutrientsBarInfo(
                     size = size,
                     style = Stroke(
                         width = strokeWidth.toPx(),
-                        cap = StrokeCap.Round
-                    )
+                        cap = StrokeCap.Round,
+                    ),
                 )
             }
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = (goal - value).absoluteValue.toString(),
                 color = if (value <= goal) {
                     primaryColor
-                } else goalExceededColor,
+                } else {
+                    goalExceededColor
+                },
                 style = MaterialTheme.typography.headlineLarge,
                 fontSize = 40.sp,
-                modifier = Modifier
+                modifier = Modifier,
             )
             Text(
                 text = "$name $data",
                 color = if (value <= goal) {
                     background
-                } else goalExceededColor,
+                } else {
+                    goalExceededColor
+                },
                 style = MaterialTheme.typography.bodyLarge,
             )
         }

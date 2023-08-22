@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TrackerOverViewViewModel @Inject constructor(
     private val trackerUseCases: TrackerUseCases,
-    private val setShouldShowOnboardingUseCase: SetShouldShowOnboardingUseCase
+    private val setShouldShowOnboardingUseCase: SetShouldShowOnboardingUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(TrackerOverViewState())
@@ -50,13 +50,13 @@ class TrackerOverViewViewModel @Inject constructor(
             }
             is TrackerOverViewEvent.OnNextDayClick -> {
                 state = state.copy(
-                    date = state.date.plusDays(1)
+                    date = state.date.plusDays(1),
                 )
                 refreshFoods()
             }
             is TrackerOverViewEvent.OnPreviousDayClick -> {
                 state = state.copy(
-                    date = state.date.minusDays(1)
+                    date = state.date.minusDays(1),
                 )
                 refreshFoods()
             }
@@ -65,8 +65,10 @@ class TrackerOverViewViewModel @Inject constructor(
                     meals = state.meals.map {
                         if (it.name == event.meal.name) {
                             it.copy(isExpanded = !it.isExpanded)
-                        } else it
-                    }
+                        } else {
+                            it
+                        }
+                    },
                 )
             }
             is TrackerOverViewEvent.OnUpdateTrackedFoodClick -> {
@@ -105,15 +107,15 @@ class TrackerOverViewViewModel @Inject constructor(
                                     carbs = 0,
                                     protein = 0,
                                     fat = 0,
-                                    calories = 0
+                                    calories = 0,
                                 )
                         it.copy(
                             carbs = nutrientsForMeal.carbs,
                             protein = nutrientsForMeal.protein,
                             fat = nutrientsForMeal.fat,
-                            calories = nutrientsForMeal.calories
+                            calories = nutrientsForMeal.calories,
                         )
-                    }
+                    },
                 )
             }
             .launchIn(viewModelScope)

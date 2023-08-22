@@ -17,19 +17,19 @@ fun ActionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
         enabled = isEnable,
-        shape = RoundedCornerShape(100.dp)
+        shape = RoundedCornerShape(100.dp),
     ) {
         Text(
             text = text,
             style = textStyle,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(LocalSpacing.current.spaceSmall)
+            modifier = Modifier.padding(LocalSpacing.current.spaceSmall),
         )
     }
 }

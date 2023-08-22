@@ -27,6 +27,6 @@ object DataStoreModule {
             serializer = userPreferencesSerializer,
             produceFile = {
                 context.dataStoreFile("user_preferences.pb")
-            }
+            },
         )
 }

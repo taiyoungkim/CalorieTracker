@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GenderViewModel @Inject constructor(
-    private val setGenderUseCase: SetGenderUseCase
+    private val setGenderUseCase: SetGenderUseCase,
 ) : ViewModel() {
 
     var selectedGender by mutableStateOf(Gender.MALE)

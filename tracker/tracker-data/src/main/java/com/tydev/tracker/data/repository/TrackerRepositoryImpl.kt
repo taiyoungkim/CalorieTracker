@@ -1,4 +1,5 @@
 @file:Suppress("MagicNumber")
+
 package com.tydev.tracker.data.repository
 
 import com.tydev.tracker.data.local.TrackerDao
@@ -17,19 +18,19 @@ import java.time.LocalDate
 
 class TrackerRepositoryImpl(
     private val dao: TrackerDao,
-    private val api: OpenFoodApi
+    private val api: OpenFoodApi,
 ) : TrackerRepository {
 
     override suspend fun searchFood(
         query: String,
         page: Int,
-        pageSize: Int
+        pageSize: Int,
     ): Result<List<TrackableFood>> {
         return try {
             val searchDto = api.searchFood(
                 query = query,
                 page = page,
-                pageSize = pageSize
+                pageSize = pageSize,
             )
             Result.success(
                 searchDto.products
@@ -42,7 +43,7 @@ class TrackerRepositoryImpl(
                         val upperBound = calculatedCalories * 1.01f
                         it.nutriments.energyKcal100g in (lowerBound..upperBound)
                     }
-                    .mapNotNull { it.toTrackableFood() }
+                    .mapNotNull { it.toTrackableFood() },
             )
         } catch (e: IOException) {
             Result.failure(e)
@@ -63,7 +64,7 @@ class TrackerRepositoryImpl(
         return dao.getFoodsForDate(
             day = localDate.dayOfMonth,
             month = localDate.monthValue,
-            year = localDate.year
+            year = localDate.year,
         ).map { entities ->
             entities.map { it.toTrackedFood() }
         }

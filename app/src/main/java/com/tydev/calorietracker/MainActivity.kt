@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                             is Loading -> Unit
                             is Success -> AppNavHost(navController, state.userData, snackbarHostState, padding)
                         }
-                    }
+                    },
                 )
             }
         }

@@ -25,66 +25,66 @@ object CoreDomainModule {
     @Provides
     @Singleton
     fun provideSetActivityLevelUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetActivityLevelUseCase = SetActivityLevelUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetAgeUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetAgeUseCase = SetAgeUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetCarbRatioUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetCarbRatioUseCase = SetCarbRatioUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetFatRatioUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetFatRatioUseCase = SetFatRatioUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetGenderUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetGenderUseCase = SetGenderUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetGoalTypeUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetGoalTypeUseCase = SetGoalTypeUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetHeightUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetHeightUseCase = SetHeightUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetProteinRatioUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetProteinRatioUseCase = SetProteinRatioUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetShouldShowOnboardingUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetShouldShowOnboardingUseCase = SetShouldShowOnboardingUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideSetWeightUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): SetWeightUseCase = SetWeightUseCase(userDataRepository)
 
     @Provides
     @Singleton
     fun provideGetUserDataUseCase(
-        userDataRepository: UserDataRepository
+        userDataRepository: UserDataRepository,
     ): GetUserDataUseCase = GetUserDataUseCase(userDataRepository)
 }

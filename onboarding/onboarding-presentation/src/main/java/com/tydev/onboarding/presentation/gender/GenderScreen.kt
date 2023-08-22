@@ -34,7 +34,7 @@ import com.tydev.onboarding.presentation.components.SelectableImageButton
 @Composable
 internal fun GenderRoute(
     onNextClick: (Gender) -> Unit,
-    viewModel: GenderViewModel = hiltViewModel()
+    viewModel: GenderViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = viewModel) {
         viewModel.uiEvent.collect { event ->
@@ -48,7 +48,7 @@ internal fun GenderRoute(
     GenderScreen(
         selectedGender = viewModel.selectedGender,
         onGenderClick = viewModel::onGenderClick,
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
     )
 }
 
@@ -63,16 +63,16 @@ fun GenderScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(spacing.spaceLarge)
+            .padding(spacing.spaceLarge),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = com.tydev.core.R.string.whats_your_gender),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
@@ -89,12 +89,13 @@ fun GenderScreen(
                         onGenderClick(Gender.MALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
                     ),
-                    imageResId = if (selectedGender == Gender.MALE)
+                    imageResId = if (selectedGender == Gender.MALE) {
                         R.drawable.ic_man_select
-                    else
+                    } else {
                         R.drawable.ic_man_unselect
+                    },
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
@@ -110,12 +111,13 @@ fun GenderScreen(
                         onGenderClick(Gender.FEMALE)
                     },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
                     ),
-                    imageResId = if (selectedGender == Gender.FEMALE)
+                    imageResId = if (selectedGender == Gender.FEMALE) {
                         R.drawable.ic_woman_select
-                    else
+                    } else {
                         R.drawable.ic_woman_unselect
+                    },
                 )
             }
         }
@@ -125,7 +127,7 @@ fun GenderScreen(
             onClick = onNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }

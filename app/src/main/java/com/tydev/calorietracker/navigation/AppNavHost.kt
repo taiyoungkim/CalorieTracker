@@ -34,12 +34,12 @@ fun AppNavHost(
     navController: NavHostController,
     userData: UserData,
     snackbarHostState: SnackbarHostState,
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
     NavHost(
         navController = navController,
         startDestination = if (userData.shouldShowOnboarding) WELCOME else TRACKER_OVERVIEW,
-        modifier = Modifier.padding(padding)
+        modifier = Modifier.padding(padding),
     ) {
         welcomeScreen { navController.navigateToAge() }
         ageScreen({ navController.navigateToGender() }, snackbarHostState)

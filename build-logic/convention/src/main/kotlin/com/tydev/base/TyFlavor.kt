@@ -20,7 +20,7 @@ enum class TyFlavor(val dimension: FlavorDimension, val applicationIdSuffix: Str
     prod(FlavorDimension.contentType, ".prod")
 }
 
-fun Project.configureFlavors(
+fun configureFlavors(
     commonExtension: CommonExtension<*, *, *, *>,
     flavorConfigurationBlock: ProductFlavor.(flavor: TyFlavor) -> Unit = {}
 ) {

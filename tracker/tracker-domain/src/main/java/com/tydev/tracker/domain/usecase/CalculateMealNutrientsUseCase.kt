@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlin.math.roundToInt
 
 class CalculateMealNutrientsUseCase(
-    private val getUserDataUseCase: GetUserDataUseCase
+    private val getUserDataUseCase: GetUserDataUseCase,
 ) {
 
     operator fun invoke(trackedFoods: List<TrackedFood>): Flow<Result> =
@@ -27,7 +27,7 @@ class CalculateMealNutrientsUseCase(
                         protein = foods.sumOf { it.protein },
                         fat = foods.sumOf { it.fat },
                         calories = foods.sumOf { it.calories },
-                        mealType = type
+                        mealType = type,
                     )
                 }
             val totalCarbs = allNutrients.values.sumOf { it.carbs }
@@ -49,7 +49,7 @@ class CalculateMealNutrientsUseCase(
                 totalProtein = totalProtein,
                 totalFat = totalFat,
                 totalCalories = totalCalories,
-                mealNutrients = allNutrients
+                mealNutrients = allNutrients,
             )
         }
 
@@ -89,7 +89,7 @@ class CalculateMealNutrientsUseCase(
         val protein: Int,
         val fat: Int,
         val calories: Int,
-        val mealType: MealType
+        val mealType: MealType,
     )
 
     data class Result(
@@ -101,7 +101,7 @@ class CalculateMealNutrientsUseCase(
         val totalProtein: Int,
         val totalFat: Int,
         val totalCalories: Int,
-        val mealNutrients: Map<MealType, MealNutrients>
+        val mealNutrients: Map<MealType, MealNutrients>,
     )
 }
 

@@ -33,7 +33,7 @@ class TrackFoodUseCaseTest {
             proteinPer100g = 0,
             fatPer100g = 0,
             caloriesPer100g = 52,
-            imageUrl = null
+            imageUrl = null,
         )
         val amount = 200
         val mealType = mockk<MealType>(relaxed = true)
@@ -58,8 +58,8 @@ class TrackFoodUseCaseTest {
                     carbsPerGram = food.carbsPer100g / RATIO_PERCENT,
                     proteinPerGram = food.proteinPer100g / RATIO_PERCENT,
                     fatPerGram = food.fatPer100g / RATIO_PERCENT,
-                    caloriePerGram = food.caloriesPer100g / RATIO_PERCENT
-                )
+                    caloriePerGram = food.caloriesPer100g / RATIO_PERCENT,
+                ),
             )
         }
     }

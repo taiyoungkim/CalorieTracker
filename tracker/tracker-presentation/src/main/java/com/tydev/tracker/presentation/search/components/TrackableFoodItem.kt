@@ -55,7 +55,7 @@ fun TrackableFoodItem(
     onClick: () -> Unit,
     onAmountChange: (String) -> Unit,
     onTrack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val food = trackableFoodUiState.food
     val spacing = LocalSpacing.current
@@ -66,19 +66,19 @@ fun TrackableFoodItem(
             .padding(spacing.spaceExtraSmall)
             .shadow(
                 elevation = 1.dp,
-                shape = RoundedCornerShape(5.dp)
+                shape = RoundedCornerShape(5.dp),
             )
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
-            .padding(end = spacing.spaceMedium)
+            .padding(end = spacing.spaceMedium),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(
@@ -89,25 +89,25 @@ fun TrackableFoodItem(
                                 error(R.drawable.ic_burger)
                                 fallback(R.drawable.ic_burger)
                                 memoryCachePolicy(CachePolicy.ENABLED)
-                            }).build()
+                            }).build(),
                     ),
                     contentDescription = food.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(70.dp)
-                        .clip(RoundedCornerShape(topStart = 5.dp))
+                        .clip(RoundedCornerShape(topStart = 5.dp)),
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
                 Column(
-                    modifier = Modifier.align(CenterVertically)
+                    modifier = Modifier.align(CenterVertically),
                 ) {
                     Text(
                         text = food.name,
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
 
                     Spacer(modifier = Modifier.height(spacing.spaceSmall))
@@ -115,9 +115,9 @@ fun TrackableFoodItem(
                     Text(
                         text = stringResource(
                             id = R.string.kcal_per_100g,
-                            food.caloriesPer100g
+                            food.caloriesPer100g,
                         ),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }
@@ -128,7 +128,7 @@ fun TrackableFoodItem(
                     unit = stringResource(id = R.string.grams),
                     amountTextSize = 16.sp,
                     unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
+                    nameTextStyle = MaterialTheme.typography.bodyMedium,
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
@@ -139,7 +139,7 @@ fun TrackableFoodItem(
                     unit = stringResource(id = R.string.grams),
                     amountTextSize = 16.sp,
                     unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
+                    nameTextStyle = MaterialTheme.typography.bodyMedium,
                 )
 
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
@@ -150,7 +150,7 @@ fun TrackableFoodItem(
                     unit = stringResource(id = R.string.grams),
                     amountTextSize = 16.sp,
                     unitTextSize = 12.sp,
-                    nameTextStyle = MaterialTheme.typography.bodyMedium
+                    nameTextStyle = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -160,7 +160,7 @@ fun TrackableFoodItem(
                     .fillMaxWidth()
                     .padding(spacing.spaceMedium),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row {
                     BasicTextField(
@@ -169,24 +169,26 @@ fun TrackableFoodItem(
                         keyboardOptions = KeyboardOptions(
                             imeAction = if (trackableFoodUiState.amount.isNotBlank()) {
                                 ImeAction.Done
-                            } else ImeAction.Default,
-                            keyboardType = KeyboardType.Number
+                            } else {
+                                ImeAction.Default
+                            },
+                            keyboardType = KeyboardType.Number,
                         ),
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 onTrack()
                                 defaultKeyboardAction(ImeAction.Done)
-                            }
+                            },
                         ),
                         singleLine = true,
                         modifier = Modifier
                             .border(
                                 shape = RoundedCornerShape(5.dp),
                                 width = 0.5.dp,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
                             .alignBy(LastBaseline)
-                            .padding(spacing.spaceMedium)
+                            .padding(spacing.spaceMedium),
                     )
 
                     Spacer(modifier = Modifier.width(spacing.spaceExtraSmall))
@@ -194,16 +196,16 @@ fun TrackableFoodItem(
                     Text(
                         text = stringResource(id = R.string.grams),
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.alignBy(LastBaseline)
+                        modifier = Modifier.alignBy(LastBaseline),
                     )
                 }
                 IconButton(
                     onClick = onTrack,
-                    enabled = trackableFoodUiState.amount.isNotBlank()
+                    enabled = trackableFoodUiState.amount.isNotBlank(),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,
-                        contentDescription = stringResource(id = R.string.track)
+                        contentDescription = stringResource(id = R.string.track),
                     )
                 }
             }

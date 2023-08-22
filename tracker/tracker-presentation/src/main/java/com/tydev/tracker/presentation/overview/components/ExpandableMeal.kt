@@ -34,69 +34,74 @@ fun ExpandableMeal(
     meal: Meal,
     onToggleClick: () -> Unit,
     content: @Composable () -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onToggleClick() }
                 .padding(spacing.spaceMedium),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
                 painter = painterResource(id = meal.drawableRes),
-                colorFilter = if (meal.calories > 0)
+                colorFilter = if (meal.calories > 0) {
                     ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
-                else
-                    null,
-                contentDescription = meal.name.asString(context)
+                } else {
+                    null
+                },
+                contentDescription = meal.name.asString(context),
             )
             Spacer(modifier = Modifier.width(spacing.spaceMedium))
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = meal.name.asString(context),
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
                 UnitDisplay(
                     amount = meal.calories,
                     unit = stringResource(id = R.string.kcal),
-                    amountTextSize = 15.sp
+                    amountTextSize = 15.sp,
                 )
             }
             Row {
                 NutrientInfo(
                     name = stringResource(id = R.string.carbs),
                     amount = meal.carbs,
-                    unit = stringResource(id = R.string.grams)
+                    unit = stringResource(id = R.string.grams),
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
                 NutrientInfo(
                     name = stringResource(id = R.string.protein),
                     amount = meal.protein,
-                    unit = stringResource(id = R.string.grams)
+                    unit = stringResource(id = R.string.grams),
                 )
                 Spacer(modifier = Modifier.width(spacing.spaceSmall))
                 NutrientInfo(
                     name = stringResource(id = R.string.fat),
                     amount = meal.fat,
-                    unit = stringResource(id = R.string.grams)
+                    unit = stringResource(id = R.string.grams),
                 )
             }
             Spacer(modifier = Modifier.width(spacing.spaceSmall))
             Icon(
                 imageVector = if (meal.isExpanded) {
                     Icons.Default.KeyboardArrowUp
-                } else Icons.Default.KeyboardArrowDown,
+                } else {
+                    Icons.Default.KeyboardArrowDown
+                },
                 contentDescription = if (meal.isExpanded) {
                     stringResource(id = R.string.collapse)
-                } else stringResource(id = R.string.extend)
+                } else {
+                    stringResource(id = R.string.extend)
+                },
             )
         }
         AnimatedVisibility(visible = meal.isExpanded) {
