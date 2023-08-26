@@ -15,4 +15,5 @@ data class TrackerOverViewState(
     val date: LocalDate = LocalDate.now(),
     val trackedFoods: List<TrackedFood> = emptyList(),
     val meals: List<Meal> = defaultMeals,
+    val isReveal: Int = -1,
 )
