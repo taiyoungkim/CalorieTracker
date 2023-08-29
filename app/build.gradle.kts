@@ -24,7 +24,6 @@ android {
         create("release") {
             val files = file("/Users/kimtaeyeong/androidKey/").listFiles()
             if (files != null) {
-                println(files.first())
                 storeFile = files.first()
                 storePassword = System.getenv("SIGNING_STORE_PASSWORD")
                 keyAlias = System.getenv("SIGNING_KEY_ALIAS")
