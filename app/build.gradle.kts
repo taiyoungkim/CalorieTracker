@@ -12,8 +12,8 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.tydev.calorietracker"
-        versionCode = 2
-        versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 3
+        versionName = "0.0.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         vectorDrawables {
             useSupportLibrary = true
