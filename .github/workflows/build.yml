@@ -94,7 +94,8 @@ jobs:
           path: '*/build/reports/androidTests'
 
   publish_aab:
-    if: github.ref == 'refs/heads/main'
+    needs: [ build, androidTest ]
+    if: github.base_ref == 'main'
     runs-on: ubuntu-latest
 
     steps:
