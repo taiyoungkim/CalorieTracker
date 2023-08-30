@@ -5,6 +5,9 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
+  pull-requests: read
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
@@ -121,18 +124,18 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         env:
-          ENCODED_STRING: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
-          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          ENCODED_STRING: ${{ vars.SIGNING_KEY_STORE_BASE64 }}
+          SIGNING_KEY_STORE_PATH: ${{ vars.SIGNING_KEY_STORE_PATH }}
         with:
-          fileName: ${{ secrets.SIGNING_KEY_STORE_PATH }}
-          encodedString: ${{secrets.CALORIETRACKER_KEY}}
+          fileName: ${{ vars.SIGNING_KEY_STORE_PATH }}
+          encodedString: ${{vars.CALORIETRACKER_KEY}}
 
       - name: Build Release bundle
         env:
-          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_STORE_PATH: ${{ vars.SIGNING_KEY_STORE_PATH }}
+          SIGNING_KEY_ALIAS: ${{ vars.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ vars.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ vars.SIGNING_STORE_PASSWORD }}
         run: ./gradlew bundleRelease
       #3
       - name: Upload Release Build to Artifacts
