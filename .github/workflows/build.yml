@@ -103,93 +103,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.6.0
+      - uses: actions/checkout@v2
 
-      - name: Setup JAVA 11
-        uses: actions/setup-java@v3
+      # JDK 설정
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          distribution: 'corretto'
-          java-version: 11
+          java-version: '11'
+          distribution: 'adopt'
+          check-latest: true
 
-      - name: Cache Gradle and wrapper
-        uses: actions/cache@v2
+      # Ruby Setting
+      - uses: ruby/setup-ruby@v1
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          ruby-version: 3.0.2
+          bundler-cache: true
 
-      #1
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
-        env:
-          ENCODED_STRING: ${{ vars.SIGNING_KEY_STORE_BASE64 }}
-          SIGNING_KEY_STORE_PATH: ${{ vars.SIGNING_KEY_STORE_PATH }}
         with:
-          fileName: ${{ vars.SIGNING_KEY_STORE_PATH }}
-          encodedString: ${{vars.CALORIETRACKER_KEY}}
+          fileName: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          encodedString: ${{secrets.CALORIETRACKER_KEY}}
+          SIGNING_KEY_STORE_PATH:  ${{ secrets.SIGNING_KEY_STORE_PATH }}
 
-      - name: Build Release bundle
-        env:
-          SIGNING_KEY_STORE_PATH: ${{ vars.SIGNING_KEY_STORE_PATH }}
-          SIGNING_KEY_ALIAS: ${{ vars.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ vars.SIGNING_KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ vars.SIGNING_STORE_PASSWORD }}
-        run: ./gradlew bundleRelease
-      #3
-      - name: Upload Release Build to Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-artifacts
-          paths: |
-            app/build/outputs/apk/release/
-            app/build/outputs/bundle/release/
-      #4
-      - name: Create Github Release
-        uses: softprops/action-gh-release@v1
-        with:
-          generate_release_notes: true
-          prerelease: true
-          files: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      # JDK 설정
-#      - name: set up JDK 11
-#        uses: actions/setup-java@v2
-#        with:
-#          java-version: '11'
-#          distribution: 'adopt'
-#          check-latest: true
-#
-#      # Ruby Setting
-#      - uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: 3.0.2
-#          bundler-cache: true
-#
-#      - name: Decode Keystore
-#        id: decode_keystore
-#        uses: timheuer/base64-to-file@v1
-#        with:
-#          fileName: ${{ secrets.SIGNING_KEY_STORE_PATH }}
-#          encodedString: ${{secrets.CALORIETRACKER_KEY}}
-#          SIGNING_KEY_STORE_PATH:  ${{ secrets.SIGNING_KEY_STORE_PATH }}
-#
-#      - name: Make gradlew executable
-#        run: chmod +x ./gradlew
-#
-#      # Fastlane Setting
-#      - name: Set Up fastlane And Publish Google Play
-#        uses: maierj/fastlane-action@v2.2.0
-#        with:
-#          lane: 'productionDeploy'
-#        env:
-#          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
-#          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-#          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-#          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      # Fastlane Setting
+      - name: Set Up fastlane And Publish Google Play
+        uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: 'productionDeploy'
+        env:
+          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
