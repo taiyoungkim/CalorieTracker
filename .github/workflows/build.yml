@@ -123,7 +123,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: '/keystore/release/calorieTrackerKey.jks'
+          fileName: '/keystore/release/calorieTrackerKey'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
 
       # Fastlane Setting

@@ -22,7 +22,7 @@ android {
 
     signingConfigs {
         create("release") {
-            val files = file("/home/runner/work/_temp/keystore/release").listFiles()
+            val files = file("/keystore/release").listFiles()
             if (files != null) {
                 storeFile = files.first()
                 storePassword = System.getenv("SIGNING_STORE_PASSWORD")
