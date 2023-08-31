@@ -116,19 +116,15 @@ jobs:
       # Ruby Setting
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.2
+          ruby-version: 2.7.2
           bundler-cache: true
 
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          fileName: '/keystore/release/calorieTrackerKey.jks'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
-          SIGNING_KEY_STORE_PATH:  ${{ secrets.SIGNING_KEY_STORE_PATH }}
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
@@ -136,7 +132,6 @@ jobs:
         with:
           lane: 'productionDeploy'
         env:
-          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
