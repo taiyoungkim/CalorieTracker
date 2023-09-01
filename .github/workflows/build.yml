@@ -126,7 +126,6 @@ jobs:
           fileName: 'calorieTrackerKey.jks'
           fileDir: './keystore/release/'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
-        secrets: inherit
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
