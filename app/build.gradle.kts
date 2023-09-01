@@ -12,27 +12,37 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.tydev.calorietracker"
-        versionCode = 2
-        versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 3
+        versionName = "0.0.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = "/keystore/release/calorieTrackerKey.jks"
+            val keystoreFile = file(keystorePath)
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         val debug by getting {
             applicationIdSuffix = TyBuildType.DEBUG.applicationIdSuffix
+            signingConfig = signingConfigs.getByName("debug")
         }
         val release by getting {
             isMinifyEnabled = true
             applicationIdSuffix = TyBuildType.RELEASE.applicationIdSuffix
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-
-            // To publish on the Play store a private signing key is required, but to allow anyone
-            // who clones the code to sign and run the release variant, use the debug signing key.
-            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
         val benchmark by creating {
             // Enable all the optimizations from release build through initWith(release).
@@ -52,11 +62,13 @@ android {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
         }
     }
+
     lint {
         baseline = file("lint-baseline.xml")
     }
@@ -96,4 +108,10 @@ configurations.configureEach {
         // Temporary workaround for https://issuetracker.google.com/174733673
         force("org.objenesis:objenesis:2.6")
     }
+}
+
+tasks.register("Release") {
+    dependsOn(tasks["clean"])
+    dependsOn(tasks["bundleRelease"])
+    mustRunAfter(tasks["clean"])
 }

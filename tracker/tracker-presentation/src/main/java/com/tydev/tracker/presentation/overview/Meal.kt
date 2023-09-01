@@ -5,11 +5,6 @@ import com.tydev.core.R
 import com.tydev.core.ui.util.UiText
 import com.tydev.tracker.domain.model.MealType
 
-// presentation model
-// 왜 얘 혼자만 presentation layer 에 있는거? domain 에
-// ui 에 직접적으로 show 하기 위한 용도의 data class 이기 때문
-// 간편하게 ui state 를 다루기 위해서
-// 하나의 화면만을 위한 wrapper class
 data class Meal(
     val name: UiText,
     @DrawableRes val drawableRes: Int,
