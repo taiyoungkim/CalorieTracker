@@ -133,7 +133,6 @@ jobs:
         uses: maierj/fastlane-action@v2.2.0
         with:
           lane: 'productionDeploy'
-        secrets: inherit
         env:
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
