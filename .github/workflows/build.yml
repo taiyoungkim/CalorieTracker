@@ -97,7 +97,6 @@ jobs:
           path: '*/build/reports/androidTests'
 
   publish_aab:
-    environment: MyEnvironments
     needs: [ build, androidTest ]
     if: github.base_ref == 'main'
     runs-on: ubuntu-latest
@@ -129,7 +128,7 @@ jobs:
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
-        uses: maierj/fastlane-action@v2.2.0
+        uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'productionDeploy'
         env:

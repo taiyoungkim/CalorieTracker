@@ -22,9 +22,10 @@ android {
 
     signingConfigs {
         create("release") {
-            val files = file("/home/runner/work/CalorieTracker/CalorieTracker/keystore/release").listFiles()
-            if (files != null) {
-                storeFile = files.first()
+            val keystorePath = "/keystore/release/calorieTrackerKey.jks"
+            val keystoreFile = file(keystorePath)
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
                 storePassword = System.getenv("SIGNING_STORE_PASSWORD")
                 keyAlias = System.getenv("SIGNING_KEY_ALIAS")
                 keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
