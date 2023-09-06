@@ -73,16 +73,16 @@ platform :android do
         artifactPath = filePath.sub("..",".")
         puts artifactPath
 
-        upload_to_play_store(
-            track: "internal",
-            package_name: "com.tydev.calorietracker.prod",
-            aab: artifactPath,
-            skip_upload_metadata: true,
-            skip_upload_images: true,
-            skip_upload_screenshots: true,
-            skip_upload_apk: true,
-            release_status: "inProgress",
-            rollout: "1"
-        )
+#         upload_to_play_store(
+#             track: "internal",
+#             package_name: "com.tydev.calorietracker.prod",
+#             aab: artifactPath,
+#             skip_upload_metadata: true,
+#             skip_upload_images: true,
+#             skip_upload_screenshots: true,
+#             skip_upload_apk: true,
+#             release_status: "inProgress",
+#             rollout: "1"
+#         )
       end
 end
