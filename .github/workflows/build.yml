@@ -118,18 +118,18 @@ jobs:
           ruby-version: 2.7.2
           bundler-cache: true
 
-      - name: Set Secret Properties
-        env:
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: echo "$LOCAL_PROPERTIES" > ./local.properties
-
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'calorieTrackerKey.jks'
+          fileName: 'calorieTrackerKey'
           fileDir: './keystore/release/'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
+
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
