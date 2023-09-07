@@ -135,6 +135,14 @@ jobs:
           fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/app/keystore/release/'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
 
+      - name: Decode Google Json
+        id: decode_json
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'CalorieTrackerAppServiceKey.json'
+          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/fastlane/'
+          encodedString: ${{secrets.APP_SERVICE_KEY}}
+
       - name: Set Secret Properties
         env:
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
