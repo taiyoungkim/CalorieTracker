@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - git-action-test
+      - main
   pull_request:
 permissions:
   contents: read
@@ -11,7 +11,8 @@ permissions:
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
-
+before_script:
+  - touch local.properties
 jobs:
   build:
     runs-on: macos-latest
