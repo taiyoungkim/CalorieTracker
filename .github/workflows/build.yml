@@ -32,19 +32,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # Ruby Setting
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
-
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'calorieTrackerKey'
-          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/app/keystore/release/'
-          encodedString: ${{secrets.CALORIETRACKER_KEY}}
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       - name: Check spotless
         run: ./gradlew spotlessCheck --init-script gradle/init.gradle.kts --no-configuration-cache
@@ -92,19 +83,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # Ruby Setting
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
-
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'calorieTrackerKey'
-          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/app/keystore/release/'
-          encodedString: ${{secrets.CALORIETRACKER_KEY}}
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
