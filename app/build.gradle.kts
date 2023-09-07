@@ -1,4 +1,5 @@
 import com.tydev.base.TyBuildType
+import java.util.Properties
 
 plugins {
     id("tydev.android.application")
@@ -22,14 +23,14 @@ android {
 
     signingConfigs {
         create("release") {
-            val keystorePath = "/keystore/release/calorieTrackerKey.jks"
-            val keystoreFile = file(keystorePath)
-            if (keystoreFile.exists()) {
-                storeFile = keystoreFile
-                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
-                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
-            }
+            val localProperties = Properties()
+            val localPropertiesFile = rootProject.file("local.properties").inputStream()
+            localProperties.load(localPropertiesFile)
+
+            storeFile = file(localProperties["STORE_FILE"]!!)
+            storePassword = localProperties["STORE_PASSWORD"] as String?
+            keyPassword = localProperties["KEY_PASSWORD"] as String?
+            keyAlias = localProperties["KEY_ALIAS"] as String?
         }
     }
 

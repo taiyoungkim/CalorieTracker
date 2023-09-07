@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - git-action-test
   pull_request:
 permissions:
   contents: read
@@ -122,9 +122,14 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'calorieTrackerKey.jks'
-          fileDir: './keystore/release/'
+          fileName: 'calorieTrackerKey'
+          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/app/keystore/release/'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
+
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
