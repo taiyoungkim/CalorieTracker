@@ -164,8 +164,8 @@ fun SearchScreen(
                             onAmountChange = {
                                 onEvent(
                                     SearchEvent.OnAmountForFoodChange(
-                                        food.food,
-                                        it,
+                                        food = food.food,
+                                        amount = it,
                                     ),
                                 )
                             },
