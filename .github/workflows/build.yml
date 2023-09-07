@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - git-action-test
+      - main
   pull_request:
 permissions:
   contents: read
