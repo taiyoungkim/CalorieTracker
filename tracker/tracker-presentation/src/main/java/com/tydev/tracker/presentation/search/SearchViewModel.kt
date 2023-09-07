@@ -32,9 +32,7 @@ class SearchViewModel @Inject constructor(
         when (event) {
             is SearchEvent.OnQueryChange -> {
                 state = state.copy(
-                    trackableFood = emptyList(),
                     query = event.query,
-                    lastPage = 0,
                 )
             }
             is SearchEvent.OnAmountForFoodChange -> {
