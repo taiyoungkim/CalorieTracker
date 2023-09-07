@@ -11,7 +11,6 @@ permissions:
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   build:
     runs-on: macos-latest
@@ -32,6 +31,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       - name: Check spotless
         run: ./gradlew spotlessCheck --init-script gradle/init.gradle.kts --no-configuration-cache
@@ -79,6 +83,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
+
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -122,9 +131,22 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'calorieTrackerKey.jks'
-          fileDir: './keystore/release/'
+          fileName: 'calorieTrackerKey'
+          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/app/keystore/release/'
           encodedString: ${{secrets.CALORIETRACKER_KEY}}
+
+      - name: Decode Google Json
+        id: decode_json
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'CalorieTrackerAppServiceKey.json'
+          fileDir: '/home/runner/work/CalorieTracker/CalorieTracker/fastlane/'
+          encodedString: ${{secrets.APP_SERVICE_KEY}}
+
+      - name: Set Secret Properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       # Fastlane Setting
       - name: Set Up fastlane And Publish Google Play
